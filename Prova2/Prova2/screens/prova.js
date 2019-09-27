@@ -25,38 +25,6 @@ export default class prova extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to the prova!</Text>
-        <TextInput
-          style={{
-            height: 40,
-            width: "40%",
-            alignItems: 'stretch',
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginTop: 50
-          }}
-          onChangeText={username => this.setState({ username })}
-          placeholder={"Username"}
-          value={this.state.username}
-        />
-        <TextInput
-          style={{
-            height: 40,
-            width: "40%",
-            marginTop: 10,
-            alignItems: 'stretch',
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginBottom: 50
-          }}
-          onChangeText={(v) => this.setState({ password: v })}
-          placeholder={"Password"}
-          value={this.state.password}
-          secureTextEntry={true} />
-
-        <Button onPress={() => { 
-          alert(this.state.username + " " + this.state.password);
-          navigate("Login")
-           }} title="Login"> </Button>
       </View>
 
     );
@@ -70,15 +38,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FBEAFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });

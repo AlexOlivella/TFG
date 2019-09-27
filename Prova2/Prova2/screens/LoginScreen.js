@@ -7,6 +7,7 @@ const instructions = Platform.select({
 });
 
 
+
 export default class LoginScreen extends Component {
 
   constructor(props) {
@@ -53,10 +54,8 @@ export default class LoginScreen extends Component {
           value={this.state.password}
           secureTextEntry={true} />
 
-        <Button onPress={() => { 
-          alert(this.state.username + " " + this.state.password);
-          navigate("ProvaP")
-           }} title="Login"> </Button>
+        <Button onPress={() => {navigate("ProvaP")}} title="Sign in" stlye={styles.boto}> </Button>
+        <Button onPress={() => {navigate("Register")}} title = "Sign up" stlye={styles.boto}></Button>
       </View>
 
     );
@@ -66,20 +65,14 @@ export default class LoginScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FBEAFF',
     
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  boto: {
+    width: "50%",
+    marginBottom: 20,
+  }
 });
