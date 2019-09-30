@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Picker,Platform, StyleSheet, Text, View, Button, TextInput, ScrollView, Alert } from 'react-native';
 import { MenuProvider, Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import DatePicker from 'react-native-datepicker'
-
+import { TextField } from 'react-native-material-textfield';
 
 
 export default class Register extends Component {
@@ -11,6 +11,7 @@ export default class Register extends Component {
     super(props);
     this.state = {
       username: "",
+      username2: "",
       password: "",
       birthday: "",
       gender: "",
@@ -24,7 +25,7 @@ export default class Register extends Component {
     //console.log(this.props)
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.welcome}>Sign up</Text>
         <TextInput
           style={styles.textinput}
@@ -48,7 +49,7 @@ export default class Register extends Component {
         <Picker
           selectedValue={this.state.gender}
           placeholder = "Gender"
-          style={{ height: 50, width: "40%" }}
+          style={{ height: 40 }}
           onValueChange={(itemValue, itemIndex) => this.setState({ gender: itemValue })}>
           <Picker.Item label="Select gender" value="select" />          
           <Picker.Item label="Male" value="m" />
@@ -68,24 +69,22 @@ export default class Register extends Component {
           maxDate="2009-12-31"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
+          showIcon = {false}
           customStyles={{
-            dateIcon: {
-              position: 'absolute',
-              left: 0,
-              top: 4,
-              marginLeft: 0
-            },
-            dateInput: {
-              marginLeft: 36
-            }
-          }}
+            dateInput:{ 
+              width:"100%"
+          }
+          }
+          
+          }
+
           onDateChange={date => { this.setState({ birthday: date }) }}
         />
         <Button style={styles.boto} onPress={() => {
           navigate("ProvaP");
           alert(this.state.username + " " + this.state.password + " " + this.state.email + " " + this.state.gender + " " + this.state.birthday)
         }} title="Sign up" > </Button>
-      </View>
+      </ScrollView>
 
     );
   }
@@ -95,13 +94,15 @@ export default class Register extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    //justifyContent: 'center',
+    //alignItems: 'center',
     backgroundColor: '#FBEAFF',
+    padding: 10,
+    paddingBottom: 10
+
   },
   textinput: {
     height: 40,
-    width: "40%",
     marginTop: 10,
     alignItems: 'stretch',
     borderColor: 'gray',
@@ -110,11 +111,11 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
   boto: {
-    width: "40%"
+    width:"100%",
+    paddingBottom: 100
   },
   daypicker: {
     height: 40,
-    width: "40%",
     marginTop: 10,
     borderColor: 'gray',
 
