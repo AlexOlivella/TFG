@@ -1,17 +1,36 @@
-import * as firebase from 'firebase'
+import firebase from './../src/config';
 
-export const createUser = (email, password) => {
+export async function createUser(username, password, email, gender, birthday) {
+	let error;
 	console.log('CreateUser has been called.')
 
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .catch((error) => console.log('createUser error: ', error));
+	return await firebase.auth().createUserWithEmailAndPassword(email, password).then((res) => {
+		firebase.database().ref('users/' + res.user.uid).set({
+			username: username,
+			password: password,
+			email: email,
+			gender: gender,
+			birthday: birthday,
+		})
+	}).catch((error) => {
+		console.log('createUser error: ', error);
+		return {isError: true, error: error};
+	});
 }
 
-export const signInUser = (email, password) => {
-	firebase.auth().signInWithEmailAndPassword(email, password)
-		.catch((error) => console.log('createUser error: ', error));
+export async function signInUser (email, password){
+	let error;
+	
+	console.log('signInUser has been called.')
+
+	return await firebase.auth().signInWithEmailAndPassword(email, password)
+		.catch((error) => {
+			console.log('signInUser error: ', error);
+			return {isError: true, error: error};
+		});
 }
 
 export const logoutUser = () => {
+	console.log('logoutUser has been called.')
 	firebase.auth().signOut();
 }
