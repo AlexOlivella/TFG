@@ -12,6 +12,7 @@ export async function createUser(username, password, email, gender, birthday) {
 			gender: gender,
 			birthday: birthday,
 		})
+		return {isError: false, error: ""};
 	}).catch((error) => {
 		console.log('createUser error: ', error);
 		return {isError: true, error: error};

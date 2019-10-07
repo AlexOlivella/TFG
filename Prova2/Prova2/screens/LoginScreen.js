@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TextInput, TouchableHighlight } from 'react-native';
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI';
+import { TextField } from 'react-native-material-textfield';
+
+
 
 
 export default class LoginScreen extends Component {
@@ -14,6 +17,11 @@ export default class LoginScreen extends Component {
       errorMessage: "",
     }
   }
+
+  static navigationOptions = {
+    //To hide the ActionBar/NavigationBar
+    header: null,
+};
   CheckTextInput = () => {
     //Handler for the Submit onPress
     //Check for the Name TextInput
@@ -31,6 +39,9 @@ export default class LoginScreen extends Component {
     return false;
   };
 
+
+
+
   async signIn() {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
@@ -38,18 +49,18 @@ export default class LoginScreen extends Component {
       let response = await FirebaseAPI.signInUser(this.state.email.trim(), this.state.password)
       if (response.isError) {
         //if(response.error == 200)
-          if(response.error.code=="auth/invalid-email"){
-            alert("The format of email is invalid\nTry something like: example@mail.com")
-          }
-          if(response.error.code == "auth/user-not-found"){
-            alert("This user is not in the database")
-          }
-          if(response.error.code == "auth/wrong-password"){
-            alert("The password is incorrect")
-          }
-          else alert(response.error.code)
+        if (response.error.code == "auth/invalid-email") {
+          alert("The format of email is invalid\nTry something like: example@mail.com")
+        }
+        if (response.error.code == "auth/user-not-found") {
+          alert("This user is not in the database")
+        }
+        if (response.error.code == "auth/wrong-password") {
+          alert("The password is incorrect")
+        }
+        else alert(response.error.code)
 
-      } else {        
+      } else {
         navigate("ProvaP")
       }
     }
@@ -60,41 +71,38 @@ export default class LoginScreen extends Component {
     var navigate = navigation.navigate;
     return (
       <View style={styles.container}>
-        <Text style={{ fontSize: 40 }}>Login</Text>
-        <TextInput
-          style={{
-            height: 40,
-            width: "100%",
-            alignItems: 'stretch',
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginTop: 50
-          }}
-          onChangeText={email => this.setState({ email })}
-          placeholder={"Email"}
-          autoCapitalize="none"
-          value={this.state.email}
-        />
-        <TextInput
-          style={{
-            height: 40,
-            width: "100%",
-            marginTop: 10,
-            alignItems: 'stretch',
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginBottom: 50
-          }}
-          onChangeText={(v) => this.setState({ password: v })}
-          placeholder={"Password"}
-          autoCapitalize="none"
-          value={this.state.password}
-          secureTextEntry={true} />
+        <View style={styles.seccioTitol}>
+          <Text style={{ fontSize: 40 }}>Logo</Text>
+        </View>
+        <View style={styles.seccioEscriure}>
+          <View style={{width:"100%"}}>
+          <TextField
+            label="Email"
+            onChangeText={email => this.setState({ email })}
+            autoCapitalize="none"
+            value={this.state.email}
+          />
+          </View>
+          <View style={{width:"100%"}}>
+          <TextField
+            label="Password"
+            onChangeText={(v) => this.setState({ password: v })}
+            autoCapitalize="none"
+            value={this.state.password}
+            secureTextEntry={true} />
+            </View>
+        </View>
+        <View style={styles.seccioBotons}>
+          <View style={{ width: "90%", paddingBottom: 10}}>
+            <Button onPress={() => {
+              this.signIn();
+            }} title="Sign in"> </Button>
 
-        <Button onPress={() => {
-          this.signIn();
-        }} title="Sign in" style={styles.boto}> </Button>
-        <Button onPress={() => { navigate("Register") }} title="Sign up" style={styles.boto}></Button>
+          </View>
+          <Text style={{fontSize: 15}}>  No account yet? 
+          <Text onPress={() => { navigate("Register") }} style={{fontWeight:'bold', fontSize:15}} > Create one</Text>
+          </Text>
+        </View>
       </View>
 
     );
@@ -105,11 +113,29 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-around',
+    backgroundColor: '#FBEAFF',
+  },
+  seccioTitol: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FBEAFF',
-    padding: 10,
-    paddingBottom: 10
+
+  },
+  seccioEscriure: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#FBEAFF',
+    paddingHorizontal: 10
+
+  },
+  seccioBotons: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#FBEAFF',
+
   },
   boto: {
     width: "100%",
