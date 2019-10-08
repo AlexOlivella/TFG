@@ -32,4 +32,6 @@ target 'Prova2' do
 
   use_unimodules!
 
+  pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
+
 end

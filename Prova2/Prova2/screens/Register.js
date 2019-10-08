@@ -3,7 +3,7 @@ import { Picker, Platform, StyleSheet, Text, View, Button, TextInput, ScrollView
 import DatePicker from 'react-native-datepicker'
 import * as FirebaseAPI from '../modules/firebaseAPI';
 import { TextField } from 'react-native-material-textfield';
-
+import { Dropdown } from 'react-native-material-dropdown';
 
 export default class Register extends Component {
 
@@ -19,7 +19,12 @@ export default class Register extends Component {
     }
 
   };
-
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: '#FBEAFF',
+      borderBottomWidth:0,
+    }
+  }
 
   CheckTextInput = () => {
     //Handler for the Submit onPress
@@ -28,7 +33,7 @@ export default class Register extends Component {
       if (this.state.password != '') {
         //Check for the Email TextInput
         if (this.state.email != '') {
-          if (this.state.gender != '' || this.state.gender == "select") {
+          if (this.state.gender != '') {
             if (this.state.birthday != '') {
               //alert('Success')
               return true;
@@ -63,6 +68,9 @@ export default class Register extends Component {
         //if(response.error == 200)
         if (response.error.code == "auth/invalid-email") {
           alert("The format of email is invalid\nTry something like: example@mail.com")
+        }
+        else if (response.error.code == "auth/weak-password"){
+          alert("Your password is too short, it must have 6 characters at least")
         }
         else alert(response.error.code)
       } else {
@@ -106,23 +114,24 @@ export default class Register extends Component {
               value={this.state.email}
             />
           </View>
-
-          <Picker
-            selectedValue={this.state.gender}
-            placeholder="Gender"
-            style={{ height: 40 }}
-            onValueChange={(itemValue, itemIndex) => this.setState({ gender: itemValue })}>
-            <Picker.Item label="Select gender" value="select" />
-            <Picker.Item label="Male" value="m" />
-            <Picker.Item label="Female" value="f" />
-            <Picker.Item label="Other" value="o" />
-
-          </Picker>
-
+          
+          <View style={{ width: "100%" }}>
+            <Dropdown
+              label='Select gender'
+              data={[{
+                value: "Male"
+              }, {
+                value: "Female"
+              }, {
+                value: "Other"
+              }]}
+              value={this.state.gender}
+              onChangeText={(itemValue) => this.setState({ gender: itemValue })}
+            />
+          </View>
           <View style={{ width: "100%" }}>
             <DatePicker
               date={this.state.birthday}
-              style={styles.datepicker}
               mode="date"
               placeholder="Select date of birth"
               format="YYYY-MM-DD"
@@ -131,14 +140,23 @@ export default class Register extends Component {
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
+              style={{width:"100%"}}
               customStyles={{
-                dateInput: {
-                  width: "100%"
+                dateText:{
+                  color: "rgba(0, 0, 0, .87)",
+                  fontSize:16,
+                  alignItems: 'flex-start',
+                  width:"100%"
+                },
+                dateInput:{
+                  marginTop:20,
+                  borderWidth:0,
+                  fontSize:16,
+                  color:"rgba(0, 0, 0, .38)",
+                  borderBottomWidth:0.5,
+                  alignItems: 'flex-start'
                 }
-              }
-
-              }
-
+              }}
               onDateChange={date => { this.setState({ birthday: date }) }}
             />
           </View>
@@ -146,10 +164,10 @@ export default class Register extends Component {
         <View style={styles.seccioBotons}>
           <View style={{ width: "90%" }} >
             <Button onPress={() => {
-              //alert(this.state.username + " " + this.state.password + " " + this.state.email + " " + this.state.gender + " " + this.state.birthday)
+              //alert(/*this.state.username + " " + this.state.password + " " + this.state.email + " " + this.state.gender + " " + this.state.birthday*/)
               this.createUser();
 
-            }} title="Sign up" > </Button>
+            }} title="Sign up"> </Button>
           </View>
         </View>
       </View >
@@ -171,7 +189,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBEAFF',
   },
   textinput: {
-    flex: 2,
+    flex: 3,
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#FBEAFF',
@@ -186,9 +204,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
 
   },
-  datepicker: {
-    height: 40,
-    marginTop: 10,
-    borderColor: 'gray',
-  }
+
 });
