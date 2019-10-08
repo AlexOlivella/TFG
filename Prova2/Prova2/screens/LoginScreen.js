@@ -61,7 +61,7 @@ export default class LoginScreen extends Component {
         else alert(response.error.code)
 
       } else {
-        navigate("ProvaP")
+        navigate("Home")
       }
     }
   }

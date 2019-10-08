@@ -26,7 +26,7 @@ export default class LoginScreen extends Component {
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        navigate("ProvaP")
+        navigate("Home")
         console.log("logged bruh")
       } else {
         console.log("not logged bruh")

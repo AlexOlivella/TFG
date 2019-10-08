@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Picker, Platform, StyleSheet, Text, View, Button, TextInput, ScrollView, Alert, ToastAndroid } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import * as FirebaseAPI from '../modules/firebaseAPI';
+import { TextField } from 'react-native-material-textfield';
+
 
 export default class Register extends Component {
 
@@ -59,88 +61,101 @@ export default class Register extends Component {
         this.state.birthday);
       if (response.isError) {
         //if(response.error == 200)
-        if(response.error.code=="auth/invalid-email"){
+        if (response.error.code == "auth/invalid-email") {
           alert("The format of email is invalid\nTry something like: example@mail.com")
         }
         else alert(response.error.code)
       } else {
-        navigate("ProvaP")
+        navigate("Home")
       }
     }
   }
 
-render() {
+  render() {
 
-  //console.log(this.props)
+    //console.log(this.props)
 
-  return (
-    <View style={styles.container}>
+    return (
+      <View style={styles.container}>
+        <View style={styles.seccioTitol}>
+          <Text style={{ fontSize: 40 }}>Sign up</Text>
+        </View>
+        <View style={styles.textinput}>
+          <View style={{ width: "100%" }}>
+            <TextField
+              label="Username"
+              onChangeText={username => this.setState({ username })}
+              value={this.state.username}
+            />
+          </View>
 
-      <Text style={styles.welcome}>Sign up</Text>
-      <TextInput
-        style={styles.textinput}
-        onChangeText={username => this.setState({ username })}
-        placeholder={"Username"}
-        value={this.state.username}
-      />
-      <TextInput
-        style={styles.textinput}
-        onChangeText={(v) => this.setState({ password: v })}
-        placeholder={"Password"}
-        autoCapitalize="none"
-        value={this.state.password}
-        secureTextEntry={true} />
-      <TextInput
-        style={styles.textinput}
-        onChangeText={(v) => this.setState({ email: v })}
-        placeholder={"Email"}
-        autoCapitalize="none"
-        value={this.state.email}
-      />
+          <View style={{ width: "100%" }}>
+            <TextField
+              label="Password"
+              onChangeText={(v) => this.setState({ password: v })}
+              autoCapitalize="none"
+              value={this.state.password}
+              secureTextEntry={true} />
+          </View>
 
-      <Picker
-        selectedValue={this.state.gender}
-        placeholder="Gender"
-        style={{ height: 40 }}
-        onValueChange={(itemValue, itemIndex) => this.setState({ gender: itemValue })}>
-        <Picker.Item label="Select gender" value="select" />
-        <Picker.Item label="Male" value="m" />
-        <Picker.Item label="Female" value="f" />
-        <Picker.Item label="Other" value="o" />
+          <View style={{ width: "100%" }}>
+            <TextField
+              label="Email"
+              onChangeText={(v) => this.setState({ email: v })}
+              autoCapitalize="none"
+              value={this.state.email}
+            />
+          </View>
 
-      </Picker>
+          <Picker
+            selectedValue={this.state.gender}
+            placeholder="Gender"
+            style={{ height: 40 }}
+            onValueChange={(itemValue, itemIndex) => this.setState({ gender: itemValue })}>
+            <Picker.Item label="Select gender" value="select" />
+            <Picker.Item label="Male" value="m" />
+            <Picker.Item label="Female" value="f" />
+            <Picker.Item label="Other" value="o" />
 
+          </Picker>
 
-      <DatePicker
-        date={this.state.birthday}
-        style={styles.datepicker}
-        mode="date"
-        placeholder="Select date of birth"
-        format="YYYY-MM-DD"
-        minDate="1919-01-01"
-        maxDate="2009-12-31"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        showIcon={false}
-        customStyles={{
-          dateInput: {
-            width: "100%"
-          }
-        }
+          <View style={{ width: "100%" }}>
+            <DatePicker
+              date={this.state.birthday}
+              style={styles.datepicker}
+              mode="date"
+              placeholder="Select date of birth"
+              format="YYYY-MM-DD"
+              minDate="1919-01-01"
+              maxDate="2009-12-31"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              customStyles={{
+                dateInput: {
+                  width: "100%"
+                }
+              }
 
-        }
+              }
 
-        onDateChange={date => { this.setState({ birthday: date }) }}
-      />
-      <Button style={styles.boto} onPress={() => {
-        //alert(this.state.username + " " + this.state.password + " " + this.state.email + " " + this.state.gender + " " + this.state.birthday)
-        this.createUser();
+              onDateChange={date => { this.setState({ birthday: date }) }}
+            />
+          </View>
+        </View>
+        <View style={styles.seccioBotons}>
+          <View style={{ width: "90%" }} >
+            <Button onPress={() => {
+              //alert(this.state.username + " " + this.state.password + " " + this.state.email + " " + this.state.gender + " " + this.state.birthday)
+              this.createUser();
 
-      }} title="Sign up" > </Button>
-    </View>
+            }} title="Sign up" > </Button>
+          </View>
+        </View>
+      </View >
 
-  );
-}
+    );
+  }
 }
 
 
@@ -148,34 +163,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FBEAFF',
-    padding: 10,
-    paddingBottom: 10
   },
-  view: {
+  seccioTitol: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FBEAFF',
-    padding: 10,
-    paddingBottom: 10
-
   },
   textinput: {
-    height: 40,
-    marginTop: 10,
-    alignItems: 'stretch',
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingLeft: 10,
-    paddingRight: 10
+    flex: 2,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#FBEAFF',
+    paddingHorizontal: 10,
   },
-  boto: {
-    width: "100%",
-    paddingBottom: 100
-  },
-  daypicker: {
-    height: 40,
-    marginTop: 10,
-    borderColor: 'gray',
 
+  seccioBotons: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#FBEAFF',
+    marginTop: 10,
+
+  },
+  datepicker: {
+    height: 40,
+    marginTop: 10,
+    borderColor: 'gray',
   }
 });
