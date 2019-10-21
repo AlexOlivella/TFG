@@ -1,9 +1,9 @@
 {
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": "https://jn-xk7.anonymous.prova2.exp.direct",
-  "packagerNgrokUrl": "https://packager.jn-xk7.anonymous.prova2.exp.direct",
-  "ngrokPid": 11164,
+  "packagerPort": 19001,
+  "packagerPid": 13352,
+  "expoServerNgrokUrl": "https://wm-p4m.anonymous.prova2.exp.direct",
+  "packagerNgrokUrl": "https://packager.wm-p4m.anonymous.prova2.exp.direct",
+  "ngrokPid": 14876,
   "expoServerPort": 19000,
   "devToolsPort": 19002
 }

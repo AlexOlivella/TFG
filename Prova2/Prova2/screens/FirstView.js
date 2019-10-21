@@ -8,72 +8,81 @@ export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     isLoading: true
-      
+      isLoading: true
+
     }
   }
 
   static navigationOptions = {
     //To hide the ActionBar/NavigationBar
     header: null,
-};
+  };
 
-  handleLoad = ()=>{
+  handleLoad = () => {
 
     var { navigation } = this.props;
     var navigate = navigation.navigate;
 
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         navigate("Home")
         console.log("logged bruh")
       } else {
         console.log("not logged bruh")
       }
-      this.setState({isLoading:false})
+      this.setState({ isLoading: false })
 
     }.bind(this));
   }
 
   render() {
-    var {navigation} = this.props;
+    var { navigation } = this.props;
     var navigate = navigation.navigate;
     //console.log(this.props)
-if(this.state.isLoading)
-    {
+    if (this.state.isLoading) {
       this.handleLoad();
       return (
-        <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-<ActivityIndicator size ="large" color="black"/>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <ActivityIndicator size="large" color="black" />
         </View>
 
-    );}
-  else{
-    return(
-      <View style={styles.container}>
-      <Text style= {styles.titol}> MigrañApp </Text>
-      <Button onPress ={ () => {navigate("Login")}} title= "Enter" style={styles.button}> </Button>
-  </View>
-    )
-  }
+      );
+    }
+    else {
+      return (
+        <View style={styles.container}>
+          <View style={styles.seccioTitol}>
+            <Text style={{ fontSize: 40 }}> MigrañApp </Text>
+          </View>
+          <View style={styles.seccioBoto}>
+            <View style={{ width: "90%", paddingBottom: 10 }}>
+              <Button onPress={() => { navigate("Login") }} title="Enter" > </Button>
+            </View>
+          </View>
+        </View>
+      )
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FBEAFF',
+
+  },
+  seccioTitol: {
+    flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FBEAFF',
-    
   },
-  titol: {
-    alignSelf: "center",
-    fontSize: 30,
-    paddingBottom: 100
+  seccioBoto: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#FBEAFF',
   },
-  button: {
-    width: "50%"
-  }
+
 });

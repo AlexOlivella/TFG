@@ -151,8 +151,8 @@ export default class Register extends Component {
                 dateInput:{
                   marginTop:20,
                   borderWidth:0,
-                  fontSize:16,
-                  color:"rgba(0, 0, 0, .38)",
+                  fontSize:18,
+                  color:"rgba(0, 0, 0, .87)",
                   borderBottomWidth:0.5,
                   alignItems: 'flex-start'
                 }
