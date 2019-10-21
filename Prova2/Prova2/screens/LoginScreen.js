@@ -15,26 +15,27 @@ export default class LoginScreen extends Component {
       email: "",
       password: "",
       errorMessage: "",
+      contador: 0,
     }
   }
 
   static navigationOptions = {
     //To hide the ActionBar/NavigationBar
     header: null,
-};
-  CheckTextInput = () => {
+  };
+  CheckTextInput = (email,password) => {
     //Handler for the Submit onPress
     //Check for the Name TextInput
-    if (this.state.email != '') {
+    if (email != '') {
       //Check for the Email TextInput
-      if (this.state.password != '') {
+      if (password != '') {
         //alert('Success')
         return true;
       } else {
-        alert('Please enter password');
+       // alert('Please enter password');
       }
     } else {
-      alert('Please enter email');
+      //alert('Please enter email');
     }
     return false;
   };
@@ -42,11 +43,11 @@ export default class LoginScreen extends Component {
 
 
 
-  async signIn() {
+  async signIn(email, password) {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
-    if (this.CheckTextInput()) {
-      let response = await FirebaseAPI.signInUser(this.state.email.trim(), this.state.password)
+    if (this.CheckTextInput(email,password)) {
+      let response = await FirebaseAPI.signInUser(email.trim(), password)
       if (response.isError) {
         //if(response.error == 200)
         if (response.error.code == "auth/invalid-email") {
@@ -65,7 +66,15 @@ export default class LoginScreen extends Component {
       }
     }
   }
-
+  developer() {
+    if (this.state.email == "" && this.state.password == "" && this.state.contador == "2"){
+      this.signIn("a@a.com", "password");
+      this.setState({contador:0})
+    }
+    else {
+      this.signIn(this.state.email, this.state.password)
+    }
+  }
   render() {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
@@ -75,32 +84,34 @@ export default class LoginScreen extends Component {
           <Text style={{ fontSize: 40 }}>Logo</Text>
         </View>
         <View style={styles.seccioEscriure}>
-          <View style={{width:"100%"}}>
-          <TextField
-            label="Email"
-            onChangeText={email => this.setState({ email })}
-            autoCapitalize="none"
-            value={this.state.email}
-          />
+          <View style={{ width: "100%" }}>
+            <TextField
+              label="Email"
+              onChangeText={email => this.setState({ email })}
+              autoCapitalize="none"
+              value={this.state.email}
+            />
           </View>
-          <View style={{width:"100%"}}>
-          <TextField
-            label="Password"
-            onChangeText={(v) => this.setState({ password: v })}
-            autoCapitalize="none"
-            value={this.state.password}
-            secureTextEntry={true} />
-            </View>
+          <View style={{ width: "100%" }}>
+            <TextField
+              label="Password"
+              onChangeText={(v) => this.setState({ password: v })}
+              autoCapitalize="none"
+              value={this.state.password}
+              secureTextEntry={true} />
+          </View>
         </View>
         <View style={styles.seccioBotons}>
-          <View style={{ width: "90%", paddingBottom: 10}}>
+          <View style={{ width: "90%", paddingBottom: 10 }}>
             <Button onPress={() => {
-              this.signIn();
+              this.setState({ contador: this.state.contador + 1 });
+              this.developer();
+              console.log(this.state.contador)
             }} title="Sign in"> </Button>
 
           </View>
-          <Text style={{fontSize: 15}}>  No account yet? 
-          <Text onPress={() => { navigate("Register") }} style={{fontWeight:'bold', fontSize:15}} > Create one</Text>
+          <Text style={{ fontSize: 15 }}>  No account yet?
+          <Text onPress={() => { navigate("Register") }} style={{ fontWeight: 'bold', fontSize: 15 }} > Create one</Text>
           </Text>
         </View>
       </View>

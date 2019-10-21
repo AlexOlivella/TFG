@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, DrawerLayoutAndroid,TouchableHightlight, ToolbarAndroid, Button } from 'react-native';
-import Hamburger from 'react-native-hamburger';
+import { StatusBar ,StyleSheet, Text, View, DrawerLayoutAndroid, TouchableHightlight, ToolbarAndroid, Button } from 'react-native';
 import HamburgerMenu from '../components/HamburgerMenu'
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
@@ -8,71 +7,68 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class prova extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      active4: false,
-    };
+	constructor(props) {
+		super(props);
+		this.state = {
+			active: false,
+		};
 
-  }
-  static navigationOptions = {
-    headerLeft: <HamburgerMenu/>,
-    headerStyle: {
+	}
+	
+	static navigationOptions = {
+		//headerLeft: <HamburgerMenu />,
+		header:null,
+	}
 
-      backgroundColor: '#7BF0E6',
-      borderBottomWidth: 0,
+	onPress = () => {
+		this.drawer.openDrawer();
 
-    }
-  }
-onPress = () =>{
-    this.drawer.openDrawer();
+	}
 
-}
-  
-  render() {
-    //console.log(this.props)
-    var drawer = (
-      //Color del menu que es deplega
-      <View style={{ flex: 1, backgroundColor: '#7BF0E6' }}>
+	render() {
+		//console.log(this.props)
+		return (
+			<View style={styles.container}>
+				<View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end" }}>
+					<Button title="test drawer" onPress={() => {
 
-      </View>
-    );
-    return (
-      <View style={styles.container}>
-        <DrawerLayoutAndroid renderNavigationView={() => drawer} drawerWidth={Math.min(height, width) * 0.7}
-          ref={_drawer => (this.drawer = _drawer)}>
-        </DrawerLayoutAndroid>
-      </View>
-    );
-  }
+						this.props.navigation.toggleDrawer();
+
+
+					}}> </Button>
+				</View>
+
+			</View>
+		);
+	}
 }
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#7BF0E6',
-  },
-  seccioBotons: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#7BF0E6',
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: '#7BF0E6',
+	},
+	seccioBotons: {
+		flex: 1,
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		backgroundColor: '#7BF0E6',
 
-  },
-  toolbar: {
-    height: 56,
-    backgroundColor: '#FBEAFF'
-  },
-  seccioBotons: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+	},
+	toolbar: {
+		height: 56,
+		backgroundColor: '#FBEAFF'
+	},
+	seccioBotons: {
+		flex: 1,
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		backgroundColor: '#FBEAFF',
 
-  },
+	},
 });
 /*
 import React, { Component } from 'react';
