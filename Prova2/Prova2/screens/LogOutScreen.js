@@ -31,6 +31,9 @@ export default class prova extends Component {
         //console.log(this.props)
         return (
             <View style={styles.container}>
+                <Text title="Home">
+
+                </Text>
                 <Button title="log out" onPress={() => {
                     firebase.auth().signOut().then(function () {
                         // Sign-out successful.
@@ -51,6 +54,5 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#FBEAFF',
     }
 });

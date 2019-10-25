@@ -35,3 +35,13 @@ export const logoutUser = () => {
 	console.log('logoutUser has been called.')
 	firebase.auth().signOut();
 }
+
+export function readUserData(uid){
+	firebase.database().ref('users/' + {uid}).on('value', snap => 
+	console.log(snap.val()));
+}
+export const updateSingleData=(email)=>{
+    firebase.database().ref('users/').update({
+        email,
+    });
+}

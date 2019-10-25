@@ -74,6 +74,8 @@
 	<key>NSRemindersUsageDescription</key>
 	<string>Allow Prova2 to access your reminders</string>
 	<key>UIAppFonts</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Access Prova2 to access your location</string>
 	<array>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>

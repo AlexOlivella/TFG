@@ -27,17 +27,14 @@ export default class prova extends Component {
 
 	render() {
 		//console.log(this.props)
+		const { navigation } = this.props;
+		const email_user = navigation.getParam('email_user', 'NO-User');
+		
+        const other_param = navigation.getParam('otherParam', 'some default value');  
 		return (
 			<View style={styles.container}>
-				<View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end" }}>
-					<Button title="test drawer" onPress={() => {
-
-						this.props.navigation.toggleDrawer();
-
-
-					}}> </Button>
-				</View>
-
+				<Text style={{fontSize:50}}> Hey {JSON.stringify(email_user)}</Text>
+				<Text> Altres parametres: {JSON.stringify(other_param)}</Text>
 			</View>
 		);
 	}

@@ -19,6 +19,16 @@ export default class LoginScreen extends Component {
     }
   }
 
+  _isMounted = false;
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+
   static navigationOptions = {
     //To hide the ActionBar/NavigationBar
     header: null,
@@ -62,7 +72,12 @@ export default class LoginScreen extends Component {
         else alert(response.error.code)
 
       } else {
-        navigate("Home")
+        navigate("Home", 
+        {
+          email_user: email,
+          otherParam: "altres parametres",
+        })
+        this.props.navigation.navigate('MyProfile', {email_user: email})
       }
     }
   }
@@ -106,12 +121,12 @@ export default class LoginScreen extends Component {
             <Button onPress={() => {
               this.setState({ contador: this.state.contador + 1 });
               this.developer();
-              console.log(this.state.contador)
+              //console.log(this.state.contador)
             }} title="Sign in"> </Button>
 
           </View>
           <Text style={{ fontSize: 15 }}>  No account yet?
-          <Text onPress={() => { navigate("Register") }} style={{ fontWeight: 'bold', fontSize: 15 }} > Create one</Text>
+          <Text onPress={() => { navigate("Register")}} style={{ fontWeight: 'bold', fontSize: 15 }} > Create one</Text>
           </Text>
         </View>
       </View>

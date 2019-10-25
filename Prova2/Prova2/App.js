@@ -6,36 +6,73 @@ import FirstView from './screens/FirstView'
 import Register from './screens/Register'
 import Calendar from './screens/CalendarScreen'
 import LogOut from './screens/LogOutScreen'
-import provaMenu from './screens/provaMenu'
 import HamburgerMenu from './components/HamburgerMenu'
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
+import Weather from './screens/Weather'
+import MyProfile from './screens/MyProfile'
 
 
-
-const MainNavigator = createStackNavigator({
-  FirstView: {screen: FirstView},
-  Login: {screen: LoginScreen},
-  Drawer: {screen: createDrawerNavigator({
-    Home:{
-      screen: HomeScreen,
-      navigationOptions: {
-        headerTitle: 'Hoe',
-      },
+const AuthStack = createStackNavigator(
+  {
+    FirstView: {
+      screen: FirstView
     },
-    Calendar:{
-      screen: Calendar
-    }
+    Login: {
+      screen: LoginScreen
+    },
+    Register: {
+      screen: Register
+    },
   },
-   )},
-  Register: {screen: Register},
-  LogOut: {screen:LogOut},
-  Calendar:{screen:Calendar},
-  provaMenu:{screen:provaMenu}
-},
+  {
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+    })
+  }
 );
 
-const App = createAppContainer(MainNavigator);
+const MainTabs = createMaterialBottomTabNavigator({
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+    },
+  },
+  Weather: {
+    screen: Weather,
+    navigationOptions: {
+      tabBarLabel: 'Weather',
+    },
+  },
+  Calendar: {
+    screen: Calendar,
+    navigationOptions: {
+      tabBarLabel: 'Calendar',
+    },
+  },
+});
 
-export default App;
+const MainDrawer = createDrawerNavigator({
+  MainTabs: MainTabs,
+  MyProfile:{screen:MyProfile},
+  LogOut:{screen:LogOut},
+  
+});
+
+
+const App = createSwitchNavigator(
+  {
+    Auth: {
+      screen: AuthStack
+    },
+
+    App: {
+      screen: MainDrawer
+    },
+  }
+)
+
+export default createAppContainer(App);
