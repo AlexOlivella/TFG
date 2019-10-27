@@ -33,7 +33,7 @@ export default class prova extends Component {
   render() {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
-    //console.log(this.props)
+    ////console.log(this.props)
     const { selectedStartDate } = this.state;
     const startDate = selectedStartDate ? selectedStartDate.toString() : '';
     return (

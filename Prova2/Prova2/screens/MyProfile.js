@@ -11,15 +11,14 @@ export default class Register extends Component {
         super(props);
         const { navigation } = this.props;
         const user_email = navigation.state.params;
-        //console.log(this.props)
-       // console.log(JSON.stringify(user_email.email_user))
+        ////console.log(this.props)
+        //console.log(user_email.email_user)
         this.state = {
             username: "",
             password: "",
             birthday: "",
             gender: "",
-            email: JSON.stringify(user_email.email_user),
-
+            email: user_email.email_user,
         }
 
     };
@@ -27,7 +26,7 @@ export default class Register extends Component {
     _isMounted = false;
 
     componentDidMount() {
-        //this.getUser();
+        this.getUser();
         this._isMounted = true;
     }
     componentWillUnmount() {
@@ -37,8 +36,9 @@ export default class Register extends Component {
         headerTitle: "My Profile",
 
     };
-    getUser() {
-       console.log("usuari firebase: " + FirebaseAPI.readUserData());
+    async getUser() {
+        var result = await FirebaseAPI.readUserData("6MSFII08vrh1m0iry22GdORtAgU2")
+       console.log("usuari firebase: " , result);
     }
     
     render() {

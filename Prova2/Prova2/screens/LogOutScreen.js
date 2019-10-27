@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, TextInput, BackHandler } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, Alert, TextInput, BackHandler } from 'react-native';
 import firebase from 'firebase'
 import CalendarPicker from 'react-native-calendar-picker';
 
@@ -9,50 +9,53 @@ import CalendarPicker from 'react-native-calendar-picker';
 
 export default class prova extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: "",
-            password: "",
-        }
+    componentDidMount() {
+        const { navigation } = this.props;
+        this.focusListener = navigation.addListener('didFocus', () => {
+            // The screen is focused
+            this.asklogout()
+        });
     }
 
-    static navigationOptions = {
-        headerStyle: {
-            backgroundColor: '#FBEAFF',
-            borderBottomWidth: 0,
-
-        }
+    componentWillUnmount() {
+        // Remove the event listener
+        this.focusListener.remove();
     }
 
-    render() {
+
+
+    asklogout() {
         var { navigation } = this.props;
         var navigate = navigation.navigate;
-        //console.log(this.props)
-        return (
-            <View style={styles.container}>
-                <Text title="Home">
+        Alert.alert(
+            "Log out",
+            "Do you want to log out?",
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => { navigate("Home") },
+                    style: 'cancel'
+                },
+                {
+                    text: 'OK', onPress: () => {
+                        firebase.auth().signOut().then(function () {
+                            // Sign-out successful.
+                            navigate("Login")
+                        }).catch(function (error) {
+                            // An error happened.
+                        });
+                    }
+                },
 
-                </Text>
-                <Button title="log out" onPress={() => {
-                    firebase.auth().signOut().then(function () {
-                        // Sign-out successful.
-                        navigate("Login")
-                    }).catch(function (error) {
-                        // An error happened.
-                    });
-                }}></Button>
-            </View>
+            ]
 
         );
+
+    }
+    render() {
+        return (
+            <View style={{backgroundColor:"#FBEAFF"}}></View>
+        );
+
     }
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-});

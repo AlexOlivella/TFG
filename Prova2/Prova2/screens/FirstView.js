@@ -30,10 +30,10 @@ export default class LoginScreen extends Component {
           email_user: user.email
         })
         this.props.navigation.navigate('MyProfile', {email_user: user.email})
-        console.log("logged bruh")
-        console.log(user)
+        //console.log("logged bruh")
+        //console.log(user)
       } else {
-        console.log("not logged bruh")
+        //console.log("not logged bruh")
       }
       this.setState({ isLoading: false })
 
@@ -43,7 +43,7 @@ export default class LoginScreen extends Component {
   render() {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
-    //console.log(this.props)
+    ////console.log(this.props)
     if (this.state.isLoading) {
       this.handleLoad();
       return (

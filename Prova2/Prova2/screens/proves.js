@@ -62,7 +62,7 @@ export default class prova extends Component {
   render() {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
-    //console.log(this.props)
+    ////console.log(this.props)
     return (
 
       <View style={styles.container}>
