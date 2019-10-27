@@ -26,12 +26,9 @@ export default class LoginScreen extends Component {
 
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        navigate("Home", {
-          email_user: user.email
-        })
-        this.props.navigation.navigate('MyProfile', {email_user: user.email})
+        navigate("Home")
         //console.log("logged bruh")
-        //console.log(user)
+        //console.log(user.uid)
       } else {
         //console.log("not logged bruh")
       }

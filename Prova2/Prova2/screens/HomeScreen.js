@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { StatusBar ,StyleSheet, Text, View, DrawerLayoutAndroid, TouchableHightlight, ToolbarAndroid, Button } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, DrawerLayoutAndroid, TouchableHightlight, ToolbarAndroid, Button } from 'react-native';
 import HamburgerMenu from '../components/HamburgerMenu'
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import firebase from 'firebase'
 export default class prova extends Component {
 
 	constructor(props) {
@@ -14,10 +14,16 @@ export default class prova extends Component {
 		};
 
 	}
-	
+
 	static navigationOptions = {
-		//headerLeft: <HamburgerMenu />,
-		header:null,
+		title: 'HeaderTitle',
+		headerStyle: {
+			backgroundColor: '#f4511e',
+		},
+		headerTintColor: '#0ff',
+		headerTitleStyle: {
+			fontWeight: 'bold',
+		},
 	}
 
 	onPress = () => {
@@ -28,13 +34,13 @@ export default class prova extends Component {
 	render() {
 		////console.log(this.props)
 		const { navigation } = this.props;
-		const email_user = navigation.getParam('email_user', 'NO-User');
-		
-        const other_param = navigation.getParam('otherParam', 'some default value');  
+		const uid_user = navigation.getParam('uid_user', 'NO-User');
+        var user = firebase.auth().currentUser;
+
 		return (
 			<View style={styles.container}>
-				<Text style={{fontSize:50}}> Hey {email_user}</Text>
-				
+				<Text style={{ fontSize: 50 }}> Hey {user.email}</Text>
+
 			</View>
 		);
 	}

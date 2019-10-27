@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button,SafeAreaView, TouchableOpacity, Alert  } from 'react-native';
 import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
 import FirstView from './screens/FirstView'
 import Register from './screens/Register'
 import Calendar from './screens/CalendarScreen'
-import LogOut from './screens/LogOutScreen'
 import HamburgerMenu from './components/HamburgerMenu'
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator,  } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import Weather from './screens/Weather'
 import MyProfile from './screens/MyProfile'
+import firebase from 'firebase'
 
 
 const AuthStack = createStackNavigator(
@@ -58,9 +58,38 @@ const MainTabs = createMaterialBottomTabNavigator({
 const MainDrawer = createDrawerNavigator({
   MainTabs: MainTabs,
   MyProfile:{screen:MyProfile},
-  LogOut:{screen:LogOut},
+  //LogOut:{screen:LogOut},
   
-});
+}, 
+{contentComponent:(props) => (
+  <View style={{flex:1}}>
+      <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+        <DrawerItems {...props} />
+        <TouchableOpacity onPress={()=>
+          Alert.alert(
+            'Log out',
+            'Do you want to Log out?',
+            [
+              {text: 'Cancel', onPress: () => {return null}},
+              {text: 'Confirm', onPress: () => {
+                firebase.auth().signOut().then(function () {
+                  // Sign-out successful.
+                  props.navigation.navigate('Login')
+
+              }).catch(function (error) {
+                  // An error happened.
+              });
+                
+              }},
+            ],
+            { cancelable: false }
+          )  
+        }>
+          <Text style={{marginLeft:16 , fontWeight: 'bold', fontSize: 15, marginVertical: 5}}>Logout</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+  </View>
+),});
 
 
 const App = createSwitchNavigator(

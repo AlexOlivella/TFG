@@ -72,12 +72,9 @@ export default class LoginScreen extends Component {
         else alert(response.error.code)
 
       } else {
-        navigate("Home", 
-        {
-          email_user: email,
-          otherParam: "altres parametres",
-        })
-        this.props.navigation.navigate('MyProfile', {email_user: email})
+        navigate("Home")
+        //this.props.navigation.navigate('MyProfile', {uid_user: user.uid})
+       // console.log(user)
       }
     }
   }

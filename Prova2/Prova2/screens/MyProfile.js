@@ -1,32 +1,30 @@
 import React, { Component } from 'react';
-import { Picker, Platform, StyleSheet, Text, View, Button, TextInput, ScrollView, Alert, ToastAndroid } from 'react-native';
-import DatePicker from 'react-native-datepicker'
-import * as FirebaseAPI from '../modules/firebaseAPI';
-import { TextField } from 'react-native-material-textfield';
-import { Dropdown } from 'react-native-material-dropdown';
-
+import { StyleSheet, Text, View, Button, } from 'react-native';
+import firebase from 'firebase'
+import FirebaseAPI from '../modules/firebaseAPI'
 export default class Register extends Component {
 
     constructor(props) {
         super(props);
         const { navigation } = this.props;
-        const user_email = navigation.state.params;
+        const uid_user = navigation.state.params;
         ////console.log(this.props)
         //console.log(user_email.email_user)
         this.state = {
-            username: "",
-            password: "",
-            birthday: "",
-            gender: "",
-            email: user_email.email_user,
+            email: "",
+            photoUrl: "",
+            uid: "",
+            emailVerified: "",
         }
 
     };
 
     _isMounted = false;
-
-    componentDidMount() {
+    componentWillMount() {
         this.getUser();
+
+    }
+    componentDidMount() {
         this._isMounted = true;
     }
     componentWillUnmount() {
@@ -36,13 +34,30 @@ export default class Register extends Component {
         headerTitle: "My Profile",
 
     };
-    async getUser() {
-        var result = await FirebaseAPI.readUserData("6MSFII08vrh1m0iry22GdORtAgU2")
-       console.log("usuari firebase: " , result);
+    getUser() {
+        var user = firebase.auth().currentUser;
+        //console.log("current user: ", user)
+
+        if (user != null) {
+            //this.setState({name: user.displayName}) ;
+            this.setState({ email: user.email })
+            //this.setState({photoUrl}) = user.photoURL;
+            //this.setState({emailVerified}) = user.emailVerified;
+            this.setState({ uid: user.id })   // The user's ID, unique to the Firebase project. Do NOT use
+            // this value to authenticate with your backend server, if
+            // you have one. Use User.getToken() instead.
+            firebase.database().ref('users/' + "W3AbghKdQiY4dCG74PPUdDGdoVl2").on('value', snap => {
+                console.log(snap.val())
+                
+            })
+            console.log("current user: " , user.uid)
+        }
     }
-    
+
+
+
+
     render() {
-        
         return (
             <View style={styles.container}>
                 <View style={styles.textView}>

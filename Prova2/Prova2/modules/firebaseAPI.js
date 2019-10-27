@@ -37,11 +37,12 @@ export const logoutUser = () => {
 	firebase.auth().signOut();
 }
 
-export async function readUserData(uid){
-	return await firebase.database().ref('users/' + uid).on('value', snap =>{ 
-		
+export  function readUserData(uid){
+	var retorn;
+	firebase.database().ref('users/' + uid).on('value', snap =>{ 
+		retorn = snap.val()
 	console.log(snap.val())
-	return snap.val()}
+	return retorn}
 	
 	);
 	
