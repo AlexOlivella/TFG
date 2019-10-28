@@ -80,7 +80,7 @@ export default class LoginScreen extends Component {
   }
   developer() {
     if (this.state.email == "" && this.state.password == "" && this.state.contador == "2"){
-      this.signIn("a@a.com", "password");
+      this.signIn("i@i.com", "password");
       this.setState({contador:0})
     }
     else {

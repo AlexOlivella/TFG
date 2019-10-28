@@ -59,9 +59,9 @@ export default class Register extends Component {
     var navigate = navigation.navigate;
     if (this.CheckTextInput()) {
       let response = await FirebaseAPI.createUser(
-        this.state.username,
+        this.state.username.trim(),
         this.state.password,
-        this.state.email,
+        this.state.email.trim(),
         this.state.gender,
         this.state.birthday);
       if (response.isError) {
@@ -74,6 +74,7 @@ export default class Register extends Component {
         }
         else alert(response.error.code)
       } else {
+        ToastAndroid.show("Welcome to the MigranyApp", ToastAndroid.SHORT)
         navigate("Home")
       }
     }

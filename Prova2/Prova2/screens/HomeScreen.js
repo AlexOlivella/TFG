@@ -39,7 +39,7 @@ export default class prova extends Component {
 
 		return (
 			<View style={styles.container}>
-				<Text style={{ fontSize: 50 }}> Hey {user.email}</Text>
+				<Text style={{ fontSize: 30 }}> Hey {user.email}</Text>
 
 			</View>
 		);
