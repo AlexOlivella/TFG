@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import firebase from 'firebase'
 import FirebaseAPI from '../modules/firebaseAPI'
 import { TextField } from 'react-native-material-textfield';
+import { Dropdown } from 'react-native-material-dropdown';
+import DatePicker from 'react-native-datepicker'
 
 export default class Register extends Component {
 
@@ -21,6 +23,7 @@ export default class Register extends Component {
             photoUrl: "",
             uid: "",
             emailVerified: "",
+
         }
 
     };
@@ -42,6 +45,7 @@ export default class Register extends Component {
         headerTitle: "My Profile",
 
     };
+
     async getUser() {
         var user = firebase.auth().currentUser;
         //console.log("current user: ", user)
@@ -50,7 +54,7 @@ export default class Register extends Component {
 
             //this.setState({photoUrl}) = user.photoURL;
             //this.setState({emailVerified}) = user.emailVerified;
-            this.setState({ uid: user.id })   // The user's ID, unique to the Firebase project. Do NOT use
+            this.setState({ uid: user.uid })   // The user's ID, unique to the Firebase project. Do NOT use
             // this value to authenticate with your backend server, if
             // you have one. Use User.getToken() instead.
             await firebase.database().ref('users/' + user.uid).on('value', snap => {
@@ -65,43 +69,147 @@ export default class Register extends Component {
         }
     }
 
+    validate = (text) => {
+        console.log(text);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (reg.test(text) === false) {
+            console.log("Email is Not Correct");
+            this.setState({ email: text })
+            return false;
+        }
+        else {
+            this.setState({ email: text })
+            console.log("Email is Correct");
+            return true;
+        }
+    }
+    CheckTextInput = () => {
+        //Handler for the Submit onPress
+        if (this.state.username != '') {
+            //Check for the Name TextInput
+            if (this.state.password != '') {
+                //Check for the Email TextInput
+                if (this.state.email != '') {
+                    if (this.state.gender != '') {
+                        if (this.state.birthday != '') {
+                            //alert('Success')
+                            return true;
+                        } else {
+                            alert('Please enter a birthday');
+                        }
+                    } else {
+                        alert('Please enter a gender');
+                    }
+                } else {
+                    if(!this.validate(this.state.email)) alert("The format of email is invalid\nTry something like: example@mail.com")
+                    else alert('Please enter email');
+                }
+            } else {
+                if (this.state.password.length() < 6) alert("Your password is too short, it must have 6 characters at least")
+                else alert('Please enter password');
+            }
+        } else {
+            alert('Please enter username');
+        }
+        return false;
+    };
+
+    async update() {
+        if (this.CheckTextInput()) {
+            var user = firebase.auth().currentUser;
+            console.log(JSON.stringify(this.state.email))
+            await firebase.database().ref('users/' + user.uid).update({
+                email: this.state.email,
+                username: this.state.username,
+                password: this.state.password,
+                gender: this.state.gender,
+                birthday: this.state.birthday,
+            })
+
+            
 
 
+        }
+        alert("Profile successfully changed")
+    }
 
     render() {
-        var email2 = "";
-        var username2 = "";
-        var password2 = "";
-        var gender2 = "";
-        var birthday2 = "";
+
         return (
             <View style={styles.container}>
                 <View style={styles.seccioTitol}>
-                    <Text style={{ fontSize:30 }}> Change your account data</Text>
+                    <Text style={{ fontSize: 30 }}> Change your profile</Text>
 
                 </View>
                 <View style={styles.textView}>
-                    <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.dades}>
                         <Text >Email</Text>
                         <TextInput
+                            onChangeText={(v) => this.setState({ email: v })}
                         >{this.state.email}</TextInput>
                     </View>
-                    <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.dades}>
                         <Text>Username</Text>
-                        <TextInput >{this.state.username}</TextInput>
+                        <TextInput
+                            onChangeText={(v) => this.setState({ username: v })}>{this.state.username}</TextInput>
                     </View>
 
-                    <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.dades}>
                         <Text>Password</Text>
-                        <TextInput>{this.state.password}</TextInput>
+                        <TextInput
+                            secureTextEntry={true}
+                            onChangeText={(v) => this.setState({ password: v })}
+                        >{this.state.password}</TextInput>
                     </View>
-                    <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.dades}>
                         <Text>Gender</Text>
-                        <Text>{this.state.gender}</Text>
+                        <View style={{ width: "50%", }}>
+                            <Dropdown
+                                data={[{
+                                    value: "Male"
+                                }, {
+                                    value: "Female"
+                                }, {
+                                    value: "Other"
+                                }]}
+                                style={{ fontSize: 12 }}
+                                value={this.state.gender}
+                                onChangeText={(itemValue) => this.setState({ gender: itemValue })}
+                            />
+                        </View>
                     </View>
-                    <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={styles.dades}>
                         <Text>Date of birthday</Text>
-                        <TextInput>{this.state.birthday}</TextInput>
+                        <View style={{ width: "50%" }}>
+                            <DatePicker
+                                date={this.state.birthday}
+                                mode="date"
+                                placeholder="Select date of birth"
+                                format="YYYY-MM-DD"
+                                minDate="1919-01-01"
+                                maxDate="2009-12-31"
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                showIcon={false}
+                                style={{ width: "100%" }}
+                                customStyles={{
+                                    dateText: {
+                                        color: "rgba(0, 0, 0, .87)",
+                                        fontSize: 12,
+                                        alignItems: 'flex-start',
+                                        width: "100%"
+                                    },
+                                    dateInput: {
+                                        borderWidth: 0,
+                                        fontSize: 12,
+                                        color: "rgba(0, 0, 0, .87)",
+                                        alignItems: 'flex-start'
+                                    }
+                                }}
+                                onDateChange={date => this.setState({ birthday: date })}
+                            />
+                        </View>
+
                     </View>
                 </View>
                 <View style={styles.seccioBuida}></View>
@@ -110,6 +218,19 @@ export default class Register extends Component {
                         <Button onPress={() => {
                             //alert(/*this.state.username + " " + this.state.password + " " + this.state.email + " " + this.state.gender + " " + this.state.birthday*/)
                             //this.createUser();
+                            Alert.alert(
+                                'Update changes',
+                                'Do you want to confirm this changes?',
+                                [
+                                    { text: 'Cancel', onPress: () => { return null } },
+                                    {
+                                        text: 'Confirm', onPress: () => {
+                                            this.update();
+                                        }
+                                    },
+                                ],
+                                { cancelable: false }
+                            )
 
                         }} title="Update changes"> </Button>
                     </View>
@@ -132,6 +253,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#FBEAFF',
     },
+    dades: {
+        width: "100%",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottomWidth: 0.5,
+        borderBottomColor: 'gray',
+        marginBottom: 10,
+    },
     textView: {
         flex: 3,
         justifyContent: 'center',
@@ -139,8 +269,8 @@ const styles = StyleSheet.create({
         fontSize: 40,
         paddingHorizontal: 10,
     },
-    seccioBuida:{
-        flex:2,
+    seccioBuida: {
+        flex: 2,
     },
     seccioBotons: {
         flex: 1,
