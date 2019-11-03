@@ -5,6 +5,7 @@ import FirebaseAPI from '../modules/firebaseAPI'
 import { TextField } from 'react-native-material-textfield';
 import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from 'react-native-datepicker'
+import { tsThisType } from '@babel/types';
 
 export default class Register extends Component {
 
@@ -16,7 +17,10 @@ export default class Register extends Component {
         //console.log(user_email.email_user)
         this.state = {
             email: "",
-            password: "",
+            newEmail: "",
+            currentPassword: "",
+            newPassword: "",
+            confirmedPassword: "",
             username: "",
             gender: "",
             birthday: "",
@@ -27,19 +31,8 @@ export default class Register extends Component {
         }
 
     };
-
-    _isMounted = false;
     componentWillMount() {
         this.getUser();
-
-    }
-    componentDidMount() {
-        this._isMounted = true;
-
-    }
-    componentWillUnmount() {
-        alert("hola")
-        this._isMounted = false;
     }
     static navigationOptions = {
         headerTitle: "My Profile",
@@ -59,9 +52,9 @@ export default class Register extends Component {
             // you have one. Use User.getToken() instead.
             await firebase.database().ref('users/' + user.uid).on('value', snap => {
                 console.log("usuari sencer: ", snap.val());
-                this.setState({ email: snap.val().email })
+                this.setState({ email: user.email })
                 this.setState({ username: snap.val().username });
-                this.setState({ password: snap.val().password });
+                this.setState({ currentPassword: snap.val().password });
                 this.setState({ gender: snap.val().gender });
                 this.setState({ birthday: snap.val().birthday });
 
@@ -101,7 +94,7 @@ export default class Register extends Component {
                         alert('Please enter a gender');
                     }
                 } else {
-                    if(!this.validate(this.state.email)) alert("The format of email is invalid\nTry something like: example@mail.com")
+                    if (!this.validate(this.state.email)) alert("The format of email is invalid\nTry something like: example@mail.com")
                     else alert('Please enter email');
                 }
             } else {
@@ -114,52 +107,105 @@ export default class Register extends Component {
         return false;
     };
 
-    async update() {
-        if (this.CheckTextInput()) {
+    reauthenticate = (currentPassword) => {
+        var user = firebase.auth().currentUser;
+        var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+        return user.reauthenticateWithCredential(cred);
+    }
+
+    updatePassword() {
+        if (this.state.newPassword == this.state.confirmedPassword) {
+            this.reauthenticate(this.state.currentPassword).then(() => {
+                var user = firebase.auth().currentUser;
+
+                user.updatePassword(this.state.newPassword).then(function () {
+                    // Alert.alert("Password was changed");
+                }).catch(function (error) {
+                    Alert.alert(error.message)
+                })
+            }).catch((error) => {
+                Alert.alert(error.message)
+
+            });
+            return true
+        }
+        else {
+            alert("The new passwords don't match")
+            return false
+        }
+    }
+    updateEmail() {
+        this.reauthenticate(this.state.currentPassword).then(() => {
             var user = firebase.auth().currentUser;
-            console.log(JSON.stringify(this.state.email))
+
+            user.updateEmail(this.state.newEmail).then(function () {
+                //Alert.alert("Email was changed");
+            }).catch(function (error) {
+                Alert.alert(error.message)
+            })
+        }).catch((error) => {
+            Alert.alert(error.message)
+
+        });
+
+    }
+    async updateProfile() {
+        this.updateEmail();
+        let contraCorrecte = this.updatePassword();
+        var user = firebase.auth().currentUser;
+        console.log(JSON.stringify(this.state.email))
+        if (contraCorrecte) {
             await firebase.database().ref('users/' + user.uid).update({
                 email: this.state.email,
                 username: this.state.username,
-                password: this.state.password,
+                password: this.state.newPassword,
                 gender: this.state.gender,
                 birthday: this.state.birthday,
             })
-
-            
-
-
+            alert("Profile successfully changed")
         }
-        alert("Profile successfully changed")
     }
-
     render() {
 
         return (
             <View style={styles.container}>
                 <View style={styles.seccioTitol}>
                     <Text style={{ fontSize: 30 }}> Change your profile</Text>
-
                 </View>
                 <View style={styles.textView}>
                     <View style={styles.dades}>
                         <Text >Email</Text>
                         <TextInput
-                            onChangeText={(v) => this.setState({ email: v })}
+                            onChangeText={(v) => this.setState({ email: v.trim() })}
                         >{this.state.email}</TextInput>
                     </View>
                     <View style={styles.dades}>
                         <Text>Username</Text>
                         <TextInput
-                            onChangeText={(v) => this.setState({ username: v })}>{this.state.username}</TextInput>
+                            onChangeText={(v) => this.setState({ username: v.trim() })}>
+                            {this.state.username}</TextInput>
                     </View>
 
                     <View style={styles.dades}>
-                        <Text>Password</Text>
+                        <Text>Current password</Text>
                         <TextInput
-                            secureTextEntry={true}
-                            onChangeText={(v) => this.setState({ password: v })}
-                        >{this.state.password}</TextInput>
+                            //secureTextEntry={true}
+                            onChangeText={(v) => this.setState({ currentPassword: v })}
+                        >{this.state.currentPassword}</TextInput>
+                    </View>
+                    <View style={styles.dades}>
+                        <Text>New password</Text>
+                        <TextInput
+                            //secureTextEntry={true}
+                            onChangeText={(v) => this.setState({ newPassword: v })}
+                        >{this.state.newPassword}</TextInput>
+                    </View>
+                    <View style={styles.dades}>
+                        <Text>Confirm new password</Text>
+                        <TextInput
+                            //secureTextEntry={true}
+                            onChangeText={(v) => this.setState({ confirmedPassword: v })}
+                        >{this.state.confirmedPassword}</TextInput>
                     </View>
                     <View style={styles.dades}>
                         <Text>Gender</Text>
@@ -216,23 +262,21 @@ export default class Register extends Component {
                 <View style={styles.seccioBotons}>
                     <View style={{ width: "90%" }} >
                         <Button onPress={() => {
-                            //alert(/*this.state.username + " " + this.state.password + " " + this.state.email + " " + this.state.gender + " " + this.state.birthday*/)
-                            //this.createUser();
                             Alert.alert(
-                                'Update changes',
+                                'Update profile',
                                 'Do you want to confirm this changes?',
                                 [
                                     { text: 'Cancel', onPress: () => { return null } },
                                     {
                                         text: 'Confirm', onPress: () => {
-                                            this.update();
+                                            this.updateProfile();
                                         }
                                     },
                                 ],
                                 { cancelable: false }
                             )
 
-                        }} title="Update changes"> </Button>
+                        }} title="Update Profile"> </Button>
                     </View>
                 </View>
             </View >
@@ -259,7 +303,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 0.5,
-        borderBottomColor: 'gray',
+        borderBottomColor: 'white',
         marginBottom: 10,
     },
     textView: {
@@ -270,7 +314,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     seccioBuida: {
-        flex: 2,
+        flex: 1,
     },
     seccioBotons: {
         flex: 1,

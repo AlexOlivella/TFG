@@ -39,8 +39,8 @@ export default class prova extends Component {
 
 		return (
 			<View style={styles.container}>
-				<Text style={{ fontSize: 30 }}> Welcome to the app</Text>
-
+				<Text style={{ fontSize: 30 }}> Welcome to the app </Text>
+				<Text style={{ fontSize: 30 }}> {user.email} </Text>
 			</View>
 		);
 	}
