@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import firebase from 'firebase'
-import { readUserData } from '../modules/firebaseAPI'
+import * as FirebaseAPI from '../modules/firebaseAPI'
 import { TextField } from 'react-native-material-textfield';
 import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from 'react-native-datepicker'
@@ -17,17 +17,10 @@ export default class Register extends Component {
         //console.log(user_email.email_user)
         this.state = {
             email: "",
-            newEmail: "",
-            currentPassword: "",
-            newPassword: "",
-            confirmedPassword: "",
             username: "",
             gender: "",
             birthday: "",
-            photoUrl: "",
             uid: "",
-            emailVerified: "",
-
         }
 
     };
@@ -35,13 +28,13 @@ export default class Register extends Component {
         this.getUser();
     }
     static navigationOptions = {
-        headerTitle: "My Profile",
+        header: null
 
     };
 
     getDateString(time) {
         let date = new Date(time);
-      return  date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+        return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
     }
 
     async getUser() {
@@ -56,11 +49,12 @@ export default class Register extends Component {
             //this.setState({emailVerified}) = user.emailVerified;
             // this value to authenticate with your backend server, if
             // you have one. Use User.getToken() instead.
-            let data = await readUserData(user.uid)
+            let data = await FirebaseAPI.readUserData(user.uid)
             console.log("Data: ", data);
             this.setState({ uid: user.uid })   // The user's ID, unique to the Firebase project. Do NOT use
 
             this.setState({
+                email: user.email,
                 username: data.username,
                 gender: data.gender,
                 birthday: this.getDateString(data.birthday)
@@ -71,44 +65,18 @@ export default class Register extends Component {
         }
     }
 
-    validate = (text) => {
-        console.log(text);
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (reg.test(text) === false) {
-            console.log("Email is Not Correct");
-            this.setState({ email: text })
-            return false;
-        }
-        else {
-            this.setState({ email: text })
-            console.log("Email is Correct");
-            return true;
-        }
-    }
+    
     CheckTextInput = () => {
-        //Handler for the Submit onPress
         if (this.state.username != '') {
-            //Check for the Name TextInput
-            if (this.state.password != '') {
-                //Check for the Email TextInput
-                if (this.state.email != '') {
-                    if (this.state.gender != '') {
-                        if (this.state.birthday != '') {
-                            //alert('Success')
-                            return true;
-                        } else {
-                            alert('Please enter a birthday');
-                        }
-                    } else {
-                        alert('Please enter a gender');
-                    }
+            if (this.state.gender != '') {
+                if (this.state.birthday != '') {
+                    //alert('Success')
+                    return true;
                 } else {
-                    if (!this.validate(this.state.email)) alert("The format of email is invalid\nTry something like: example@mail.com")
-                    else alert('Please enter email');
+                    alert('Please enter a birthday');
                 }
             } else {
-                if (this.state.password.length() < 6) alert("Your password is too short, it must have 6 characters at least")
-                else alert('Please enter password');
+                alert('Please enter a gender');
             }
         } else {
             alert('Please enter username');
@@ -116,66 +84,20 @@ export default class Register extends Component {
         return false;
     };
 
-    reauthenticate = (currentPassword) => {
-        var user = firebase.auth().currentUser;
-        var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-        return user.reauthenticateWithCredential(cred);
-    }
 
-    updatePassword() {
-        if (this.state.newPassword == this.state.confirmedPassword) {
-            this.reauthenticate(this.state.currentPassword).then(() => {
-                var user = firebase.auth().currentUser;
-
-                user.updatePassword(this.state.newPassword).then(function () {
-                    // Alert.alert("Password was changed");
-                }).catch(function (error) {
-                    Alert.alert(error.message)
-                })
-            }).catch((error) => {
-                Alert.alert(error.message)
-
-            });
-            return true
-        }
-        else {
-            alert("The new passwords don't match")
-            return false
-        }
-    }
-    updateEmail() {
-        this.reauthenticate(this.state.currentPassword).then(() => {
-            var user = firebase.auth().currentUser;
-
-            user.updateEmail(this.state.newEmail).then(function () {
-                //Alert.alert("Email was changed");
-            }).catch(function (error) {
-                Alert.alert(error.message)
-            })
-        }).catch((error) => {
-            Alert.alert(error.message)
-
-        });
-
-    }
     async updateProfile() {
-        this.updateEmail();
-        let contraCorrecte = this.updatePassword();
+        //this.updateEmail();
+        //let contraCorrecte = this.updatePassword();
         var user = firebase.auth().currentUser;
         console.log(JSON.stringify(this.state.email))
-        if (contraCorrecte) {
-            await firebase.database().ref('users/' + user.uid).update({
-                email: this.state.email,
-                username: this.state.username,
-                password: this.state.newPassword,
-                gender: this.state.gender,
-                birthday: this.state.birthday,
-            })
-            alert("Profile successfully changed")
+        if (this.CheckTextInput()) {
+            let resposta = await FirebaseAPI.updateProfile(user.uid, this.state.username, this.state.gender, new Date(this.state.birthday).getTime())
+            //alert(resposta)
         }
     }
     render() {
-
+        var { navigation } = this.props;
+        var navigate = navigation.navigate;
         return (
             <View style={styles.container}>
                 <View style={styles.seccioTitol}>
@@ -184,37 +106,13 @@ export default class Register extends Component {
                 <View style={styles.textView}>
                     <View style={styles.dades}>
                         <Text >Email</Text>
-                        <TextInput
-                            onChangeText={(v) => this.setState({ email: v.trim() })}
-                        >{this.state.email}</TextInput>
+                        <Text>{this.state.email}</Text>
                     </View>
                     <View style={styles.dades}>
                         <Text>Username</Text>
                         <TextInput
                             onChangeText={(v) => this.setState({ username: v.trim() })}>
                             {this.state.username}</TextInput>
-                    </View>
-
-                    <View style={styles.dades}>
-                        <Text>Current password</Text>
-                        <TextInput
-                            //secureTextEntry={true}
-                            onChangeText={(v) => this.setState({ currentPassword: v })}
-                        >{this.state.currentPassword}</TextInput>
-                    </View>
-                    <View style={styles.dades}>
-                        <Text>New password</Text>
-                        <TextInput
-                            //secureTextEntry={true}
-                            onChangeText={(v) => this.setState({ newPassword: v })}
-                        >{this.state.newPassword}</TextInput>
-                    </View>
-                    <View style={styles.dades}>
-                        <Text>Confirm new password</Text>
-                        <TextInput
-                            //secureTextEntry={true}
-                            onChangeText={(v) => this.setState({ confirmedPassword: v })}
-                        >{this.state.confirmedPassword}</TextInput>
                     </View>
                     <View style={styles.dades}>
                         <Text>Gender</Text>
@@ -241,8 +139,8 @@ export default class Register extends Component {
                                 mode="date"
                                 placeholder="Select date of birth"
                                 format="DD-MM-YYYY"
-                                minDate="1919-01-01"
-                                maxDate="2009-12-31"
+                                minDate="01-01-1919"
+                                maxDate="31-12-2009"
                                 confirmBtnText="Confirm"
                                 cancelBtnText="Cancel"
                                 showIcon={false}
@@ -286,6 +184,7 @@ export default class Register extends Component {
                             )
 
                         }} title="Update Profile"> </Button>
+                        <Button onPress={() => { navigate("UpdateEmailPass") }} title="Update Email and Password"></Button>
                     </View>
                 </View>
             </View >

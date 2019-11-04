@@ -1,9 +1,9 @@
 {
   "expoServerNgrokUrl": "https://ic-vh4.anonymous.prova2.exp.direct",
   "packagerNgrokUrl": "https://packager.ic-vh4.anonymous.prova2.exp.direct",
-  "ngrokPid": 7880,
+  "ngrokPid": 876,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 6716,
+  "packagerPid": 11008,
   "devToolsPort": 19002
 }

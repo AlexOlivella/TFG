@@ -22,7 +22,7 @@ export default class Register extends Component {
   static navigationOptions = {
     headerStyle: {
       backgroundColor: '#FBEAFF',
-      borderBottomWidth:0,
+      borderBottomWidth: 0,
     }
   }
 
@@ -69,7 +69,7 @@ export default class Register extends Component {
         if (response.error.code == "auth/invalid-email") {
           alert("The format of email is invalid\nTry something like: example@mail.com")
         }
-        else if (response.error.code == "auth/weak-password"){
+        else if (response.error.code == "auth/weak-password") {
           alert("Your password is too short, it must have 6 characters at least")
         }
         else alert(response.error.code)
@@ -115,7 +115,7 @@ export default class Register extends Component {
               value={this.state.email}
             />
           </View>
-          
+
           <View style={{ width: "100%" }}>
             <Dropdown
               label='Select gender'
@@ -136,25 +136,25 @@ export default class Register extends Component {
               mode="date"
               placeholder="Select date of birth"
               format="DD-MM-YYYY"
-              minDate="1919-01-01"
-              maxDate="2009-12-31"
+              minDate="01-01-1919"
+              maxDate="31-12-2009"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
-              style={{width:"100%"}}
+              style={{ width: "100%" }}
               customStyles={{
-                dateText:{
+                dateText: {
                   color: "rgba(0, 0, 0, .87)",
-                  fontSize:16,
+                  fontSize: 16,
                   alignItems: 'flex-start',
-                  width:"100%"
+                  width: "100%"
                 },
-                dateInput:{
-                  marginTop:20,
-                  borderWidth:0,
-                  fontSize:18,
-                  color:"rgba(0, 0, 0, .87)",
-                  borderBottomWidth:0.5,
+                dateInput: {
+                  marginTop: 20,
+                  borderWidth: 0,
+                  fontSize: 18,
+                  color: "rgba(0, 0, 0, .87)",
+                  borderBottomWidth: 0.5,
                   alignItems: 'flex-start'
                 }
               }}

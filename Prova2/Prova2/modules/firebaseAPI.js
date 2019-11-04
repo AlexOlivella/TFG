@@ -66,3 +66,18 @@ export const updateSingleData=(email)=>{
         email,
     });
 }
+
+export async function updateProfile(uid, newUsername, newGender, newBirthday){
+	var docRef = db.collection("Users").doc(uid);
+	return await docRef.update({
+		username: newUsername,
+		gender: newGender,
+		birthday: newBirthday,
+	}).then(function() {
+		console.log("Document successfully updated!");
+	})
+	.catch(function(error) {
+		// The document probably doesn't exist.
+		console.error("Error updating document: ", error);
+	});
+}

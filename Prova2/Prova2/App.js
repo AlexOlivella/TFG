@@ -13,7 +13,7 @@ import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import Weather from './screens/Weather'
 import MyProfile from './screens/MyProfile'
 import firebase from 'firebase'
-
+import UpdateEmailPass from './screens/UpdateEmailPass'
 
 const AuthStack = createStackNavigator(
   {
@@ -55,9 +55,14 @@ const MainTabs = createMaterialBottomTabNavigator({
   },
 });
 
+const Profile = createStackNavigator({
+  MyProfile:{screen: MyProfile},
+  UpdateEmailPass:{screen: UpdateEmailPass}
+})
+
 const MainDrawer = createDrawerNavigator({
   MainTabs: MainTabs,
-  MyProfile:{screen:MyProfile},
+  Profile: Profile
   //LogOut:{screen:LogOut},
   
 }, 
