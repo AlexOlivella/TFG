@@ -63,7 +63,7 @@ export default class Register extends Component {
         this.state.password,
         this.state.email.trim(),
         this.state.gender,
-        this.state.birthday);
+        new Date(this.state.birthday).getTime());
       if (response.isError) {
         //if(response.error == 200)
         if (response.error.code == "auth/invalid-email") {
@@ -135,7 +135,7 @@ export default class Register extends Component {
               date={this.state.birthday}
               mode="date"
               placeholder="Select date of birth"
-              format="YYYY-MM-DD"
+              format="DD-MM-YYYY"
               minDate="1919-01-01"
               maxDate="2009-12-31"
               confirmBtnText="Confirm"

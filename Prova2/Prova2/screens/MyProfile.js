@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 import firebase from 'firebase'
-import FirebaseAPI from '../modules/firebaseAPI'
+import { readUserData } from '../modules/firebaseAPI'
 import { TextField } from 'react-native-material-textfield';
 import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from 'react-native-datepicker'
@@ -39,26 +39,35 @@ export default class Register extends Component {
 
     };
 
+    getDateString(time) {
+        let date = new Date(time);
+      return  date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    }
+
     async getUser() {
         var user = firebase.auth().currentUser;
+        console.log("getUser", user)
+
         //console.log("current user: ", user)
         if (user != null) {
             //this.setState({name: user.displayName}) ;
 
             //this.setState({photoUrl}) = user.photoURL;
             //this.setState({emailVerified}) = user.emailVerified;
-            this.setState({ uid: user.uid })   // The user's ID, unique to the Firebase project. Do NOT use
             // this value to authenticate with your backend server, if
             // you have one. Use User.getToken() instead.
-            await firebase.database().ref('users/' + user.uid).on('value', snap => {
-                console.log("usuari sencer: ", snap.val());
-                this.setState({ email: user.email })
-                this.setState({ username: snap.val().username });
-                this.setState({ currentPassword: snap.val().password });
-                this.setState({ gender: snap.val().gender });
-                this.setState({ birthday: snap.val().birthday });
+            let data = await readUserData(user.uid)
+            console.log("Data: ", data);
+            this.setState({ uid: user.uid })   // The user's ID, unique to the Firebase project. Do NOT use
 
+            this.setState({
+                username: data.username,
+                gender: data.gender,
+                birthday: this.getDateString(data.birthday)
             })
+
+
+
         }
     }
 
@@ -231,7 +240,7 @@ export default class Register extends Component {
                                 date={this.state.birthday}
                                 mode="date"
                                 placeholder="Select date of birth"
-                                format="YYYY-MM-DD"
+                                format="DD-MM-YYYY"
                                 minDate="1919-01-01"
                                 maxDate="2009-12-31"
                                 confirmBtnText="Confirm"
