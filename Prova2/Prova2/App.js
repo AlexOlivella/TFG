@@ -5,7 +5,6 @@ import HomeScreen from './screens/HomeScreen'
 import FirstView from './screens/FirstView'
 import Register from './screens/Register'
 import Calendar from './screens/CalendarScreen'
-import HamburgerMenu from './components/HamburgerMenu'
 import { createAppContainer, createSwitchNavigator,  } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -14,6 +13,9 @@ import Weather from './screens/Weather'
 import MyProfile from './screens/MyProfile'
 import firebase from 'firebase'
 import UpdateEmailPass from './screens/UpdateEmailPass'
+import IntensitatDolor from './screens/IntensitatDolor'
+import EstatAnim from './screens/EstatAnim'
+import ZonaCap from './screens/ZonaCap'
 
 const AuthStack = createStackNavigator(
   {
@@ -35,16 +37,17 @@ const AuthStack = createStackNavigator(
 );
 
 const MainTabs = createMaterialBottomTabNavigator({
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: {
-      tabBarLabel: 'Home',
-    },
-  },
+  
   Weather: {
     screen: Weather,
     navigationOptions: {
       tabBarLabel: 'Weather',
+    },
+  },
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      tabBarLabel: 'Home',
     },
   },
   Calendar: {
@@ -96,13 +99,19 @@ const MainDrawer = createDrawerNavigator({
   </View>
 ),});
 
-
+const Migranya = createStackNavigator({
+  IntensitatDolor:{screen:IntensitatDolor},
+  EstatAnim: {screen:EstatAnim},
+  ZonaCap: {screen: ZonaCap}
+})
 const App = createSwitchNavigator(
   {
     Auth: {
       screen: AuthStack
     },
-
+    Migranya:{
+      screen: Migranya
+    },
     App: {
       screen: MainDrawer
     },

@@ -39,33 +39,22 @@ export default class Register extends Component {
 
     async getUser() {
         var user = firebase.auth().currentUser;
-        console.log("getUser", user)
-
-        //console.log("current user: ", user)
+        //console.log("getUser", user)
         if (user != null) {
-            //this.setState({name: user.displayName}) ;
-
-            //this.setState({photoUrl}) = user.photoURL;
-            //this.setState({emailVerified}) = user.emailVerified;
-            // this value to authenticate with your backend server, if
-            // you have one. Use User.getToken() instead.
             let data = await FirebaseAPI.readUserData(user.uid)
             console.log("Data: ", data);
-            this.setState({ uid: user.uid })   // The user's ID, unique to the Firebase project. Do NOT use
-
+            this.setState({ uid: user.uid })
             this.setState({
                 email: user.email,
                 username: data.username,
                 gender: data.gender,
                 birthday: this.getDateString(data.birthday)
+                
             })
-
-
-
+            console.log("birthdy: " ,new Date(data.birthday))
         }
     }
 
-    
     CheckTextInput = () => {
         if (this.state.username != '') {
             if (this.state.gender != '') {
@@ -91,8 +80,12 @@ export default class Register extends Component {
         var user = firebase.auth().currentUser;
         console.log(JSON.stringify(this.state.email))
         if (this.CheckTextInput()) {
-            let resposta = await FirebaseAPI.updateProfile(user.uid, this.state.username, this.state.gender, new Date(this.state.birthday).getTime())
-            //alert(resposta)
+            let resposta = await FirebaseAPI.updateProfile(
+                user.uid,
+                this.state.username, 
+                this.state.gender, 
+                new Date(this.state.birthday).getTime())
+            console.log("resposta: ", resposta)
         }
     }
     render() {

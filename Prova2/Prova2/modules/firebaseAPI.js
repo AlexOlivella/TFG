@@ -1,10 +1,8 @@
 import firebase from './../src/config';
 
 const db = firebase.firestore();
-export async function createUser(username, password, email, gender, birthday) {
-	let error;
-	//console.log('CreateUser has been called.')
 
+export async function createUser(username, password, email, gender, birthday) {
 	return await firebase.auth().createUserWithEmailAndPassword(email, password).then((res) => {
 		//console.log("res: ", res)
 		db.collection('Users').doc(res.user.uid).set({
@@ -79,5 +77,21 @@ export async function updateProfile(uid, newUsername, newGender, newBirthday){
 	.catch(function(error) {
 		// The document probably doesn't exist.
 		console.error("Error updating document: ", error);
+	});
+}
+
+export async function createMigranya(uid, dIni, estatA, partC, med){
+	var docRef= db.collection("Users").doc(uid).collection("migranyes");
+	return await docRef.add({
+		estatAnim: estatA,
+		medicament: med,
+		zonaCos: partC,
+		dataIni: dIni,
+		//dataFi: dFi,
+	}).then(function(docRef) {
+		console.log("Migraine added successfull: ", docRef.id);
+	})
+	.catch(function(error) {
+		console.error("Error adding migraine: ", error);
 	});
 }

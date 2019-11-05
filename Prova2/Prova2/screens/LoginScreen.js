@@ -19,15 +19,6 @@ export default class LoginScreen extends Component {
     }
   }
 
-  _isMounted = false;
-
-  componentDidMount() {
-    this._isMounted = true;
-  }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
 
   static navigationOptions = {
     //To hide the ActionBar/NavigationBar
@@ -49,8 +40,6 @@ export default class LoginScreen extends Component {
     }
     return false;
   };
-
-
 
 
   async signIn(email, password) {
