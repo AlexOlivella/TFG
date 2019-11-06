@@ -181,19 +181,19 @@ export default class Register extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
   },
   seccioTitol: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
   },
   textinput: {
     flex: 3,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
     paddingHorizontal: 10,
   },
 
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
     marginTop: 10,
 
   },

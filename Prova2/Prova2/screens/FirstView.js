@@ -70,20 +70,20 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
 
   },
   seccioTitol: {
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
   },
   seccioBoto: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
   },
 
 });

@@ -125,20 +125,20 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
   },
   seccioTitol: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
 
   },
   seccioEscriure: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
     paddingHorizontal: 10
 
   },
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#FBEAFF',
+    backgroundColor: '#7BF0E6',
 
   },
   boto: {

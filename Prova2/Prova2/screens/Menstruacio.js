@@ -3,14 +3,7 @@ import { StyleSheet, View, } from 'react-native';
 
 
 
-export default class NomClasse extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          
-        }
-      }
-
+export default class Menstruacio extends Component {
     static navigationOptions={
         header:null
     }

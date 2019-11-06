@@ -46,7 +46,7 @@ export default class prova extends Component {
 		var user = firebase.auth().currentUser;
 		var { navigation } = this.props;
     	var navigate = navigation.navigate;
-		navigate("IntensitatDolor", {dataIni: this.getCurrentTime()})
+		navigate("Exercici", {dataIni: this.getCurrentTime()})
 		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
 	}
 	render() {

@@ -16,6 +16,11 @@ import UpdateEmailPass from './screens/UpdateEmailPass'
 import IntensitatDolor from './screens/IntensitatDolor'
 import EstatAnim from './screens/EstatAnim'
 import ZonaCap from './screens/ZonaCap'
+import Causes from './screens/Causes'
+import Exercici from './screens/Exercici'
+import Medicament from './screens/Medicaments'
+import Menstruacio from './screens/Menstruacio'
+import Simptomes from './screens/Simptomes'
 
 const AuthStack = createStackNavigator(
   {
@@ -102,7 +107,12 @@ const MainDrawer = createDrawerNavigator({
 const Migranya = createStackNavigator({
   IntensitatDolor:{screen:IntensitatDolor},
   EstatAnim: {screen:EstatAnim},
-  ZonaCap: {screen: ZonaCap}
+  ZonaCap: {screen: ZonaCap},
+  Causes:{screen:Causes},
+  Exercici:{screen:Exercici},
+  Medicament: {screen:Medicament},
+  Menstruacio:{screen:Menstruacio},
+  Simptomes:{screen:Simptomes},
 })
 const App = createSwitchNavigator(
   {

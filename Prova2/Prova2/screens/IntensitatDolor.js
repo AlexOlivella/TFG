@@ -22,17 +22,19 @@ export default class IntensitatDolor extends Component {
         var dataIni = navigation.getParam('dataIni');
         this.props.navigation.navigate(
             "EstatAnim",
-            { dataIni,
-             intensitatDolor: 6/*this.state.intensitatDolor*/ }
+            /*{ dataIni,
+             intensitatDolor: 6/*this.state.intensitatDolor }*/
         )
     }
     render() {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
+        var exercici = navigation.getParam('Exercici')
+
         return (
             <View style={styles.container}>
                 <Text> IntensitatDolor</Text>
-                <Text> Summary: {dataIni}</Text>
+                <Text> Summary: {exercici}</Text>
 
                 <View>
                     <Button
