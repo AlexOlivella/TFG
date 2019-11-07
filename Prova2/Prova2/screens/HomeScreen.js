@@ -4,14 +4,13 @@ import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
+import { Header, Icon } from 'react-native-elements'
 
-
-export default class prova extends Component {
+export default class HomeScreen extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			active: false,
 		};
 
 	}
@@ -27,9 +26,8 @@ export default class prova extends Component {
 		},
 	}
 
-	onPress = () => {
-		this.drawer.openDrawer();
-
+	obrirDrawer = () => {
+		this.props.navigation.openDrawer();
 	}
 	getCurrentTime() {
 		var date = new Date().getDate(); //Current Date
@@ -44,9 +42,8 @@ export default class prova extends Component {
 
 	createMigraine() {
 		var user = firebase.auth().currentUser;
-		var { navigation } = this.props;
-    	var navigate = navigation.navigate;
-		navigate("Exercici", {dataIni: this.getCurrentTime()})
+		
+		this.props.navigation.navigate("IntensitatDolor", { dataIni: this.getCurrentTime() })
 		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
 	}
 	render() {
@@ -56,10 +53,18 @@ export default class prova extends Component {
 		var user = firebase.auth().currentUser;
 
 		return (
+
 			<View style={styles.container}>
+				<View>
+					{/*<Header
+						placement="left"
+						leftComponent={<Icon name='menu' onPress={this.obrirDrawer()} />}
+						centerComponent={{ text: 'Home', style: { color: '#fff' } }}
+					/>*/}
+				</View>
 				<Text style={{ fontSize: 30 }}> Welcome to the app </Text>
 				<Text style={{ fontSize: 30 }}> {user.email} </Text>
-				<Button onPress={() => { this.createMigraine() }} title="Add migraine"> </Button>
+				<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
 			</View>
 		);
 	}
@@ -73,22 +78,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#7BF0E6',
 	},
-	seccioBotons: {
-		flex: 1,
-		justifyContent: 'flex-start',
-		alignItems: 'center',
-		backgroundColor: '#7BF0E6',
-
-	},
 	toolbar: {
 		height: 56,
 		backgroundColor: '#FBEAFF'
-	},
-	seccioBotons: {
-		flex: 1,
-		justifyContent: 'flex-start',
-		alignItems: 'center',
-		backgroundColor: '#FBEAFF',
-
 	},
 });

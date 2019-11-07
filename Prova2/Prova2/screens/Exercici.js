@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { Button } from 'react-native-elements'
+import { Button, Header } from 'react-native-elements'
 
 
 export default class Exercici extends Component {
@@ -8,37 +8,64 @@ export default class Exercici extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          opcioTriada:"",
         }
-      }
+    }
     static navigationOptions = {
         header: null
     }
 
-    next (exercici){
+    next(exercici) {
         var { navigation } = this.props;
-        this.setState({opcioTriada:exercici})
+        var dataIni = navigation.getParam('dataIni');
+        var intensitatDolor = navigation.getParam('intensitatDolor')
+        var zonaCap = navigation.getParam('zonaCap')   
+        var simptomes = navigation.getParam('simptomes')
+        var causes = navigation.getParam('causes')
+
         this.props.navigation.navigate(
-            "IntensitatDolor",
-            { Exercici: exercici}
+            "Menstruacio",
+            {  dataIni,
+                intensitatDolor,
+                zonaCap,
+                simptomes,
+                causes,
+                exercicis: exercici
+             }
         )
+        console.log("exercici")
+
+        //}
+       /* else{
+                var { navigation } = this.props;
+                var dataIni = navigation.getParam('dataIni');
+                this.props.navigation.navigate(
+                    "Medicaments",
+                    {
+                        dataIni,
+                        intensitatDolor: dolor,
+        
+                    }
+                )
+
+        }*/
     }
     render() {
 
         return (
             <View style={styles.container}>
+                
                 <View style={styles.titol}>
-                    <Text style={{ fontSize: 20, alignItems:"center"}}> Did you do some exercise?</Text>
+                    <Text style={{ fontSize: 20, alignItems: "center" }}> Did you do some exercise?</Text>
 
                 </View>
                 <View style={styles.seccioOpcions}>
                     <View style={styles.lateral}>
-                        <TouchableOpacity onPress={()=>{this.next("Low")}}>
-                        <View>
-                            <Text
+                        <TouchableOpacity onPress={() => { this.next("Low") }}>
+                            <View>
+                                <Text
                                 > Low
                             </Text>
-                        </View>
+                            </View>
                         </TouchableOpacity>
                         <View>
                             <Button
@@ -47,7 +74,7 @@ export default class Exercici extends Component {
 
                                 color="#38B3EF"
                                 rounded={true}
-                                onPress={()=> { this.next("Moderate")}}
+                                onPress={() => { this.next("Moderate") }}
 
                             ></Button>
                         </View>
@@ -59,9 +86,9 @@ export default class Exercici extends Component {
                                 color="#38B3EF"
                                 type="outline"
                                 title="Hard"
-                                onPress={()=> {this.next("Hard")}}
+                                onPress={() => { this.next("Hard") }}
 
-                                >
+                            >
                             </Button>
                         </View>
 
@@ -70,7 +97,7 @@ export default class Exercici extends Component {
                                 title="Intensive"
                                 type="outline"
                                 color="#38B3EF"
-                                onPress={()=> {this.next("Intensive")}}
+                                onPress={() => { this.next("Intensive") }}
                             ></Button>
                         </View>
                     </View>

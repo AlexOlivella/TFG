@@ -14,7 +14,7 @@ import MyProfile from './screens/MyProfile'
 import firebase from 'firebase'
 import UpdateEmailPass from './screens/UpdateEmailPass'
 import IntensitatDolor from './screens/IntensitatDolor'
-import EstatAnim from './screens/EstatAnim'
+import Impediments from './screens/Impediments'
 import ZonaCap from './screens/ZonaCap'
 import Causes from './screens/Causes'
 import Exercici from './screens/Exercici'
@@ -106,7 +106,7 @@ const MainDrawer = createDrawerNavigator({
 
 const Migranya = createStackNavigator({
   IntensitatDolor:{screen:IntensitatDolor},
-  EstatAnim: {screen:EstatAnim},
+  Impediments: {screen:Impediments},
   ZonaCap: {screen: ZonaCap},
   Causes:{screen:Causes},
   Exercici:{screen:Exercici},

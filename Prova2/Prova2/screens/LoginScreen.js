@@ -82,7 +82,7 @@ export default class LoginScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.seccioTitol}>
-          <Text style={{ fontSize: 40 }}>Logo</Text>
+          <Text style={{ fontSize: 30 }}>Logo</Text>
         </View>
         <View style={styles.seccioEscriure}>
           <View style={{ width: "100%" }}>

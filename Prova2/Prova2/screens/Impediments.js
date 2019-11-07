@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, Alert} from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from 'react-native';
 
 
 
-export default class EstatAnim extends Component {
+export default class Impediments extends Component {
     static navigationOptions={
         header:null
     }
@@ -13,10 +13,10 @@ export default class EstatAnim extends Component {
         var dataIni = navigation.getParam('dataIni');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         this.props.navigation.navigate(
-            "ZonaCap",
-            { dataIni,
+            
+            {/* dataIni,
              intensitatDolor,
-             estatAnim: "deprimit" }
+            estatAnim: "deprimit" */}
         )
     }
     render() {
@@ -24,8 +24,10 @@ export default class EstatAnim extends Component {
         var intensitatDolor = this.props.navigation.getParam('intensitatDolor')
         return (
             <View style={styles.container}>
-                <Text>Estat Anim</Text>
-                <Text>Summary: {dataIni} , {intensitatDolor}</Text>
+                <View>
+                   <Text>Estat Anim</Text> 
+                </View>
+                
                 <Button
                         onPress={() => {
                             this.next()
