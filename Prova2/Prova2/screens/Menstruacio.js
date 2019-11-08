@@ -12,9 +12,10 @@ export default class Menstruacio extends Component {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
         var intensitatDolor = navigation.getParam('intensitatDolor')
-        var zonaCap = navigation.getParam('zonaCap')   
+        var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
         var causes = navigation.getParam('causes')
+        var impediments = navigation.getParam('impediments')
         var exercicis = navigation.getParam('exercicis')
         this.props.navigation.navigate(
             "Medicaments",
@@ -24,7 +25,8 @@ export default class Menstruacio extends Component {
                 zonaCap,
                 simptomes,
                 causes,
-                exercicis, 
+                impediments,
+                exercicis,
                 menstruacio: tipus,
 
             }
@@ -35,10 +37,26 @@ export default class Menstruacio extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={{flex:1}}>
+                <View style={{ flex: 1 }}>
                     <Text> Menstruacio</Text>
                 </View>
-
+                <View>
+                <TouchableOpacity onPress={()=> this.next("No")}>
+                        <Text> No</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Low")}>
+                        <Text> Low</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Moderate")}>
+                        <Text> Moderate</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Hard")}>
+                        <Text> Hard</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Soon")}>
+                        <Text> Soon</Text>
+                    </TouchableOpacity>
+                </View>
                 <View style={{ flex: 1 }}>
                     <Button
                         onPress={() => {

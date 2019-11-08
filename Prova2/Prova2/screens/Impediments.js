@@ -4,19 +4,28 @@ import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from '
 
 
 export default class Impediments extends Component {
-    static navigationOptions={
-        header:null
+    static navigationOptions = {
+        header: null
     }
 
-    next() {
+    next(impediment) {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
         var intensitatDolor = navigation.getParam('intensitatDolor')
+        var zonaCap = navigation.getParam('zonaCap')
+        var simptomes = navigation.getParam('simptomes')
+        var causes = navigation.getParam('causes')
         this.props.navigation.navigate(
-            
-            {/* dataIni,
-             intensitatDolor,
-            estatAnim: "deprimit" */}
+            "Exercici",
+            {
+                dataIni,
+                intensitatDolor,
+                zonaCap,
+                simptomes,
+                causes,
+                impediments: impediment
+
+            }
         )
     }
     render() {
@@ -25,10 +34,36 @@ export default class Impediments extends Component {
         return (
             <View style={styles.container}>
                 <View>
-                   <Text>Estat Anim</Text> 
+                    <Text>Impediments</Text>
                 </View>
-                
-                <Button
+                <View>
+                    <TouchableOpacity onPress={()=>this.next("Move")}>
+                        <Text> Move</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.next("Breathe")}>
+                        <Text> Breathe</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.next("Walk")}>
+                        <Text> Walk</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.next("Make exercise")}>
+                        <Text> Make exercise</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.next("Go to school")}>
+                        <Text> Go to school</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.next("Go to work")}>
+                        <Text> Go to work</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.next("Forced to go home")}>
+                        <Text> Forced to go home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.next("Others")}>
+                        <Text>Others</Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <Button
                         onPress={() => {
                             this.next()
                         }}
@@ -36,7 +71,7 @@ export default class Impediments extends Component {
                     >
 
                     </Button>
-                <Button
+                    <Button
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
@@ -55,16 +90,17 @@ export default class Impediments extends Component {
                         title="Cancel"
                     >
                     </Button>
+                </View>
             </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#7BF0E6', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#7BF0E6',
     }
 });

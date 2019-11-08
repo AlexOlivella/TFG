@@ -20,7 +20,7 @@ export default class IntensitatDolor extends Component {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
         this.props.navigation.navigate(
-            // "ZonaCap",
+             "ZonaCap",
             {
                 dataIni,
                 intensitatDolor: dolor,
@@ -44,39 +44,39 @@ export default class IntensitatDolor extends Component {
                         <Text style={{ fontSize: 30 }}> 0 No pain</Text>
                     </TouchableOpacity>
                     {/*<Image source={require('./NoPain.png')} resizeMode='contain'></Image>*/}
-                    <TouchableOpacity style={{ backgroundColor: '#96b897', width: "100%" }} onPress={this.next(1)}>
+                    <TouchableOpacity style={{ backgroundColor: '#96b897', width: "100%" }} /*onPress={this.next(1)}*/>
                         <Text style={{ fontSize: 30 }}> 1 Mild pain</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ backgroundColor: '#b3bd74', width: "100%" }} onPress={this.next(2)}>
+                    <TouchableOpacity style={{ backgroundColor: '#b3bd74', width: "100%" }}/* onPress={this.next(2)}*/>
                         <Text style={{ fontSize: 30 }}> 2 Mild pain </Text>
                     </TouchableOpacity>
 
                     {/*<Image source={require('./MildPain.png')} resizeMode='contain'></Image>*/}
 
-                    <TouchableOpacity style={{ backgroundColor: '#d0c255', width: "100%" }} onPress={this.next(3)}>
+                    <TouchableOpacity style={{ backgroundColor: '#d0c255', width: "100%" }} /*onPress={this.next(3)}*/>
 
                         <Text style={{ fontSize: 30 }}> 3 Moderate pain</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ backgroundColor: '#f2c93d', width: "100%" }} onPress={this.next(4)}>
+                    <TouchableOpacity style={{ backgroundColor: '#f2c93d', width: "100%" }}/* onPress={this.next(4)}*/>
                         <Text style={{ fontSize: 30 }}> 4 Moderate pain</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ backgroundColor: '#e7a93c', width: "100%" }} onPress={this.next(5)}>
+                    <TouchableOpacity style={{ backgroundColor: '#e7a93c', width: "100%" }} /*onPress={this.next(5)}*/>
                         <Text style={{ fontSize: 30 }}> 5 Severe pain</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ backgroundColor: '#de8d3e', width: "100%" }} onPress={this.next(6)}>
+                    <TouchableOpacity style={{ backgroundColor: '#de8d3e', width: "100%" }}/* onPress={this.next(6)}*/>
                         <Text style={{ fontSize: 30 }}> 6 Severe pain</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ backgroundColor: '#d6713b', width: "100%" }} onPress={this.next(7)}>
+                    <TouchableOpacity style={{ backgroundColor: '#d6713b', width: "100%" }}/* onPress={this.next(7)}*/>
                         <Text style={{ fontSize: 30 }}> 7 Very severe pain</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ backgroundColor: '#d3573d', width: "100%" }} onPress={this.next(8)}>
+                    <TouchableOpacity style={{ backgroundColor: '#d3573d', width: "100%" }}/* onPress={this.next(8)}*/>
                         <Text style={{ fontSize: 30 }}> 8 Very severe pain</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ backgroundColor: '#cf4140', width: "100%" }} onPress={this.next(9)}>
+                    <TouchableOpacity style={{ backgroundColor: '#cf4140', width: "100%" }}/* onPress={this.next(9)}*/>
                         <Text style={{ fontSize: 30 }}> 9 Worst pain imaginable</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ backgroundColor: '#cf4140', width: "100%" }} onPress={this.next(10)}>
+                    <TouchableOpacity style={{ backgroundColor: '#cf4140', width: "100%" }} /*onPress={this.next(10)}*/>
                         <Text style={{ fontSize: 30 }}> 10 Worst pain imaginable</Text>
                     </TouchableOpacity>
                 </View>

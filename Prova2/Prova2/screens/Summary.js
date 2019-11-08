@@ -19,11 +19,12 @@ export default class Summary extends Component {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
         var intensitatDolor = navigation.getParam('intensitatDolor')
-        var zonaCap = navigation.getParam('zonaCap')   
+        var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
         var causes = navigation.getParam('causes')
         var menstruacio = navigation.getParam('menstruacio')
         var exercicis = navigation.getParam('exercicis')
+        var impediments = navigation.getParam('impediments')
         var medicaments = navigation.getParam('medicaments')
         return (
             <View style={styles.container}>
@@ -34,6 +35,7 @@ export default class Summary extends Component {
                     <Text> {zonaCap}</Text>
                     <Text> {simptomes}</Text>
                     <Text> {causes}</Text>
+                    <Text> {impediments}</Text>
                     <Text> {exercicis}</Text>
                     <Text> {menstruacio}</Text>
                     <Text> {medicaments}</Text>

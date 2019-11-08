@@ -19,7 +19,7 @@ export default class Simptomes extends Component {
                 dataIni,
                 intensitatDolor,
                 zonaCap,
-                simptomes:simptoma
+                simptomes: simptoma
             }
         )
         console.log("simptomes")
@@ -30,6 +30,62 @@ export default class Simptomes extends Component {
             <View style={styles.container}>
                 <View>
                     <Text> Simptomes</Text>
+                </View>
+                <View>
+                    <TouchableOpacity onPress={()=> this.next("Blind spots")}>
+                        <Text> Blind spots</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Zig zag lanes")}>
+                        <Text> Zig zag lanes</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Shiny points")}>
+                        <Text> Shiny points</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Vision problems")}>
+                        <Text> Vision problems</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Vision loss")}>
+                        <Text> Vision loss</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Flashlights")}>
+                        <Text> Flashlights</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Sound intolerance")}>
+                        <Text> Sound intolerance</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Hear noises")}>
+                        <Text> Hear noises</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Odor intolerance")}>
+                        <Text> Odor intolerance</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Nausea or vomiting")}>
+                        <Text> Nausea or vomiting</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Tingling in body parts")}>
+                        <Text> Tingling in body parts</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Talk difficulty")}>
+                        <Text> Talk difficulty</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Language comprehension difficulty")}>
+                        <Text> Language comprehension difficulty</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Tearing")}>
+                        <Text> Tearing</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Nasal congestion")}>
+                        <Text> Nasal congestion</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Numbness")}>
+                        <Text> Numbness</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Uncontrollable movements")}>
+                        <Text> Uncontrollable movements</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Others")}>
+                        <Text> Others</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
                     <Button

@@ -55,12 +55,13 @@ export default class HomeScreen extends Component {
 		return (
 
 			<View style={styles.container}>
-				<View>
-					{/*<Header
+				<View style={{alignItems:'flex-start'}}>
+					<Header
+						style={{width:'100%'}}
 						placement="left"
 						leftComponent={<Icon name='menu' onPress={this.obrirDrawer()} />}
 						centerComponent={{ text: 'Home', style: { color: '#fff' } }}
-					/>*/}
+					/>
 				</View>
 				<Text style={{ fontSize: 30 }}> Welcome to the app </Text>
 				<Text style={{ fontSize: 30 }}> {user.email} </Text>

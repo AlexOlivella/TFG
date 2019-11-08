@@ -18,42 +18,44 @@ export default class Exercici extends Component {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
         var intensitatDolor = navigation.getParam('intensitatDolor')
-        var zonaCap = navigation.getParam('zonaCap')   
+        var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
         var causes = navigation.getParam('causes')
-
+        var impediments = navigation.getParam('impediments')
         this.props.navigation.navigate(
             "Menstruacio",
-            {  dataIni,
+            {
+                dataIni,
                 intensitatDolor,
                 zonaCap,
                 simptomes,
                 causes,
+                impediments,
                 exercicis: exercici
-             }
+            }
         )
         console.log("exercici")
 
         //}
-       /* else{
-                var { navigation } = this.props;
-                var dataIni = navigation.getParam('dataIni');
-                this.props.navigation.navigate(
-                    "Medicaments",
-                    {
-                        dataIni,
-                        intensitatDolor: dolor,
-        
-                    }
-                )
-
-        }*/
+        /* else{
+                 var { navigation } = this.props;
+                 var dataIni = navigation.getParam('dataIni');
+                 this.props.navigation.navigate(
+                     "Medicaments",
+                     {
+                         dataIni,
+                         intensitatDolor: dolor,
+         
+                     }
+                 )
+ 
+         }*/
     }
     render() {
 
         return (
             <View style={styles.container}>
-                
+
                 <View style={styles.titol}>
                     <Text style={{ fontSize: 20, alignItems: "center" }}> Did you do some exercise?</Text>
 

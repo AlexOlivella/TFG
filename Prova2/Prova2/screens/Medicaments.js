@@ -11,12 +11,12 @@ export default class Medicaments extends Component {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
         var intensitatDolor = navigation.getParam('intensitatDolor')
-        var zonaCap = navigation.getParam('zonaCap')   
+        var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
         var causes = navigation.getParam('causes')
         var menstruacio = navigation.getParam('menstruacio')
         var exercicis = navigation.getParam('exercicis')
-
+        var impediments = navigation.getParam('impediments')
         this.props.navigation.navigate(
             "Summary",
             {
@@ -25,7 +25,8 @@ export default class Medicaments extends Component {
                 zonaCap,
                 simptomes,
                 causes,
-                exercicis, 
+                impediments,
+                exercicis,
                 menstruacio,
                 medicaments: medicament
 
@@ -40,6 +41,59 @@ export default class Medicaments extends Component {
                 <View>
                     <Text> Medicaments</Text>
                 </View>
+                <View>
+                <TouchableOpacity onPress={()=> this.next("Aspirin 1000mg")}>
+                        <Text> Aspirin 1000mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Paracetamol 1000mg")}>
+                        <Text> Paracetamol 1000mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Metamizol 500mg")}>
+                        <Text> Metamizol 500mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Sodic naproxen 500mg")}>
+                        <Text> Sodic naproxen 500mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Ibuprofen 200mg")}>
+                        <Text> Ibuprofen 200mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Dexketoprofen trometamol 25mg")}>
+                        <Text> Dexketoprofen trometamol 25mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Almotriptan 12.5mg")}>
+                        <Text> Almotriptan 12.5mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Zolmitriptan 5mg")}>
+                        <Text> Zolmitriptan 5mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Eletriptan 40mg")}>
+                        <Text> Eletriptan 40mg</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={()=> this.next("Rizatriptan 5mg")}>
+                        <Text> Rizatriptan 5mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Sumatriptan 25mg")}>
+                        <Text> Sumatriptan 25mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Chlorpromazine 10mg")}>
+                        <Text> Chlorpromazine 10mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Metoclopramide 20mg")}>
+                        <Text> Metoclopramide 20mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Propranolol 60mg")}>
+                        <Text> Propranolol 60mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Timolol 60mg")}>
+                        <Text> Timolol 60mg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=> this.next("Others")}>
+                        <Text> Others</Text>
+                    </TouchableOpacity>
+                    
+                </View>
+
                 <View style={{ flex: 1 }}>
                     <Button
                         onPress={() => {
