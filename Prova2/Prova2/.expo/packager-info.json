@@ -1,9 +1,9 @@
 {
-  "expoServerNgrokUrl": "https://5t-pri.anonymous.prova2.exp.direct",
-  "packagerNgrokUrl": "https://packager.5t-pri.anonymous.prova2.exp.direct",
-  "ngrokPid": 11196,
+  "expoServerNgrokUrl": "https://ke-t8s.anonymous.prova2.exp.direct",
+  "packagerNgrokUrl": "https://packager.ke-t8s.anonymous.prova2.exp.direct",
+  "ngrokPid": 1920,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 11384,
+  "packagerPid": 10048,
   "devToolsPort": 19002
 }

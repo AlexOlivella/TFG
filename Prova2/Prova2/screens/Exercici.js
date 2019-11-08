@@ -61,79 +61,70 @@ export default class Exercici extends Component {
 
                 </View>
                 <View style={styles.seccioOpcions}>
-                    <View style={styles.lateral}>
-                        <TouchableOpacity onPress={() => { this.next("Low") }}>
-                            <View>
-                                <Text
-                                > Low
-                            </Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View>
-                            <Button
-                                title="Moderate"
-                                type="outline"
-
-                                color="#38B3EF"
-                                rounded={true}
-                                onPress={() => { this.next("Moderate") }}
-
-                            ></Button>
-                        </View>
+                    <TouchableOpacity onPress={() => { this.next("Low") }}>
+                        <Text>Low</Text>
+                    </TouchableOpacity >
+                    <TouchableOpacity onPress={() => { this.next("Moderate") }}>
+                        <Text>Moderate</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { this.next("Intense") }}>
+                        <Text>Intense</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { this.next("Very intense") }}>
+                        <Text>Very intense</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.next("No")}>
+                        <Text>No</Text>
+                    </TouchableOpacity>
                     </View>
-                    <View style={styles.lateral}>
-                        <View>
-                            <Button
-                                rounded={true}
-                                color="#38B3EF"
-                                type="outline"
-                                title="Hard"
-                                onPress={() => { this.next("Hard") }}
-
-                            >
-                            </Button>
-                        </View>
-
-                        <View>
-                            <Button
-                                title="Intensive"
-                                type="outline"
-                                color="#38B3EF"
-                                onPress={() => { this.next("Intensive") }}
-                            ></Button>
-                        </View>
+                    <View style={{ flex: 1 }}>
+                        <Button
+                            onPress={() => {
+                                Alert.alert(
+                                    'Cancel',
+                                    'Do you want to cancel this process?',
+                                    [
+                                        { text: 'Cancel', onPress: () => { return null } },
+                                        {
+                                            text: 'Confirm', onPress: () => {
+                                                this.props.navigation.navigate("Home")
+                                            }
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                )
+                            }}
+                            title="Cancel"
+                        >
+                        </Button>
                     </View>
                 </View>
-                <View style={styles.seccioBuida}>
-
-                </View>
-            </View>
-        );
-    }
-}
-
+                );
+            }
+        }
+        
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#7BF0E6',
-    },
+                    container: {
+                    flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#7BF0E6',
+            },
     lateral: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        backgroundColor: "red"
-    },
+                    flexDirection: "row",
+                justifyContent: "space-between",
+                backgroundColor: "red"
+            },
     seccioOpcions: {
-        flex: 1,
-        //justifyContent: "center",
-        justifyContent: "space-between",
-    },
+                    flex: 1,
+                //justifyContent: "center",
+                justifyContent: "space-between",
+            },
     titol: {
-        flex: 1,
-        alignItems: "flex-start"
-    },
+                    flex: 1,
+                alignItems: "flex-start"
+            },
     seccioBuida: {
-        flex: 1,
-    }
-});
+                    flex: 1,
+            }
+        });

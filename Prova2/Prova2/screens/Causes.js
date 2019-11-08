@@ -37,68 +37,62 @@ export default class Causes extends Component {
                 </View>
                 <View>
                     <TouchableOpacity onPress={()=>this.next("Stress")}>
-                        <Text> Stress</Text>
+                        <Text>Stress</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Anxiety")}>
-                        <Text> Anxiety</Text>
+                        <Text>Anxiety</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Depression")}>
-                        <Text> Depression</Text>
+                        <Text>Depression</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Sleep a lot")}>
-                        <Text> Sleep a lot</Text>
+                        <Text>Sleep a lot</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Not sleep enough")}>
-                        <Text> Not sleep enough</Text>
+                        <Text>Not sleep enough</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Dehydration")}>
-                        <Text> Dehydration</Text>
+                        <Text>Dehydration</Text>
                     </TouchableOpacity>
                     {/*<TouchableOpacity>
                         <Text> Hormonal</Text>
                     </TouchableOpacity>*/}
                     <TouchableOpacity onPress={()=>this.next("Diet")}>
-                        <Text> Diet</Text>
+                        <Text>Diet</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Physical activity changes")}>
-                        <Text> Physical activity changes</Text>
+                        <Text>Physical activity changes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Sunlight")}>
-                        <Text> Sunlight</Text>
+                        <Text>Sunlight</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next(" Seeing intermitent lights")}>
-                        <Text> Seeing intermitent lights</Text>
+                        <Text>Seeing intermitent lights</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Smell permufe")}>
-                        <Text> Smell permufe</Text>
+                        <Text>Smell permufe</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Smell incense")}>
-                        <Text> Smell incense</Text>
+                        <Text>Smell incense</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Smell tobacco")}>
-                        <Text> Smell tobacco</Text>
+                        <Text>Smell tobacco</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Loud noises")}>
-                        <Text> Loud noises</Text>
+                        <Text>Loud noises</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Others")}>
-                        <Text> Others</Text>
+                        <Text>Others</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Button
-                        onPress={() => {
-                            this.next("")
-                        }}
-                        title="Next"
-                    >
+                    
 
-                    </Button>
                     <Button
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
-                                'Do you want to canel this process?',
+                                'Do you want to cancel this process?',
                                 [
                                     { text: 'Cancel', onPress: () => { return null } },
                                     {

@@ -38,44 +38,37 @@ export default class Impediments extends Component {
                 </View>
                 <View>
                     <TouchableOpacity onPress={()=>this.next("Move")}>
-                        <Text> Move</Text>
+                        <Text>Move</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Breathe")}>
-                        <Text> Breathe</Text>
+                        <Text>Breathe</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Walk")}>
-                        <Text> Walk</Text>
+                        <Text>Walk</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Make exercise")}>
-                        <Text> Make exercise</Text>
+                        <Text>Make exercise</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Go to school")}>
-                        <Text> Go to school</Text>
+                        <Text>Go to school</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Go to work")}>
-                        <Text> Go to work</Text>
+                        <Text>Go to work</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Forced to go home")}>
-                        <Text> Forced to go home</Text>
+                        <Text>Forced to go home</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.next("Others")}>
                         <Text>Others</Text>
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <Button
-                        onPress={() => {
-                            this.next()
-                        }}
-                        title="Next"
-                    >
-
-                    </Button>
+                    
                     <Button
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
-                                'Do you want to canel this process?',
+                                'Do you want to cancel this process?',
                                 [
                                     { text: 'Cancel', onPress: () => { return null } },
                                     {

@@ -41,47 +41,50 @@ export default class ZonaCap extends Component {
                 </View>
                 <View style={{ flex: 2 }}>
                     <View style={styles.lateral}>
-                        <TouchableOpacity style={{}} onPress={this.next("front left head")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("front left head")}>
                             <Image source={require('./davantDaltEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("front right head")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("front right head")}>
                             <Image source={require('./davantDaltDreta.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("back left head")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("back left head")}>
                             <Image source={require('./darrereCapEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("back right head")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("back right head")}>
                             <Image source={require('./darrereCapDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.lateral}>
-                        <TouchableOpacity style={{}} onPress={this.next("front left face")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("front left face")}>
                             <Image source={require('./caraEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("front right face")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("front right face")}>
                             <Image source={require('./davantCaraDreta.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("back left face")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("back left face")}>
                             <Image source={require('./darrereCaraEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("back right face")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("back right face")}>
                             <Image source={require('./darrereCaraDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.lateral}>
-                        <TouchableOpacity style={{}} onPress={this.next("front left neck")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("front left neck")}>
                             <Image source={require('./collDavantEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("front right neck")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("front right neck")}>
                             <Image source={require('./davantCollDreta.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("back left neck")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("back left neck")}>
                             <Image source={require('./darrereCollEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={this.next("back right neck")}>
+                        <TouchableOpacity style={{}} onPress={()=>this.next("back right neck")}>
                             <Image source={require('./darrereCollDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
+                    <TouchableOpacity style={{width:"100%",}} onPress={()=>this.next("None of this")}>
+                        <Text>None of this</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
                     {/*<Button
@@ -96,7 +99,7 @@ export default class ZonaCap extends Component {
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
-                                'Do you want to canel this process?',
+                                'Do you want to cancel this process?',
                                 [
                                     { text: 'Cancel', onPress: () => { return null } },
                                     {

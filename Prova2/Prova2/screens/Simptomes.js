@@ -33,74 +33,67 @@ export default class Simptomes extends Component {
                 </View>
                 <View>
                     <TouchableOpacity onPress={()=> this.next("Blind spots")}>
-                        <Text> Blind spots</Text>
+                        <Text>Blind spots</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Zig zag lanes")}>
-                        <Text> Zig zag lanes</Text>
+                        <Text>Zig zag lanes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Shiny points")}>
-                        <Text> Shiny points</Text>
+                        <Text>Shiny points</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Vision problems")}>
-                        <Text> Vision problems</Text>
+                        <Text>Vision problems</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Vision loss")}>
-                        <Text> Vision loss</Text>
+                        <Text>Vision loss</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Flashlights")}>
-                        <Text> Flashlights</Text>
+                        <Text>Flashlights</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Sound intolerance")}>
-                        <Text> Sound intolerance</Text>
+                        <Text>Sound intolerance</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Hear noises")}>
-                        <Text> Hear noises</Text>
+                        <Text>Hear noises</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Odor intolerance")}>
-                        <Text> Odor intolerance</Text>
+                        <Text>Odor intolerance</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Nausea or vomiting")}>
-                        <Text> Nausea or vomiting</Text>
+                        <Text>Nausea or vomiting</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Tingling in body parts")}>
-                        <Text> Tingling in body parts</Text>
+                        <Text>Tingling in body parts</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Talk difficulty")}>
-                        <Text> Talk difficulty</Text>
+                        <Text>Talk difficulty</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Language comprehension difficulty")}>
-                        <Text> Language comprehension difficulty</Text>
+                        <Text>Language comprehension difficulty</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Tearing")}>
-                        <Text> Tearing</Text>
+                        <Text>Tearing</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Nasal congestion")}>
-                        <Text> Nasal congestion</Text>
+                        <Text>Nasal congestion</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Numbness")}>
-                        <Text> Numbness</Text>
+                        <Text>Numbness</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Uncontrollable movements")}>
-                        <Text> Uncontrollable movements</Text>
+                        <Text>Uncontrollable movements</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Others")}>
-                        <Text> Others</Text>
+                        <Text>Others</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
-                    <Button
-                        onPress={() => {
-                            this.next("")
-                        }}
-                        title="Next"
-                    >
-
-                    </Button>
+                    
                     <Button
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
-                                'Do you want to canel this process?',
+                                'Do you want to cancel this process?',
                                 [
                                     { text: 'Cancel', onPress: () => { return null } },
                                     {

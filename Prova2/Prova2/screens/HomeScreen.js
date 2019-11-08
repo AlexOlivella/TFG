@@ -55,11 +55,13 @@ export default class HomeScreen extends Component {
 		return (
 
 			<View style={styles.container}>
+							<StatusBar barStyle={"default"}/>
+
 				<View style={{alignItems:'flex-start'}}>
 					<Header
 						style={{width:'100%'}}
 						placement="left"
-						leftComponent={<Icon name='menu' onPress={this.obrirDrawer()} />}
+						leftComponent={<Icon name='menu' onPress={ ()=> this.obrirDrawer()} />}
 						centerComponent={{ text: 'Home', style: { color: '#fff' } }}
 					/>
 				</View>
@@ -75,8 +77,7 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
+		
 		backgroundColor: '#7BF0E6',
 	},
 	toolbar: {

@@ -1,18 +1,42 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from 'react-native';
-
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid } from 'react-native';
+import * as FirebaseAPI from '../modules/firebaseAPI'
+import firebase from 'firebase'
 
 
 export default class Summary extends Component {
     static navigationOptions = {
         header: null
     }
-    next() {
+    async next() {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
+        var intensitatDolor = navigation.getParam('intensitatDolor')
+        var zonaCap = navigation.getParam('zonaCap')
+        var simptomes = navigation.getParam('simptomes')
+        var causes = navigation.getParam('causes')
+        var menstruacio = navigation.getParam('menstruacio')
+        var exercicis = navigation.getParam('exercicis')
+        var impediments = navigation.getParam('impediments')
+        var medicaments = navigation.getParam('medicaments')
+        var user = firebase.auth().currentUser; 
+        await FirebaseAPI.createMigranya(
+            user.uid,
+            dataIni,
+            intensitatDolor,
+            zonaCap,
+            simptomes,
+            causes,
+            menstruacio,
+            exercicis,
+            impediments,
+            medicaments,
+            )
         this.props.navigation.navigate(
-            "HomeScreen"
+            "Home"
         )
+        ToastAndroid.show("Migraine added succesfully", ToastAndroid.SHORT)
+
         console.log("summary")
     }
     render() {
@@ -43,9 +67,21 @@ export default class Summary extends Component {
                 <View style={{ flex: 1 }}>
                     <Button
                         onPress={() => {
-                            this.next()
+                            Alert.alert(
+                                'Confirm',
+                                'Do you want to confirm this data?',
+                                [
+                                    { text: 'Cancel', onPress: () => { return null } },
+                                    {
+                                        text: 'Confirm', onPress: () => {
+                                            this.next()
+                                        }
+                                    },
+                                ],
+                                { cancelable: false }
+                            )
                         }}
-                        title="Next"
+                        title="Confirm"
                     >
 
                     </Button>
@@ -53,7 +89,7 @@ export default class Summary extends Component {
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
-                                'Do you want to canel this process?',
+                                'Do you want to cancel this process?',
                                 [
                                     { text: 'Cancel', onPress: () => { return null } },
                                     {

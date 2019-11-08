@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button,SafeAreaView, TouchableOpacity, Alert  } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button,SafeAreaView, TouchableOpacity, Alert, StatusBar  } from 'react-native';
 import LoginScreen from './screens/LoginScreen'
 import HomeScreen from './screens/HomeScreen'
 import FirstView from './screens/FirstView'
@@ -18,9 +18,10 @@ import Impediments from './screens/Impediments'
 import ZonaCap from './screens/ZonaCap'
 import Causes from './screens/Causes'
 import Exercici from './screens/Exercici'
-import Medicament from './screens/Medicaments'
+import Medicaments from './screens/Medicaments'
 import Menstruacio from './screens/Menstruacio'
 import Simptomes from './screens/Simptomes'
+import Summary from './screens/Summary'
 
 const AuthStack = createStackNavigator(
   {
@@ -74,9 +75,9 @@ const MainDrawer = createDrawerNavigator({
   //LogOut:{screen:LogOut},
   
 }, 
-{contentComponent:(props) => (
-  <View style={{flex:1}}>
-      <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+{hideStatusBar:true,
+  contentComponent:(props) => (
+      <View style={{height:"90%"}}>
         <DrawerItems {...props} />
         <TouchableOpacity onPress={()=>
           Alert.alert(
@@ -100,8 +101,7 @@ const MainDrawer = createDrawerNavigator({
         }>
           <Text style={{marginLeft:16 , fontWeight: 'bold', fontSize: 15, marginVertical: 5}}>Logout</Text>
         </TouchableOpacity>
-      </SafeAreaView>
-  </View>
+      </View>
 ),});
 
 const Migranya = createStackNavigator({
@@ -110,9 +110,10 @@ const Migranya = createStackNavigator({
   ZonaCap: {screen: ZonaCap},
   Causes:{screen:Causes},
   Exercici:{screen:Exercici},
-  Medicament: {screen:Medicament},
+  Medicaments: {screen:Medicaments},
   Menstruacio:{screen:Menstruacio},
   Simptomes:{screen:Simptomes},
+  Summary:{screen:Summary},
 })
 const App = createSwitchNavigator(
   {

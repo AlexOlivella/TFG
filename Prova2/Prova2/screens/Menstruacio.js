@@ -42,35 +42,27 @@ export default class Menstruacio extends Component {
                 </View>
                 <View>
                 <TouchableOpacity onPress={()=> this.next("No")}>
-                        <Text> No</Text>
+                        <Text>No</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Low")}>
-                        <Text> Low</Text>
+                        <Text>Low</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Moderate")}>
-                        <Text> Moderate</Text>
+                        <Text>Moderate</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Hard")}>
-                        <Text> Hard</Text>
+                        <Text>Hard</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> this.next("Soon")}>
-                        <Text> Soon</Text>
+                        <Text>Soon</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
                     <Button
                         onPress={() => {
-                            this.next("")
-                        }}
-                        title="Next"
-                    >
-
-                    </Button>
-                    <Button
-                        onPress={() => {
                             Alert.alert(
                                 'Cancel',
-                                'Do you want to canel this process?',
+                                'Do you want to cancel this process?',
                                 [
                                     { text: 'Cancel', onPress: () => { return null } },
                                     {
@@ -95,8 +87,6 @@ export default class Menstruacio extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#7BF0E6',
     }
 });
