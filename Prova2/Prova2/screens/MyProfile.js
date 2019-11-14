@@ -79,12 +79,15 @@ export default class Register extends Component {
         //let contraCorrecte = this.updatePassword();
         var user = firebase.auth().currentUser;
         console.log(JSON.stringify(this.state.email))
+        let dateAux = new Date(this.state.birthday.replace("-","/"))
+        let date = new Date(dateAux.getDate(), (dateAux.getMonth() +1), dateAux.getYear()).getTime();
+        console.log(date)
         if (this.CheckTextInput()) {
             let resposta = await FirebaseAPI.updateProfile(
                 user.uid,
                 this.state.username, 
                 this.state.gender, 
-                new Date(this.state.birthday).getTime())
+                date)
             console.log("resposta: ", resposta)
         }
     }

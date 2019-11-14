@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from 'react-native';
+import { Header, Icon } from 'react-native-elements'
 
 
 
@@ -8,6 +9,21 @@ export default class ZonaCap extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selected: {
+                "Front left head": false,
+                "Front right head": false,
+                "Back left head": false,
+                "Back right head": false,
+                "Front left face": false,
+                "Front right face": false,
+                "Back left face": false,
+                "Back right face": false,
+                "Front left neck": false,
+                "Front right neck": false,
+                "Back left neck": false,
+                "Back right neck": false,
+
+            }
         };
 
     }
@@ -16,85 +32,124 @@ export default class ZonaCap extends Component {
         header: null
     }
 
-    next(zonaCap) {
+    select(element) {
+        let selected = this.state.selected;
+
+        if (element === "None of this")
+            selected = {}
+
+        selected[element] = !selected[element];
+
+
+
+        //console.log(selected);
+        this.setState({ selected: selected })
+
+
+
+
+    }
+
+    next() {
+
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
         var intensitatDolor = navigation.getParam('intensitatDolor')
-        this.props.navigation.navigate(
-            "Simptomes",
-            {
-                dataIni,
-                intensitatDolor,
-                zonaCap: zonaCap
-            }
-        )
-        console.log("zonacap")
+
+        let zonesCap = [];
+        for (let pain in this.state.selected) {
+            if (this.state.selected[pain])
+                zonesCap.push(pain)
+        }
+        console.log(zonesCap)
+
+        if (zonesCap.length === 0)
+            Alert.alert("Error", "Select at least 1 option")
+        else {
+
+            this.props.navigation.navigate(
+                "Simptomes",
+                {
+                    dataIni,
+                    intensitatDolor,
+                    zonaCap: zonesCap
+                }
+            )
+            console.log("zonacap")
+        }
+
+
 
     }
     render() {
         var { navigation } = this.props;
 
+        // console.log("STATE", this.state)
         return (
             <View style={styles.container}>
-                <View style={{ flex: 1 }}>
-                    <Text> ZonaCap</Text>
-                </View>
+                <Header
+                centerComponent={{text:'Pain zone', style: { color: '#fff' }}}>
+
+                </Header>
                 <View style={{ flex: 2 }}>
                     <View style={styles.lateral}>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("front left head")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Front left head")}>
                             <Image source={require('./davantDaltEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("front right head")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Front right head")}>
                             <Image source={require('./davantDaltDreta.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("back left head")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Back left head")}>
                             <Image source={require('./darrereCapEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("back right head")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Back right head")}>
                             <Image source={require('./darrereCapDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.lateral}>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("front left face")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Front left face")}>
                             <Image source={require('./caraEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("front right face")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Front right face")}>
                             <Image source={require('./davantCaraDreta.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("back left face")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Back left face")}>
                             <Image source={require('./darrereCaraEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("back right face")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Back right face")}>
                             <Image source={require('./darrereCaraDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.lateral}>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("front left neck")}>
-                            <Image source={require('./collDavantEsquerra.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("front right neck")}>
+                        {this.state.selected["Front left neck"] &&
+                            <TouchableOpacity style={styles.headPart} onPress={() => this.select("Front left neck")}>
+                                <Image source={require('./collDavantEsquerra.png')}></Image>
+                            </TouchableOpacity> || <TouchableOpacity style={{}} onPress={() => this.select("Front left neck")}>
+                                <Image source={require('./collDavantEsquerra.png')}></Image>
+                            </TouchableOpacity>}
+                        <TouchableOpacity style={{}} onPress={() => this.select("Front right neck")}>
                             <Image source={require('./davantCollDreta.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("back left neck")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Back left neck")}>
                             <Image source={require('./darrereCollEsquerra.png')}></Image>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={()=>this.next("back right neck")}>
+                        <TouchableOpacity style={{}} onPress={() => this.select("Back right neck")}>
                             <Image source={require('./darrereCollDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{width:"100%",}} onPress={()=>this.next("None of this")}>
+                    <TouchableOpacity style={{ width: "100%", }} onPress={() => this.select("None of this")}>
                         <Text>None of this</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1 }}>
-                    {/*<Button
+                    <Button
                         onPress={() => {
                             this.next()
                         }}
                         title="Next"
                     >
 
-                    </Button>*/}
+                    </Button>
                     <Button
                         onPress={() => {
                             Alert.alert(
@@ -131,4 +186,8 @@ const styles = StyleSheet.create({
     lateral: {
         flexDirection: 'row',
     },
+
+    headPart: {
+        opacity: 0.2
+    }
 });

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, TouchableHighlight, ScrollView, SafeAreaView } from 'react-native';
+import { Header } from 'react-native-elements';
 
 
 
@@ -37,25 +38,41 @@ export default class Menstruacio extends Component {
 
         return (
             <View style={styles.container}>
-                <View style={{ flex: 1 }}>
-                    <Text> Menstruacio</Text>
-                </View>
-                <View>
-                <TouchableOpacity onPress={()=> this.next("No")}>
+                <Header
+                    centerComponent={{ text: 'Period', style: { color: '#fff' } }}
+                >
+                </Header>
+                <View style={styles.seccioOpcions}>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => this.next("No")}>
                         <Text>No</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> this.next("Low")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => this.next("Low")}>
                         <Text>Low</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> this.next("Moderate")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => this.next("Moderate")}>
                         <Text>Moderate</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> this.next("Hard")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => this.next("Hard")}>
                         <Text>Hard</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=> this.next("Soon")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => this.next("Soon")}>
                         <Text>Soon</Text>
-                    </TouchableOpacity>
+                    </TouchableHighlight>
                 </View>
                 <View style={{ flex: 1 }}>
                     <Button
@@ -87,6 +104,35 @@ export default class Menstruacio extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#7BF0E6',
+    },
+    lateral: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "red"
+    },
+    seccioOpcions: {
+        flex: 1,
+        //justifyContent: "center",
+        justifyContent: "space-between",
+    },
+    titol: {
+        flex: 1,
+        alignItems: "flex-start"
+    },
+    seccioBuida: {
+        flex: 1,
+    },
+    noSeleccionat: {
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 100,
+        height: 100,
+        backgroundColor: '#3BD3EF',
+        borderRadius: 50,
     }
 });

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { Button, Header } from 'react-native-elements'
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, TouchableHighlight, ScrollView, SafeAreaView } from 'react-native';
+import { Header } from 'react-native-elements';
+
+
+
 
 
 export default class Exercici extends Component {
@@ -56,75 +59,106 @@ export default class Exercici extends Component {
         return (
             <View style={styles.container}>
 
-                <View style={styles.titol}>
-                    <Text style={{ fontSize: 20, alignItems: "center" }}> Did you do some exercise?</Text>
-
-                </View>
+                <Header
+                    centerComponent={{ text: 'Exercise done', style: { color: '#fff' } }}
+                >
+                </Header>
                 <View style={styles.seccioOpcions}>
-                    <TouchableOpacity onPress={() => { this.next("Low") }}>
-                        <Text>Low</Text>
-                    </TouchableOpacity >
-                    <TouchableOpacity onPress={() => { this.next("Moderate") }}>
-                        <Text>Moderate</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.next("Intense") }}>
-                        <Text>Intense</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.next("Very intense") }}>
-                        <Text>Very intense</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.next("No")}>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => { this.next("No exercise") }}>
                         <Text>No</Text>
-                    </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1 }}>
-                        <Button
-                            onPress={() => {
-                                Alert.alert(
-                                    'Cancel',
-                                    'Do you want to cancel this process?',
-                                    [
-                                        { text: 'Cancel', onPress: () => { return null } },
-                                        {
-                                            text: 'Confirm', onPress: () => {
-                                                this.props.navigation.navigate("Home")
-                                            }
-                                        },
-                                    ],
-                                    { cancelable: false }
-                                )
-                            }}
-                            title="Cancel"
-                        >
-                        </Button>
-                    </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => { this.next("Low") }}>
+                        <Text>Low</Text>
+                    </TouchableHighlight >
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => { this.next("Moderate") }}>
+                        <Text>Moderate</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => { this.next("Intense") }}>
+                        <Text>Intense</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => { this.next("Very intense") }}>
+                        <Text>Very intense</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={styles.noSeleccionat}
+                        underlayColor='none'
+                        onPress={() => this.next("No")}>
+                        <Text>No</Text>
+                    </TouchableHighlight>
                 </View>
-                );
-            }
-        }
-        
+                <View style={{ flex: 1 }}>
+                    <Button
+                        onPress={() => {
+                            Alert.alert(
+                                'Cancel',
+                                'Do you want to cancel this process?',
+                                [
+                                    { text: 'Cancel', onPress: () => { return null } },
+                                    {
+                                        text: 'Confirm', onPress: () => {
+                                            this.props.navigation.navigate("Home")
+                                        }
+                                    },
+                                ],
+                                { cancelable: false }
+                            )
+                        }}
+                        title="Cancel"
+                    >
+                    </Button>
+                </View>
+            </View>
+        );
+    }
+}
+
 const styles = StyleSheet.create({
-                    container: {
-                    flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: '#7BF0E6',
-            },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#7BF0E6',
+    },
     lateral: {
-                    flexDirection: "row",
-                justifyContent: "space-between",
-                backgroundColor: "red"
-            },
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "red"
+    },
     seccioOpcions: {
-                    flex: 1,
-                //justifyContent: "center",
-                justifyContent: "space-between",
-            },
+        flex: 1,
+        //justifyContent: "center",
+        justifyContent: "space-between",
+    },
     titol: {
-                    flex: 1,
-                alignItems: "flex-start"
-            },
+        flex: 1,
+        alignItems: "flex-start"
+    },
     seccioBuida: {
-                    flex: 1,
-            }
-        });
+        flex: 1,
+    },
+    noSeleccionat: {
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 100,
+        height: 100,
+        backgroundColor: '#3BD3EF',
+        borderRadius: 50,
+    }
+});

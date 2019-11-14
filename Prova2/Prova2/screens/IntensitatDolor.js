@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from 'react-native';
+import { Header, Icon } from 'react-native-elements'
 
 
 
@@ -35,9 +36,9 @@ export default class IntensitatDolor extends Component {
             //NO PAIN(0): #7cb1b9, MILD PAIN(1,2,3):#a4bb85, MODERATE PAIN(3,4,5):#f2c93d, SEVERE PAIN(5,6,7):#e49b3c, VERY SEVER PAIN(7,8,9):#d7713b, WORST PAIN IMAGINABLE(10):#d46061 
             //0-1:#7cb1b9, 1-2: #96b897, 2-3:#b3bd74, 3-4:#d0c255, 4-5:#f2c93d, 5-6:#e7a93c, 6-7:#de8d3e, 7-8:#d6713b, 8-9:#d3573d, 9-10:#cf4140
             <View style={styles.container}>
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marignTop: 20 }}>
-                    <Text style={{ fontSize: 30 }}> IntensitatDolor</Text>
-                </View>
+                <Header
+                centerComponent={{text:'Pain scale', style: { color: '#fff', fontSize: 20 }}}
+                ></Header>
 
                 <View style={{ flex: 6 }}>
                     <TouchableOpacity style={[{ backgroundColor: '#7cb1b9' }, styles.painRow]} onPress={() => this.next(0)}>

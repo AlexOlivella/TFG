@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, TouchableHighlight, ScrollView, SafeAreaView } from 'react-native';
+import { Header } from 'react-native-elements';
 
 
 
@@ -7,86 +8,204 @@ export default class Causes extends Component {
     static navigationOptions = {
         header: null
     }
+    constructor(props) {
+        super(props);
+        this.state = {
+            selected: {
+                "Stress": false,
+                "Anxiety": false,
+                "Depression": false,
+                "Sleep a lot": false,
+                "Not sleep enough": false,
+                "Dehydration": false,
+                "Diet": false,
+                "Physical activity changes": false,
+                "Sunlight": false,
+                "Seeing intermitent lights": false,
+                "Smell": false,
+                "Loud noises": false,
+                "Others": false,
+            },
+        }
+    }
+    select(element) {
+        let selected = this.state.selected;
 
-    next(causa) {
+        if (element === "No") selected = {}
+        selected[element] = !selected[element];
+        //console.log(selected);
+        this.setState({ selected: selected })
+    }
+    next() {
         var { navigation } = this.props;
         var dataIni = navigation.getParam('dataIni');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
 
-        this.props.navigation.navigate(
-            "Impediments",
-            {
-                dataIni,
-                intensitatDolor,
-                zonaCap,
-                simptomes,
-                causes: causa
+        let causes = [];
+        for (let causa in this.state.selected) {
+            if (this.state.selected[causa])
+                causes.push(causa)
+        }
+        console.log(causes)
 
-            }
-        )
-        console.log("causes")
+        if (causes.length === 0)
+            Alert.alert("Error", "Select at least 1 option")
+        else {
+            this.props.navigation.navigate(
+                "Impediments",
+                {
+                    dataIni,
+                    intensitatDolor,
+                    zonaCap,
+                    simptomes,
+                    causes: causes
+
+                }
+            )
+            console.log("causes")
+        }
     }
     render() {
 
         return (
             <View style={styles.container}>
-                <View>
-                    <Text> Causes</Text>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={()=>this.next("Stress")}>
+                <Header
+                    centerComponent={{ text: 'Causes', style: { color: '#fff' } }}
+                >
+                </Header>
+                <SafeAreaView style={styles.safeArea}>
+                    <ScrollView contentContainerStyle={{flexWrap:'wrap'}}>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("No")}
+                    >
+                        <Text> No</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Stress"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Stress")}>
                         <Text>Stress</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Anxiety")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Anxiety"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Anxiety")}>
                         <Text>Anxiety</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Depression")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Depression"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Depression")}>
                         <Text>Depression</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Sleep a lot")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Sleep a lot"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Sleep a lot")}>
                         <Text>Sleep a lot</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Not sleep enough")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Not sleep enough"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Not sleep enough")}>
                         <Text>Not sleep enough</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Dehydration")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+
+                        style={
+                            this.state.selected["Dehydration"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Dehydration")}>
                         <Text>Dehydration</Text>
-                    </TouchableOpacity>
-                    {/*<TouchableOpacity>
+                    </TouchableHighlight>
+                    {/*<TouchableHighlight>
                         <Text> Hormonal</Text>
-                    </TouchableOpacity>*/}
-                    <TouchableOpacity onPress={()=>this.next("Diet")}>
+                    </TouchableHighlight>*/}
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Diet"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Diet")}>
                         <Text>Diet</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Physical activity changes")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Physical activity changes"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Physical activity changes")}>
                         <Text>Physical activity changes</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Sunlight")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Sunlight"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Sunlight")}>
                         <Text>Sunlight</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next(" Seeing intermitent lights")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Seeing intermitent lights"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Seeing intermitent lights")}>
                         <Text>Seeing intermitent lights</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Smell permufe")}>
-                        <Text>Smell permufe</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Smell incense")}>
-                        <Text>Smell incense</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Smell tobacco")}>
-                        <Text>Smell tobacco</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Loud noises")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Smell"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Smell")}>
+                        <Text>Smell</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Loud noises"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Loud noises")}>
                         <Text>Loud noises</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.next("Others")}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={
+                            this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
+                        }
+                        underlayColor='none'
+                        onPress={() => this.select("Others")}>
                         <Text>Others</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ flex: 1 }}>
-                    
+                    </TouchableHighlight>
+                    </ScrollView>
+                </SafeAreaView>
+
+                <View style={{}}>
+                    <Button
+                        onPress={() => {
+                            this.next()
+                        }}
+                        title="Next"
+                    >
+
+                    </Button>
 
                     <Button
                         onPress={() => {
@@ -117,8 +236,29 @@ export default class Causes extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#7BF0E6',
+    },
+    safeArea:{
+        flex:8,
+    },
+    seleccionat: {
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 105,
+        height: 105,
+        backgroundColor: '#38B3EF',
+        borderRadius: 50,
+    },
+    noSeleccionat: {
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 100,
+        height: 100,
+        backgroundColor: '#3BD3EF',
+        borderRadius: 50,
     }
 });

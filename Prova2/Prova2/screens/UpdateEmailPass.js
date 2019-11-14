@@ -24,6 +24,13 @@ export default class Register extends Component {
         }
 
     };
+
+    static navigationOptions ={
+        headerStyle:{
+            backgroundColor: '#7BF0E6'
+        }
+    }
+
     reauthenticate = (currentPassword) => {
         var user = firebase.auth().currentUser;
         var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
@@ -132,13 +139,13 @@ export default class Register extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FBEAFF',
+        backgroundColor: '#7BF0E6',
     },
     seccioTitol: {
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
-        backgroundColor: '#FBEAFF',
+        backgroundColor: '#7BF0E6',
     },
     dades: {
         width: "100%",
@@ -163,7 +170,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#FBEAFF',
+        backgroundColor: '#7BF0E6',
         marginTop: 10,
 
     },
