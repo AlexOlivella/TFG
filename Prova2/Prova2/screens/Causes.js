@@ -76,124 +76,134 @@ export default class Causes extends Component {
                 >
                 </Header>
                 <SafeAreaView style={styles.safeArea}>
-                    <ScrollView contentContainerStyle={{flexWrap:'wrap'}}>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("No")}
-                    >
-                        <Text> No</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Stress"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Stress")}>
-                        <Text>Stress</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Anxiety"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Anxiety")}>
-                        <Text>Anxiety</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Depression"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Depression")}>
-                        <Text>Depression</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Sleep a lot"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Sleep a lot")}>
-                        <Text>Sleep a lot</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Not sleep enough"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Not sleep enough")}>
-                        <Text>Not sleep enough</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
+                    <ScrollView >
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("No")}
+                            >
+                                <Text> No</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Stress"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Stress")}>
+                                <Text>Stress</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Anxiety"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Anxiety")}>
+                                <Text>Anxiety</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Depression"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Depression")}>
+                                <Text>Depression</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Sleep a lot"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Sleep a lot")}>
+                                <Text>Sleep a lot</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Not sleep enough"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Not sleep enough")}>
+                                <Text>Not sleep enough</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
 
-                        style={
-                            this.state.selected["Dehydration"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Dehydration")}>
-                        <Text>Dehydration</Text>
-                    </TouchableHighlight>
-                    {/*<TouchableHighlight>
+                                style={
+                                    this.state.selected["Dehydration"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Dehydration")}>
+                                <Text>Dehydration</Text>
+                            </TouchableHighlight>
+                            {/*<TouchableHighlight>
                         <Text> Hormonal</Text>
                     </TouchableHighlight>*/}
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Diet"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Diet")}>
-                        <Text>Diet</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Physical activity changes"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Physical activity changes")}>
-                        <Text>Physical activity changes</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Sunlight"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Sunlight")}>
-                        <Text>Sunlight</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Seeing intermitent lights"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Seeing intermitent lights")}>
-                        <Text>Seeing intermitent lights</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Smell"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Smell")}>
-                        <Text>Smell</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Loud noises"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Loud noises")}>
-                        <Text>Loud noises</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={
-                            this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
-                        }
-                        underlayColor='none'
-                        onPress={() => this.select("Others")}>
-                        <Text>Others</Text>
-                    </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Diet"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Diet")}>
+                                <Text>Diet</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Physical activity changes"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Physical activity changes")}>
+                                <Text>Physical activity changes</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Sunlight"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Sunlight")}>
+                                <Text>Sunlight</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Seeing intermitent lights"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Seeing intermitent lights")}>
+                                <Text>Seeing intermitent lights</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Smell"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Smell")}>
+                                <Text>Smell</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Loud noises"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Loud noises")}>
+                                <Text>Loud noises</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Others")}>
+                                <Text>Others</Text>
+                            </TouchableHighlight>
+                        </View>
                     </ScrollView>
                 </SafeAreaView>
 
@@ -238,8 +248,12 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#7BF0E6',
     },
-    safeArea:{
-        flex:8,
+    safeArea: {
+        flex: 8,
+    },
+    lateral: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     seleccionat: {
         borderWidth: 1,

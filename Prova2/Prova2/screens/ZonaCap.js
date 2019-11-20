@@ -91,7 +91,7 @@ export default class ZonaCap extends Component {
                 centerComponent={{text:'Pain zone', style: { color: '#fff' }}}>
 
                 </Header>
-                <View style={{ flex: 2 }}>
+                <View style={{ flex: 2 , justifyContent:'center'}}>
                     <View style={styles.lateral}>
                         <TouchableOpacity style={{}} onPress={() => this.select("Front left head")}>
                             <Image source={require('./davantDaltEsquerra.png')}></Image>

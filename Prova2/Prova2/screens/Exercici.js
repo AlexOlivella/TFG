@@ -64,42 +64,43 @@ export default class Exercici extends Component {
                 >
                 </Header>
                 <View style={styles.seccioOpcions}>
-                    <TouchableHighlight
-                        style={styles.noSeleccionat}
-                        underlayColor='none'
-                        onPress={() => { this.next("No exercise") }}>
-                        <Text>No</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={styles.noSeleccionat}
-                        underlayColor='none'
-                        onPress={() => { this.next("Low") }}>
-                        <Text>Low</Text>
-                    </TouchableHighlight >
-                    <TouchableHighlight
-                        style={styles.noSeleccionat}
-                        underlayColor='none'
-                        onPress={() => { this.next("Moderate") }}>
-                        <Text>Moderate</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={styles.noSeleccionat}
-                        underlayColor='none'
-                        onPress={() => { this.next("Intense") }}>
-                        <Text>Intense</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={styles.noSeleccionat}
-                        underlayColor='none'
-                        onPress={() => { this.next("Very intense") }}>
-                        <Text>Very intense</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={styles.noSeleccionat}
-                        underlayColor='none'
-                        onPress={() => this.next("No")}>
-                        <Text>No</Text>
-                    </TouchableHighlight>
+                    <View style={styles.lateral}>
+                        <TouchableHighlight
+                            style={styles.noSeleccionat}
+                            underlayColor='none'
+                            onPress={() => { this.next("No exercise") }}>
+                            <Text>No</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            style={styles.noSeleccionat}
+                            underlayColor='none'
+                            onPress={() => { this.next("Low") }}>
+                            <Text>Low</Text>
+                        </TouchableHighlight >
+                        <TouchableHighlight
+                            style={styles.noSeleccionat}
+                            underlayColor='none'
+                            onPress={() => { this.next("Moderate") }}>
+                            <Text>Moderate</Text>
+                        </TouchableHighlight>
+                    </View>
+                    <View style={styles.lateral}>
+                        <TouchableHighlight
+                            style={styles.noSeleccionat}
+                            underlayColor='none'
+                            onPress={() => { this.next("Intense") }}>
+                            <Text>Intense</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            style={styles.noSeleccionat}
+                            underlayColor='none'
+                            onPress={() => { this.next("Very intense") }}>
+                            <Text>Very intense</Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
+                <View style={styles.seccioBuida}>
+
                 </View>
                 <View style={{ flex: 1 }}>
                     <Button
@@ -137,12 +138,10 @@ const styles = StyleSheet.create({
     lateral: {
         flexDirection: "row",
         justifyContent: "space-between",
-        backgroundColor: "red"
     },
     seccioOpcions: {
-        flex: 1,
+        flex: 3,
         //justifyContent: "center",
-        justifyContent: "space-between",
     },
     titol: {
         flex: 1,

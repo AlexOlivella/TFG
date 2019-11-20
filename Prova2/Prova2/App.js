@@ -71,7 +71,9 @@ const Profile = createStackNavigator({
 
 const MainDrawer = createDrawerNavigator({
   MainTabs: MainTabs,
-  Profile: Profile
+  Profile: Profile,
+  Calendar: {screen:Calendar},
+  Weather: {screen:Weather},
   //LogOut:{screen:LogOut},
   
 }, 
@@ -99,7 +101,7 @@ const MainDrawer = createDrawerNavigator({
             { cancelable: false }
           )  
         }>
-          <Text style={{marginLeft:16 , fontWeight: 'bold', fontSize: 15, marginVertical: 5}}>Logout</Text>
+          <Text style={{marginLeft:16 , fontWeight: 'bold', fontSize: 14, marginVertical: 5}}>Logout</Text>
         </TouchableOpacity>
       </View>
 ),});

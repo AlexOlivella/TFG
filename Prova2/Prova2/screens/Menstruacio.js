@@ -43,6 +43,7 @@ export default class Menstruacio extends Component {
                 >
                 </Header>
                 <View style={styles.seccioOpcions}>
+                    <View style={styles.lateral}>
                     <TouchableHighlight
                         style={styles.noSeleccionat}
                         underlayColor='none'
@@ -61,6 +62,8 @@ export default class Menstruacio extends Component {
                         onPress={() => this.next("Moderate")}>
                         <Text>Moderate</Text>
                     </TouchableHighlight>
+                    </View>
+                    <View style={styles.lateral}>
                     <TouchableHighlight
                         style={styles.noSeleccionat}
                         underlayColor='none'
@@ -73,6 +76,10 @@ export default class Menstruacio extends Component {
                         onPress={() => this.next("Soon")}>
                         <Text>Soon</Text>
                     </TouchableHighlight>
+                    </View>
+                </View>
+                <View style={styles.seccioBuida}>
+
                 </View>
                 <View style={{ flex: 1 }}>
                     <Button
@@ -111,12 +118,10 @@ const styles = StyleSheet.create({
     lateral: {
         flexDirection: "row",
         justifyContent: "space-between",
-        backgroundColor: "red"
     },
     seccioOpcions: {
-        flex: 1,
+        flex: 3,
         //justifyContent: "center",
-        justifyContent: "space-between",
     },
     titol: {
         flex: 1,

@@ -88,144 +88,155 @@ export default class Medicaments extends Component {
                 >
                 </Header>
                 <SafeAreaView style={styles.safeArea}>
-                    <ScrollView contentContainerStyle={{ flexWrap: 'wrap' }}>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("No")}>
-                            <Text>No</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Aspirin 1000mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Aspirin 1000mg")}>
-                            <Text>Aspirin 1000mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Paracetamol 1000mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Paracetamol 1000mg")}>
-                            <Text>Paracetamol 1000mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Metamizol 500mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Metamizol 500mg")}>
-                            <Text>Metamizol 500mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Sodic naproxen 500mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Sodic naproxen 500mg")}>
-                            <Text>Sodic naproxen 500mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Ibuprofen 200mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Ibuprofen 200mg")}>
-                            <Text>Ibuprofen 200mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Dexketoprofen trometamol 25mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Dexketoprofen trometamol 25mg")}>
-                            <Text>Dexketoprofen trometamol 25mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Almotriptan 12.5mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Almotriptan 12.5mg")}>
-                            <Text>Almotriptan 12.5mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Zolmitriptan 5mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Zolmitriptan 5mg")}>
-                            <Text>Zolmitriptan 5mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Eletriptan 40mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Eletriptan 40mg")}>
-                            <Text>Eletriptan 40mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Rizatriptan 5mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Rizatriptan 5mg")}>
-                            <Text>Rizatriptan 5mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Sumatriptan 25mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Sumatriptan 25mg")}>
-                            <Text>Sumatriptan 25mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Chlorpromazine 10mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Chlorpromazine 10mg")}>
-                            <Text>Chlorpromazine 10mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Metoclopramide 20mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Metoclopramide 20mg")}>
-                            <Text>Metoclopramide 20mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Propranolol 60mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Propranolol 60mg")}>
-                            <Text>Propranolol 60mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Timolol 60mg"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Timolol 60mg")}>
-                            <Text>Timolol 60mg</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={
-                                this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
-                            }
-                            underlayColor='none'
-                            onPress={() => this.select("Others")}>
-                            <Text>Others</Text>
-                        </TouchableHighlight>
-
+                    <ScrollView >
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("No")}>
+                                <Text>No</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Aspirin 1000mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Aspirin 1000mg")}>
+                                <Text>Aspirin 1000mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Paracetamol 1000mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Paracetamol 1000mg")}>
+                                <Text>Paracetamol 1000mg</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Metamizol 500mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Metamizol 500mg")}>
+                                <Text>Metamizol 500mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Sodic naproxen 500mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Sodic naproxen 500mg")}>
+                                <Text>Sodic naproxen 500mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Ibuprofen 200mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Ibuprofen 200mg")}>
+                                <Text>Ibuprofen 200mg</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Dexketoprofen trometamol 25mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Dexketoprofen trometamol 25mg")}>
+                                <Text>Dexketoprofen trometamol 25mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Almotriptan 12.5mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Almotriptan 12.5mg")}>
+                                <Text>Almotriptan 12.5mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Zolmitriptan 5mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Zolmitriptan 5mg")}>
+                                <Text>Zolmitriptan 5mg</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Eletriptan 40mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Eletriptan 40mg")}>
+                                <Text>Eletriptan 40mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Rizatriptan 5mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Rizatriptan 5mg")}>
+                                <Text>Rizatriptan 5mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Sumatriptan 25mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Sumatriptan 25mg")}>
+                                <Text>Sumatriptan 25mg</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Chlorpromazine 10mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Chlorpromazine 10mg")}>
+                                <Text>Chlorpromazine 10mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Metoclopramide 20mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Metoclopramide 20mg")}>
+                                <Text>Metoclopramide 20mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Propranolol 60mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Propranolol 60mg")}>
+                                <Text>Propranolol 60mg</Text>
+                            </TouchableHighlight>
+                        </View>
+                        <View style={styles.lateral}>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Timolol 60mg"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Timolol 60mg")}>
+                                <Text>Timolol 60mg</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                                style={
+                                    this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
+                                }
+                                underlayColor='none'
+                                onPress={() => this.select("Others")}>
+                                <Text>Others</Text>
+                            </TouchableHighlight>
+                        </View>
                     </ScrollView>
                 </SafeAreaView>
 
@@ -271,6 +282,10 @@ const styles = StyleSheet.create({
     },
     safeArea: {
         flex: 8,
+    },
+    lateral: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     seleccionat: {
         borderWidth: 1,
