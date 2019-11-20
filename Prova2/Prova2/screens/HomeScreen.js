@@ -29,21 +29,12 @@ export default class HomeScreen extends Component {
 	obrirDrawer = () => {
 		this.props.navigation.openDrawer();
 	}
-	getCurrentTime() {
-		var date = new Date().getDate(); //Current Date
-		var month = new Date().getMonth() + 1; //Current Month
-		var year = new Date().getFullYear(); //Current Year
-		var hours = new Date().getHours(); //Current Hours
-		var min = new Date().getMinutes(); //Current Minutes
-		var sec = new Date().getSeconds(); //Current Seconds
-		return date + '-' + month + '-' + year + ' ' + hours + ':' + min + ':' + sec
-
-	};
+	
 
 	createMigraine() {
 		var user = firebase.auth().currentUser;
 		
-		this.props.navigation.navigate("IntensitatDolor", { dataIni: this.getCurrentTime() })
+		this.props.navigation.navigate("HoraMigranya")
 		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
 	}
 	render() {

@@ -11,7 +11,8 @@ export default class Menstruacio extends Component {
 
     next(tipus) {
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataIni');
+        var dataIni = navigation.getParam('dataInici');
+        var dataFinal= navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
@@ -22,6 +23,7 @@ export default class Menstruacio extends Component {
             "Medicaments",
             {
                 dataIni,
+                dataFinal,
                 intensitatDolor,
                 zonaCap,
                 simptomes,

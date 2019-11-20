@@ -53,7 +53,8 @@ export default class ZonaCap extends Component {
     next() {
 
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataIni');
+        var dataIni = navigation.getParam('dataInici');
+        var dataFinal= navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
 
         let zonesCap = [];
@@ -71,6 +72,7 @@ export default class ZonaCap extends Component {
                 "Simptomes",
                 {
                     dataIni,
+                    dataFinal,
                     intensitatDolor,
                     zonaCap: zonesCap
                 }

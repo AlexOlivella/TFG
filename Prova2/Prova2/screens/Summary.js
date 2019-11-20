@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid } from 'react-native';
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import firebase from 'firebase'
+import { Header } from 'react-native-elements';
 
 
 export default class Summary extends Component {
@@ -10,7 +11,8 @@ export default class Summary extends Component {
     }
     async next() {
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataIni');
+        var dataIni = navigation.getParam('dataInici');
+        var dataFinal= navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
@@ -19,10 +21,11 @@ export default class Summary extends Component {
         var exercicis = navigation.getParam('exercicis')
         var impediments = navigation.getParam('impediments')
         var medicaments = navigation.getParam('medicaments')
-        var user = firebase.auth().currentUser; 
+        var user = firebase.auth().currentUser;
         await FirebaseAPI.createMigranya(
             user.uid,
             dataIni,
+            dataFinal,
             intensitatDolor,
             zonaCap,
             simptomes,
@@ -31,7 +34,7 @@ export default class Summary extends Component {
             exercicis,
             impediments,
             medicaments,
-            )
+        )
         this.props.navigation.navigate(
             "Home"
         )
@@ -52,9 +55,14 @@ export default class Summary extends Component {
         var medicaments = navigation.getParam('medicaments')
         return (
             <View style={styles.container}>
+                <Header
+                centerComponent={{text:'Pain zone', style: { color: '#fff' }}}>
+
+                </Header>
                 <View>
                     <Text> Summary</Text>
                     <Text> {dataIni}</Text>
+                    <Text> {dataFi}</Text>
                     <Text> {intensitatDolor}</Text>
                     <Text> {zonaCap}</Text>
                     <Text> {simptomes}</Text>

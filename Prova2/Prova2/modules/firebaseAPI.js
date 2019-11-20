@@ -80,10 +80,11 @@ export async function updateProfile(uid, newUsername, newGender, newBirthday) {
 		});
 }
 
-export async function createMigranya(uid, dIni, intensitat, zonaC, simpt, caus, menst,exerc,imped,medi) {
+export async function createMigranya(uid, dIni, dFini, intensitat, zonaC, simpt, caus, menst,exerc,imped,medi) {
 	var docRef = db.collection("Users").doc(uid).collection("migranyes");
 	return await docRef.add({
 		dataIni: dIni,
+		dataFinal: dFini,
 		intensitatDolor: intensitat,
 		zonaCap: zonaC,
 		simptomes: simpt,

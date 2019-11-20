@@ -22,6 +22,7 @@ import Medicaments from './screens/Medicaments'
 import Menstruacio from './screens/Menstruacio'
 import Simptomes from './screens/Simptomes'
 import Summary from './screens/Summary'
+import HoraMigranya from './screens/HoraMigranya'
 
 const AuthStack = createStackNavigator(
   {
@@ -107,6 +108,7 @@ const MainDrawer = createDrawerNavigator({
 ),});
 
 const Migranya = createStackNavigator({
+  HoraMigranya:{screen:HoraMigranya},
   IntensitatDolor:{screen:IntensitatDolor},
   Impediments: {screen:Impediments},
   ZonaCap: {screen: ZonaCap},
