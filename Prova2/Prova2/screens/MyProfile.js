@@ -6,6 +6,8 @@ import { TextField } from 'react-native-material-textfield';
 import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from 'react-native-datepicker'
 import { tsThisType } from '@babel/types';
+import { Header, Icon } from 'react-native-elements'
+
 
 export default class Register extends Component {
 
@@ -73,7 +75,9 @@ export default class Register extends Component {
         return false;
     };
 
-
+    obrirDrawer = () => {
+		this.props.navigation.openDrawer();
+	}
     async updateProfile() {
         //this.updateEmail();
         //let contraCorrecte = this.updatePassword();
@@ -96,9 +100,13 @@ export default class Register extends Component {
         var navigate = navigation.navigate;
         return (
             <View style={styles.container}>
-                <View style={styles.seccioTitol}>
-                    <Text style={{ fontSize: 30 }}> Change your profile</Text>
-                </View>
+                <Header
+						style={{width:'100%'}}
+						placement="left"
+						leftComponent={<Icon name='menu' onPress={ ()=> this.obrirDrawer()} />}
+						centerComponent={{ text: 'Change your profile', style: { color: '#fff' } }}
+					/>
+                
                 <View style={styles.textView}>
                     <View style={styles.dades}>
                         <Text >Email</Text>

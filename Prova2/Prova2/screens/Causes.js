@@ -38,7 +38,7 @@ export default class Causes extends Component {
     }
     next() {
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataInici');
+        var dataInici = navigation.getParam('dataInici');
         var dataFinal= navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
@@ -57,7 +57,7 @@ export default class Causes extends Component {
             this.props.navigation.navigate(
                 "Impediments",
                 {
-                    dataIni,
+                    dataInici,
                     dataFinal,
                     intensitatDolor,
                     zonaCap,

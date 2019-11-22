@@ -19,7 +19,7 @@ export default class Exercici extends Component {
 
     next(exercici) {
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataInici');
+        var dataInici = navigation.getParam('dataInici');
         var dataFinal= navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
@@ -29,7 +29,7 @@ export default class Exercici extends Component {
         this.props.navigation.navigate(
             "Menstruacio",
             {
-                dataIni,
+                dataInici,
                 dataFinal,
                 intensitatDolor,
                 zonaCap,
@@ -44,11 +44,11 @@ export default class Exercici extends Component {
         //}
         /* else{
                  var { navigation } = this.props;
-                 var dataIni = navigation.getParam('dataIni');
+                 var dataInici = navigation.getParam('dataInici');
                  this.props.navigation.navigate(
                      "Medicaments",
                      {
-                         dataIni,
+                         dataInici,
                          intensitatDolor: dolor,
          
                      }

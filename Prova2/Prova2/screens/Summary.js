@@ -11,7 +11,7 @@ export default class Summary extends Component {
     }
     async next() {
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataInici');
+        var dataInici = navigation.getParam('dataInici');
         var dataFinal= navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
@@ -24,7 +24,7 @@ export default class Summary extends Component {
         var user = firebase.auth().currentUser;
         await FirebaseAPI.createMigranya(
             user.uid,
-            dataIni,
+            dataInici,
             dataFinal,
             intensitatDolor,
             zonaCap,
@@ -44,7 +44,8 @@ export default class Summary extends Component {
     }
     render() {
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataIni');
+        var dataInici = navigation.getParam('dataInici');
+        var dataFinal = navigation.getParam('dataFinal')
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
@@ -56,13 +57,12 @@ export default class Summary extends Component {
         return (
             <View style={styles.container}>
                 <Header
-                centerComponent={{text:'Pain zone', style: { color: '#fff' }}}>
+                centerComponent={{text:'Summary', style: { color: '#fff' }}}>
 
                 </Header>
                 <View>
-                    <Text> Summary</Text>
-                    <Text> {dataIni}</Text>
-                    <Text> {dataFi}</Text>
+                    <Text> {dataInici}</Text>
+                    <Text> {dataFinal}</Text>
                     <Text> {intensitatDolor}</Text>
                     <Text> {zonaCap}</Text>
                     <Text> {simptomes}</Text>

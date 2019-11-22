@@ -80,23 +80,38 @@ export async function updateProfile(uid, newUsername, newGender, newBirthday) {
 		});
 }
 
-export async function createMigranya(uid, dIni, dFini, intensitat, zonaC, simpt, caus, menst,exerc,imped,medi) {
-	var docRef = db.collection("Users").doc(uid).collection("migranyes");
-	return await docRef.add({
-		dataIni: dIni,
+export async function createMigranya(uid, dIni, dFini, intensitat, zonaC, simpt, caus, menst, exerc, imped, medi) {
+	var docRef = db.collection("Users").doc(uid).collection("migranyes").doc(dIni);
+	return await docRef.set({
 		dataFinal: dFini,
 		intensitatDolor: intensitat,
 		zonaCap: zonaC,
 		simptomes: simpt,
 		causes: caus,
 		menstruacio: menst,
-		exercicis:exerc,
-		impediments:imped,
-		medicaments:medi,
+		exercicis: exerc,
+		impediments: imped,
+		medicaments: medi,
 	}).then(function (docRef) {
-		console.log("Migraine added successfully: ", docRef.id);
-	})
-		.catch(function (error) {
-			console.error("Error adding migraine: ", error);
-		});
+		console.log("Migraine added successfully: ");
+	}).catch(function (error) {
+		console.error("Error adding migraine: ", error.message);
+	});
+}
+
+export async function getMigranyes(uid) {
+	let result = []
+	var docRef = db.collection("Users").doc(uid).collection("migranyes")
+
+	await docRef.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+			console.log(doc.id, " => ", doc.data());
+			result.push(doc.id, doc.data())
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+	});
+	return result
 }

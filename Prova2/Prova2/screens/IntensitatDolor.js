@@ -19,12 +19,12 @@ export default class IntensitatDolor extends Component {
 
     next(dolor) {
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataInici');
+        var dataInici = navigation.getParam('dataInici');
         var dataFinal= navigation.getParam('dataFinal');
         this.props.navigation.navigate(
             "ZonaCap",
             {
-                dataIni,
+                dataInici,
                 dataFinal,
                 intensitatDolor: dolor,
 

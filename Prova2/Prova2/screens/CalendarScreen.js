@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Button, TextInput, BackHandler } from 'react-native';
 import firebase from 'firebase'
 import CalendarPicker from 'react-native-calendar-picker';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
-
+import { Header, Icon } from 'react-native-elements'
 
 
 export default class prova extends Component {
@@ -13,7 +14,6 @@ export default class prova extends Component {
     this.state = {
       selectedStartDate: null,
     }
-    this.onDateChange = this.onDateChange.bind(this);
   }
 
   static navigationOptions = {
@@ -23,12 +23,10 @@ export default class prova extends Component {
 
     }
   }
+  obrirDrawer = () => {
+		this.props.navigation.openDrawer();
+	}
 
-  onDateChange(date) {
-    this.setState({
-      selectedStartDate: date,
-    });
-  }
 
   render() {
     var { navigation } = this.props;
@@ -39,9 +37,47 @@ export default class prova extends Component {
     return (
 
       <View style={styles.container}>
-          <View>
-          <CalendarPicker
-            onDateChange={this.onDateChange}
+        <Header
+						style={{width:'100%'}}
+						placement="left"
+						leftComponent={<Icon name='menu' onPress={ ()=> this.obrirDrawer()} />}
+						centerComponent={{ text: 'Calendar', style: { color: '#fff' } }}
+					/>
+        <View>
+          <Calendar
+            // Initially visible month. Default = Date()
+            current={'2012-03-01'}
+            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
+            minDate={'2012-05-10'}
+            // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
+            maxDate={'2012-05-30'}
+            // Handler which gets executed on day press. Default = undefined
+            onDayPress={(day) => { console.log('selected day', day) }}
+            // Handler which gets executed on day long press. Default = undefined
+            onDayLongPress={(day) => { console.log('selected day', day) }}
+            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+            monthFormat={'yyyy MM'}
+            // Handler which gets executed when visible month changes in calendar. Default = undefined
+            onMonthChange={(month) => { console.log('month changed', month) }}
+            // Hide month navigation arrows. Default = false
+            //hideArrows={true}
+            // Replace default arrows with custom ones (direction can be 'left' or 'right')
+            //renderArrow={(direction) => (<Arrow />)}
+            // Do not show days of other months in month page. Default = false
+            hideExtraDays={true}
+            // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
+            // day from another month that is visible in calendar page. Default = false
+            disableMonthChange={true}
+            // If firstDay=1 week starts from Monday. Note that dayNames and dayNamesShort should still start from Sunday.
+            firstDay={1}
+            // Hide day names. Default = false
+            //hideDayNames={true}
+            // Show week numbers to the left. Default = false
+            //showWeekNumbers={true}
+            // Handler which gets executed when press arrow icon left. It receive a callback can go back month
+            onPressArrowLeft={substractMonth => substractMonth()}
+            // Handler which gets executed when press arrow icon left. It receive a callback can go next month
+            onPressArrowRight={addMonth => addMonth()}
           />
         </View>
         <View>
@@ -57,8 +93,7 @@ export default class prova extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+   
     backgroundColor: '#7BF0E6',
   }
 });

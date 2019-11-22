@@ -53,7 +53,7 @@ export default class ZonaCap extends Component {
     next() {
 
         var { navigation } = this.props;
-        var dataIni = navigation.getParam('dataInici');
+        var dataInici = navigation.getParam('dataInici');
         var dataFinal= navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
 
@@ -71,7 +71,7 @@ export default class ZonaCap extends Component {
             this.props.navigation.navigate(
                 "Simptomes",
                 {
-                    dataIni,
+                    dataInici,
                     dataFinal,
                     intensitatDolor,
                     zonaCap: zonesCap

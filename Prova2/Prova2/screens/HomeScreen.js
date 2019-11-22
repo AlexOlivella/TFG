@@ -37,6 +37,13 @@ export default class HomeScreen extends Component {
 		this.props.navigation.navigate("HoraMigranya")
 		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
 	}
+
+	async getMigranyes(){
+		var user = firebase.auth().currentUser;
+		
+		var result = await FirebaseAPI.getMigranyes(user.uid) 
+		console.log("resultat", result)
+	}
 	render() {
 		////console.log(this.props)
 		const { navigation } = this.props;
@@ -48,7 +55,7 @@ export default class HomeScreen extends Component {
 			<View style={styles.container}>
 							<StatusBar barStyle={"default"}/>
 
-				<View style={{alignItems:'flex-start'}}>
+				<View>
 					<Header
 						style={{width:'100%'}}
 						placement="left"
@@ -58,6 +65,7 @@ export default class HomeScreen extends Component {
 				</View>
 				<Text style={{ fontSize: 30 }}> Welcome to the app </Text>
 				<Text style={{ fontSize: 30 }}> {user.email} </Text>
+				<Button onPress={()=> this.getMigranyes()} title="Get migranyes"></Button>
 				<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
 			</View>
 		);
