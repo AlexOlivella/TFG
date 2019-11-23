@@ -15,34 +15,34 @@ export default class HomeScreen extends Component {
 
 	}
 
-	static navigationOptions = {
-		title: 'HeaderTitle',
-		headerStyle: {
-			backgroundColor: '#f4511e',
-		},
-		headerTintColor: '#0ff',
-		headerTitleStyle: {
-			fontWeight: 'bold',
-		},
-	}
-
+	
 	obrirDrawer = () => {
 		this.props.navigation.openDrawer();
 	}
-	
+
 
 	createMigraine() {
 		var user = firebase.auth().currentUser;
-		
+
 		this.props.navigation.navigate("HoraMigranya")
 		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
 	}
-
-	async getMigranyes(){
+	componentDidMount(){
+		this.comprovaTipus()
+	}
+	async getMigranyes() {
 		var user = firebase.auth().currentUser;
-		
-		var result = await FirebaseAPI.getMigranyes(user.uid) 
+
+		var result = await FirebaseAPI.getMigranyes(user.uid)
 		console.log("resultat", result)
+		//console.log("hora Inici",result[0]);
+	}
+
+	async comprovaTipus(){
+		var user = firebase.auth().currentUser;
+
+		let resposta = await FirebaseAPI.comprovarTipusUsuari(user.uid)
+		console.log("resposta", resposta)
 	}
 	render() {
 		////console.log(this.props)
@@ -53,19 +53,20 @@ export default class HomeScreen extends Component {
 		return (
 
 			<View style={styles.container}>
-							<StatusBar barStyle={"default"}/>
+				<StatusBar barStyle={"default"} />
 
 				<View>
 					<Header
-						style={{width:'100%'}}
+						style={{ width: '100%' }}
 						placement="left"
-						leftComponent={<Icon name='menu' onPress={ ()=> this.obrirDrawer()} />}
+						leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
 						centerComponent={{ text: 'Home', style: { color: '#fff' } }}
 					/>
 				</View>
 				<Text style={{ fontSize: 30 }}> Welcome to the app </Text>
+				<Text>type:</Text>
 				<Text style={{ fontSize: 30 }}> {user.email} </Text>
-				<Button onPress={()=> this.getMigranyes()} title="Get migranyes"></Button>
+				<Button onPress={() => this.getMigranyes()} title="Get migranyes"></Button>
 				<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
 			</View>
 		);
@@ -76,7 +77,7 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		
+
 		backgroundColor: '#7BF0E6',
 	},
 	toolbar: {

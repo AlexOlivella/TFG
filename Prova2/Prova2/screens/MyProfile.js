@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Alert, ToastAndroid, TouchableOpacity } from 'react-native';
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { TextField } from 'react-native-material-textfield';
@@ -7,6 +7,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from 'react-native-datepicker'
 import { tsThisType } from '@babel/types';
 import { Header, Icon } from 'react-native-elements'
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 
 export default class Register extends Component {
@@ -50,7 +51,7 @@ export default class Register extends Component {
                 email: user.email,
                 username: data.username,
                 gender: data.gender,
-                birthday: this.getDateString(data.birthday)
+                birthday: this.state.birthday
                 
             })
             console.log("birthdy: " ,new Date(data.birthday))
@@ -82,19 +83,43 @@ export default class Register extends Component {
         //this.updateEmail();
         //let contraCorrecte = this.updatePassword();
         var user = firebase.auth().currentUser;
-        console.log(JSON.stringify(this.state.email))
-        let dateAux = new Date(this.state.birthday.replace("-","/"))
-        let date = new Date(dateAux.getDate(), (dateAux.getMonth() +1), dateAux.getYear()).getTime();
-        console.log(date)
         if (this.CheckTextInput()) {
             let resposta = await FirebaseAPI.updateProfile(
                 user.uid,
                 this.state.username, 
                 this.state.gender, 
-                date)
+                this.state.birthday)
             console.log("resposta: ", resposta)
         }
+        ToastAndroid.show("Profile updated succesfully", ToastAndroid.SHORT)
     }
+
+    showDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisible: true });
+      };
+    
+      hideDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisible: false });
+      };
+    
+      handleDatePicked = (date) => {
+        //console.log("A date inicial has been picked: ", date);
+        this.setState({ birthday: date.getTime() })
+        this.hideDateTimePicker();
+    
+      };
+
+    transformaData(time) {
+        if (time) {
+            let data = new Date(time);
+            var date = data.getDate(); //Current Date
+            var month = data.getMonth() + 1; //Current Month
+            var year = data.getFullYear() ; //Current Year
+            return date + '-' + month + '-' + year 
+        }
+        else return ""
+    }
+
     render() {
         var { navigation } = this.props;
         var navigate = navigation.navigate;
@@ -138,33 +163,16 @@ export default class Register extends Component {
                     <View style={styles.dades}>
                         <Text>Date of birthday</Text>
                         <View style={{ width: "50%" }}>
-                            <DatePicker
-                                date={this.state.birthday}
-                                mode="date"
-                                placeholder="Select date of birth"
-                                format="DD-MM-YYYY"
-                                minDate="01-01-1919"
-                                maxDate="31-12-2009"
-                                confirmBtnText="Confirm"
-                                cancelBtnText="Cancel"
-                                showIcon={false}
-                                style={{ width: "100%" }}
-                                customStyles={{
-                                    dateText: {
-                                        color: "rgba(0, 0, 0, .87)",
-                                        fontSize: 12,
-                                        alignItems: 'flex-start',
-                                        width: "100%"
-                                    },
-                                    dateInput: {
-                                        borderWidth: 0,
-                                        fontSize: 12,
-                                        color: "rgba(0, 0, 0, .87)",
-                                        alignItems: 'flex-start'
-                                    }
-                                }}
-                                onDateChange={date => this.setState({ birthday: date })}
-                            />
+                        <DateTimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this.handleDatePicked}
+              onCancel={this.hideDateTimePicker}
+              mode='date'
+            />                    
+
+            <TouchableOpacity onPress={this.showDateTimePicker} >
+              <Text >Select birthday {this.transformaData(this.state.birthday)}</Text>
+            </TouchableOpacity>
                         </View>
 
                     </View>

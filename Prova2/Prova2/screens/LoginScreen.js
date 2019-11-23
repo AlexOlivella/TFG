@@ -33,10 +33,10 @@ export default class LoginScreen extends Component {
         //alert('Success')
         return true;
       } else {
-       // alert('Please enter password');
+        alert('Please enter password');
       }
     } else {
-      //alert('Please enter email');
+      alert('Please enter email');
     }
     return false;
   };

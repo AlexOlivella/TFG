@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Picker, Platform, StyleSheet, Text, View, Button, TextInput, ScrollView, Alert, ToastAndroid } from 'react-native';
+import { Picker, Platform, StyleSheet, Text, View, Button, TextInput, ScrollView, Alert, ToastAndroid, TouchableOpacity } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import * as FirebaseAPI from '../modules/firebaseAPI';
 import { TextField } from 'react-native-material-textfield';
+import DateTimePicker from "react-native-modal-datetime-picker";
 import { Dropdown } from 'react-native-material-dropdown';
 
 export default class Register extends Component {
@@ -14,17 +15,30 @@ export default class Register extends Component {
       password: "",
       birthday: "",
       gender: "",
+      type: "",
       email: "",
-
+      isDateTimePickerVisible: false,
     }
 
   };
   static navigationOptions = {
-    headerStyle: {
-      backgroundColor: '#FBEAFF',
-      borderBottomWidth: 0,
-    }
+    header: null,
   }
+
+  showDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: true });
+  };
+
+  hideDateTimePicker = () => {
+    this.setState({ isDateTimePickerVisible: false });
+  };
+
+  handleDatePicked = (date) => {
+    //console.log("A date inicial has been picked: ", date);
+    this.setState({ birthday: date.getTime() })
+    this.hideDateTimePicker();
+
+  };
 
   CheckTextInput = () => {
     //Handler for the Submit onPress
@@ -34,11 +48,16 @@ export default class Register extends Component {
         //Check for the Email TextInput
         if (this.state.email != '') {
           if (this.state.gender != '') {
-            if (this.state.birthday != '') {
-              //alert('Success')
-              return true;
-            } else {
-              alert('Please enter a birthday');
+            if (this.state.type != '') {
+              if (this.state.birthday != '') {
+                //alert('Success')
+                return true;
+              } else {
+                alert('Please enter a birthday');
+              }
+            }
+            else {
+              alert("Please enter a type of user")
             }
           } else {
             alert('Please enter a gender');
@@ -63,7 +82,9 @@ export default class Register extends Component {
         this.state.password,
         this.state.email.trim(),
         this.state.gender,
-        new Date(this.state.birthday).getTime());
+        this.state.type,
+        this.state.birthday);
+      console.log("birthday", this.state.birthday)
       if (response.isError) {
         //if(response.error == 200)
         if (response.error.code == "auth/invalid-email") {
@@ -79,7 +100,16 @@ export default class Register extends Component {
       }
     }
   }
-
+  transformaData(time) {
+    if (time) {
+        let data = new Date(time);
+        var date = data.getDate(); //Current Date
+        var month = data.getMonth() + 1; //Current Month
+        var year = data.getFullYear() ; //Current Year
+        return date + '-' + month + '-' + year 
+    }
+    else return ""
+}
   render() {
 
     ////console.log(this.props)
@@ -131,13 +161,35 @@ export default class Register extends Component {
             />
           </View>
           <View style={{ width: "100%" }}>
-            <DatePicker
+            <Dropdown
+              label='Type of user'
+              data={[{
+                value: "Doctor"
+              }, {
+                value: "Pacient"
+              }]}
+              value={this.state.type}
+              onChangeText={(itemValue) => this.setState({ type: itemValue })}
+            />
+          </View>
+          <View style={{ width: "100%" }}>
+            <DateTimePicker
+              isVisible={this.state.isDateTimePickerVisible}
+              onConfirm={this.handleDatePicked}
+              onCancel={this.hideDateTimePicker}
+              mode='date'
+            />                    
+
+            <TouchableOpacity onPress={this.showDateTimePicker} >
+              <Text >Select birthday {this.transformaData(this.state.birthday)}</Text>
+            </TouchableOpacity>
+            {/*<DatePicker
               date={this.state.birthday}
               mode="date"
               placeholder="Select date of birth"
-              format="DD-MM-YYYY"
+              format="MM-DD-YYYY"
               minDate="01-01-1919"
-              maxDate="31-12-2009"
+              maxDate="12-31-2009"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
@@ -159,7 +211,7 @@ export default class Register extends Component {
                 }
               }}
               onDateChange={date => { this.setState({ birthday: date }) }}
-            />
+            />*/}
           </View>
         </View>
         <View style={styles.seccioBotons}>
@@ -190,7 +242,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#7BF0E6',
   },
   textinput: {
-    flex: 3,
+    flex: 8,
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#7BF0E6',

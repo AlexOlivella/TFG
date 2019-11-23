@@ -23,6 +23,8 @@ import Menstruacio from './screens/Menstruacio'
 import Simptomes from './screens/Simptomes'
 import Summary from './screens/Summary'
 import HoraMigranya from './screens/HoraMigranya'
+import LlistaPacients from './screens/LlistaPacients'
+
 
 const AuthStack = createStackNavigator(
   {
@@ -70,11 +72,17 @@ const Profile = createStackNavigator({
   UpdateEmailPass:{screen: UpdateEmailPass}
 })
 
+const LlistaPac = createDrawerNavigator({
+  LlistaPacients:{screen:LlistaPacients}
+})
+
+
 const MainDrawer = createDrawerNavigator({
   MainTabs: MainTabs,
   Profile: Profile,
   Calendar: {screen:Calendar},
   Weather: {screen:Weather},
+  Pacients: LlistaPac
   //LogOut:{screen:LogOut},
   
 }, 

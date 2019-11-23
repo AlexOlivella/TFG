@@ -2,13 +2,19 @@ import firebase from './../src/config';
 
 const db = firebase.firestore();
 
-export async function createUser(username, password, email, gender, birthday) {
+export async function createUser(username, password, email, gender, type, birthday) {
+	let docRef
 	return await firebase.auth().createUserWithEmailAndPassword(email, password).then((res) => {
 		//console.log("res: ", res)
-		db.collection('Users').doc(res.user.uid).set({
+		if (type == "Doctor") {
+			docRef = db.collection("Metges")
+		}
+		else docRef = db.collection("Pacients")
+		docRef.doc(res.user.uid).set({
 			username: username,
 			gender: gender,
 			birthday: birthday,
+			type: type
 		})
 		return { isError: false, error: "" };
 	}).catch((error) => {
@@ -33,9 +39,24 @@ export const logoutUser = () => {
 	//console.log('logoutUser has been called.')
 	firebase.auth().signOut();
 }
-
+export async function comprovarTipusUsuari(uid) {
+	var docRef = db.collection("Metges").doc(uid);
+	let resposta = false
+	await docRef.get().then(function (doc) {
+		if (doc.exists) {
+			console.log("Document data:", doc.data());
+			resposta = true
+		} else {
+			// doc.data() will be undefined in this case
+			console.log("No such document!");
+		}
+	}).catch(function (error) {
+		console.log("Error getting document:", error);
+	});
+	return resposta;
+}
 export async function readUserData(uid) {
-	var docRef = db.collection("Users").doc(uid);
+	var docRef = db.collection("Pacients").doc(uid);
 	//console.log(uid, docRef)
 	let responseUser = await docRef.get().then(async function (doc) {
 		if (doc.exists) {
@@ -43,13 +64,32 @@ export async function readUserData(uid) {
 				username: doc.data().username,
 				gender: doc.data().gender,
 				birthday: doc.data().birthday,
+				type: doc.data().type,
+
 			}
 			console.log("Document data:", doc.data());
 			return response;
 		} else {
-			// doc.data() will be undefined in this case
-			console.log("No such document!");
-			return false;
+			var docRef = db.collection("Metges").doc(uid);
+			//console.log(uid, docRef)
+			responseUser = await docRef.get().then(async function (doc) {
+				if (doc.exists) {
+					let response = {
+						username: doc.data().username,
+						gender: doc.data().gender,
+						birthday: doc.data().birthday,
+						type: doc.data().type,
+					}
+					console.log("Document data:", doc.data());
+					return response;
+				} else {
+					// doc.data() will be undefined in this case
+					console.log("No such document!");
+					return false;
+				}
+			}).catch(function (error) {
+				console.log("Error getting document:", error);
+			});
 		}
 	}).catch(function (error) {
 		console.log("Error getting document:", error);
@@ -58,15 +98,15 @@ export async function readUserData(uid) {
 	return responseUser;
 
 }
-
+/*
 export const updateSingleData = (email) => {
-	firebase.database().ref('users/').update({
+		firebase.database().ref('Pacients/').update({
 		email,
 	});
-}
+}*/
 
 export async function updateProfile(uid, newUsername, newGender, newBirthday) {
-	var docRef = db.collection("Users").doc(uid);
+	var docRef = db.collection("Pacients").doc(uid);
 	return await docRef.update({
 		username: newUsername,
 		gender: newGender,
@@ -81,7 +121,7 @@ export async function updateProfile(uid, newUsername, newGender, newBirthday) {
 }
 
 export async function createMigranya(uid, dIni, dFini, intensitat, zonaC, simpt, caus, menst, exerc, imped, medi) {
-	var docRef = db.collection("Users").doc(uid).collection("migranyes").doc(dIni);
+	var docRef = db.collection("Pacients").doc(uid).collection("migranyes").doc(dIni.toString());
 	return await docRef.set({
 		dataFinal: dFini,
 		intensitatDolor: intensitat,
@@ -101,17 +141,17 @@ export async function createMigranya(uid, dIni, dFini, intensitat, zonaC, simpt,
 
 export async function getMigranyes(uid) {
 	let result = []
-	var docRef = db.collection("Users").doc(uid).collection("migranyes")
+	var docRef = db.collection("Pacients").doc(uid).collection("migranyes")
 
-	await docRef.get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
+	await docRef.get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			// doc.data() is never undefined for query doc snapshots
 			console.log(doc.id, " => ", doc.data());
 			result.push(doc.id, doc.data())
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-	});
+		});
+	})
+		.catch(function (error) {
+			console.log("Error getting documents: ", error);
+		});
 	return result
 }
