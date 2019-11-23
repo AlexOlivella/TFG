@@ -1,9 +1,9 @@
 {
   "expoServerNgrokUrl": "https://y4-7tb.anonymous.prova2.exp.direct",
   "packagerNgrokUrl": "https://packager.y4-7tb.anonymous.prova2.exp.direct",
-  "ngrokPid": 11120,
+  "ngrokPid": 10292,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 10472,
+  "packagerPid": 9672,
   "devToolsPort": 19002
 }

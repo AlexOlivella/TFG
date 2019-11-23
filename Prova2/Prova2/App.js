@@ -24,7 +24,7 @@ import Simptomes from './screens/Simptomes'
 import Summary from './screens/Summary'
 import HoraMigranya from './screens/HoraMigranya'
 import LlistaPacients from './screens/LlistaPacients'
-
+import InfoPacient from './screens/InfoPacient'
 
 const AuthStack = createStackNavigator(
   {
@@ -72,8 +72,9 @@ const Profile = createStackNavigator({
   UpdateEmailPass:{screen: UpdateEmailPass}
 })
 
-const LlistaPac = createDrawerNavigator({
-  LlistaPacients:{screen:LlistaPacients}
+const LlistaPac = createStackNavigator({
+  LlistaPacients:{screen:LlistaPacients},
+  InfoPacient:{screen:InfoPacient}
 })
 
 

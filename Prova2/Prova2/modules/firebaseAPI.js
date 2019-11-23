@@ -155,3 +155,37 @@ export async function getMigranyes(uid) {
 		});
 	return result
 }
+
+export async function getPacientsFromMetge(uid_metge){
+	let result = []
+	var docRef = db.collection("Metges").doc(uid_metge).collection("llistaPacients")
+
+	await docRef.get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			// doc.data() is never undefined for query doc snapshots
+			console.log(doc.id, " => ", doc.data());
+			result.push(doc.id)
+		});
+	})
+		.catch(function (error) {
+			console.log("Error getting documents: ", error);
+		});
+	return result
+}
+
+export async function getDadesPacient(pacient_uid){
+	let result = []
+	var docRef = db.collection("Pacients").doc(pacient_uid)
+
+	await docRef.get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			// doc.data() is never undefined for query doc snapshots
+			console.log(doc.id, " => ", doc.data());
+			result.push(doc.id, doc.data())
+		});
+	})
+		.catch(function (error) {
+			console.log("Error getting documents: ", error);
+		});
+	return result
+}
