@@ -63,7 +63,7 @@ export default class LoginScreen extends Component {
       } else {
         navigate("Home")
         //this.props.navigation.navigate('MyProfile', {uid_user: user.uid})
-       // console.log(user)
+       // //console.log(user)
       }
     }
   }
@@ -107,7 +107,7 @@ export default class LoginScreen extends Component {
             <Button onPress={() => {
               this.setState({ contador: this.state.contador + 1 });
               this.developer();
-              ////console.log(this.state.contador)
+              //console.log(this.state.contador)
             }} title="Sign in"> </Button>
 
           </View>

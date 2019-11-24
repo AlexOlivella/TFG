@@ -40,7 +40,7 @@ export default class Summary extends Component {
         )
         ToastAndroid.show("Migraine added succesfully", ToastAndroid.SHORT)
 
-        console.log("summary")
+        //console.log("summary")
     }
     render() {
         var { navigation } = this.props;

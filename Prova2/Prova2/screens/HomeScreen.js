@@ -34,7 +34,7 @@ export default class HomeScreen extends Component {
 		var user = firebase.auth().currentUser;
 
 		var result = await FirebaseAPI.getMigranyes(user.uid)
-		console.log("resultat", result)
+		//console.log("resultat", result)
 		//console.log("hora Inici",result[0]);
 	}
 
@@ -42,10 +42,10 @@ export default class HomeScreen extends Component {
 		var user = firebase.auth().currentUser;
 
 		let resposta = await FirebaseAPI.comprovarTipusUsuari(user.uid)
-		console.log("resposta", resposta)
+		//console.log("resposta", resposta)
 	}
 	render() {
-		////console.log(this.props)
+		//console.log(this.props)
 		const { navigation } = this.props;
 		const uid_user = navigation.getParam('uid_user', 'NO-User');
 		var user = firebase.auth().currentUser;

@@ -30,7 +30,7 @@ export default class IntensitatDolor extends Component {
 
             }
         )
-        console.log("intensistat dolor")
+        //console.log("intensistat dolor")
     }
     render() {
 

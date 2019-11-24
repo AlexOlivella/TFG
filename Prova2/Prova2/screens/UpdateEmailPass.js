@@ -13,7 +13,7 @@ export default class Register extends Component {
         super(props);
         const { navigation } = this.props;
         const uid_user = navigation.state.params;
-        ////console.log(this.props)
+        //console.log(this.props)
         //console.log(user_email.email_user)
         this.state = {
             email: "",

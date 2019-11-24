@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { Header, Icon, SearchBar, List, ListItem, } from 'react-native-elements'
 
-export default class HomeScreen extends Component {
+export default class VinclePacientMetge extends Component {
 
 	constructor(props) {
 		super(props);
@@ -14,8 +14,6 @@ export default class HomeScreen extends Component {
 			llistaPacients: [],
 			loading: false,
 			search: '',
-			pendings:"",
-
 
 		};
 		this.arrayHolder = [];
@@ -29,37 +27,18 @@ export default class HomeScreen extends Component {
 	obrirDrawer = () => {
 		this.props.navigation.openDrawer();
 	}
-
-	async getPacients() {
+    async comprovaTipus(){
 		var user = firebase.auth().currentUser;
 
-		var result = await FirebaseAPI.getPacientsFromMetge(user.uid)
-		//console.log("resultat", result)
-		this.setState({ llistaPacients: result })
+		let resposta = await FirebaseAPI.comprovarTipusUsuari(user.uid)
+		//console.log("resposta", resposta)
 	}
-	async getPendings(){
-		var user = firebase.auth().currentUser;
-		var result = await FirebaseAPI.getPendings(user.uid)
-		console.log("Pendings", result)
-		this.setState({ pendings: result})
-	}
-
-
+	
 	componentDidMount() {
-		this.getPacients()
-		this.getPendings()
-	}
-	renderHeader = () => {
-		return <SearchBar
-			placeholder="Type Here..."
-			lightTheme
-			round
-			containerStyle={{ backgroundColor: '#7BF0E6' }}
-			inputContainerStyle={{ backgroundColor: 'white' }}
-			onChangeText={(itemValue) => this.setState({ search: itemValue })}
-			value={this.state.search} />;
-	};
-
+        this.comprovaTipus()
+        this.obteMetges();
+    }
+    
 	renderFooter = () => {
 		if (!this.state.loading) return null;
 
@@ -87,12 +66,27 @@ export default class HomeScreen extends Component {
 			/>
 		);
 	};
-	openPendings(){
-		this.props.navigation.navigate("Pendings")
-	}
-	obteDades(user_uid) {
-		this.props.navigation.navigate("InfoPacient", { pacient: user_uid })
-	}
+    agregarDoctor(uid_metge){
+        var user = firebase.auth().currentUser
+        Alert.alert("Add doctor", "Do you want to add this doctor?",
+         [
+            { text: 'Cancel', onPress: () => { return null } },
+            {
+                text: 'Confirm', onPress: () => {
+                    if(user.uid!=uid_metge)
+                    FirebaseAPI.addDoctor(user.uid, uid_metge)
+                    else alert("You can't add yourself as a doctor")
+                }
+            },
+        ],
+        { cancelable: false })
+    }
+    async obteMetges(){
+        let result = await FirebaseAPI.getAllMetges();
+        console.log("Metges", result)
+        this.setState({llistaPacients: result})
+    }
+    
 	render() {
 		//console.log(this.props)
 		const { navigation } = this.props;
@@ -107,15 +101,14 @@ export default class HomeScreen extends Component {
 						style={{ width: '100%' }}
 						placement="left"
 						leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-						centerComponent={{ text: 'Pacient list', style: { color: '#fff' } }}
-						rightComponent={ <Icon name='people' onPress={()=> this.openPendings()}/>}
+						centerComponent={{ text: 'Comunication', style: { color: '#fff' } }}
+						rightComponent={{ icon: '' }}
 					/>
 				</View>
-				<Text style={{fontSize: 40}}> Pendings: {this.state.pendings} </Text>
 				<FlatList
 					data={this.state.llistaPacients}
 					renderItem={({ item }) =>
-						<TouchableOpacity onPress={() => this.obteDades(item.uid)}>
+						<TouchableOpacity onPress={() => this.agregarDoctor(item.uid)}>
 							<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
 								title={item.nom}
 							/>

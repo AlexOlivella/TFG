@@ -44,7 +44,7 @@ export default class Impediments extends Component {
             if (this.state.selected[impediment])
                 impediments.push(impediment)
         }
-        console.log(impediments)
+        //console.log(impediments)
 
         if (impediments.length === 0)
             Alert.alert("Error", "Select at least 1 option")

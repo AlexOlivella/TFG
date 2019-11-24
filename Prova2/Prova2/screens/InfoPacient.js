@@ -14,25 +14,69 @@ export default class InfoPacient extends Component {
 
     constructor(props) {
         super(props);
-        
-        ////console.log(this.props)
+
+        //console.log(this.props)
         //console.log(user_email.email_user)
         this.state = {
-            uid: this.props.navigation.getParam("pacient")
+            uid: this.props.navigation.getParam("pacient"),
+            firstName: "",
+            lastName: "",
+            gender: "",
+            birthday: "",
+
         }
     }
 
     static navigationOptions = {
-        headerStyle:{
-            backgroundColor: '#3D6DCC'
+        headerStyle: {
+            backgroundColor: '#2089dc'
         }
+    }
+    componentDidMount() {
+        this.getInfoPacient()
+    }
+
+    async getInfoPacient() {
+        let result = await FirebaseAPI.getDadesPacient(this.state.uid)
+        console.log("result", result)
+        this.setState({
+            firstName: result.firstName,
+            lastName: result.lastName,
+            gender: result.gender,
+            birthday: result.birthday
+        })
+    }
+
+    obteMigranyes() {
+        this.props.navigation.navigate("LlistaMigranyes",
+            {
+                pacient: this.state.uid,
+            })
+    }
+    transformaData(time) {
+        if (time) {
+            let data = new Date(time);
+            var date = data.getDate(); //Current Date
+            var month = data.getMonth() + 1; //Current Month
+            var year = data.getFullYear(); //Current Year
+            
+            return date + '-' + month + '-' + year
+        }
+        else return ""
     }
 
     render() {
 
         return (
             <View style={styles.container}>
-                <Text>{this.state.uid}</Text>
+                <Text>First Name: {this.state.firstName}</Text>
+                <Text>Last Name: {this.state.lastName}</Text>
+                <Text>Gender: {this.state.gender}</Text>
+                <Text>Birthday: {this.transformaData(this.state.birthday)}</Text>
+                <TouchableOpacity onPress={() => this.obteMigranyes()}>
+                    <Text>Migraines</Text>
+                </TouchableOpacity>
+
             </View>
         );
     };

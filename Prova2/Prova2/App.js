@@ -25,6 +25,11 @@ import Summary from './screens/Summary'
 import HoraMigranya from './screens/HoraMigranya'
 import LlistaPacients from './screens/LlistaPacients'
 import InfoPacient from './screens/InfoPacient'
+import VinclePacientMetge from './screens/VinclePacientMetge'
+import Pendings from './screens/Pendings'
+import InfoMigranya from './screens/InfoMigranya'
+import LlistaMigranyes from './screens/LlistaMigranyes'
+
 
 const AuthStack = createStackNavigator(
   {
@@ -74,7 +79,10 @@ const Profile = createStackNavigator({
 
 const LlistaPac = createStackNavigator({
   LlistaPacients:{screen:LlistaPacients},
-  InfoPacient:{screen:InfoPacient}
+  InfoPacient:{screen:InfoPacient},
+  LlistaMigranyes:{screen:LlistaMigranyes},
+  InfoMigranya:{screen:InfoMigranya},
+  Pendings: {screen:Pendings},
 })
 
 
@@ -83,7 +91,8 @@ const MainDrawer = createDrawerNavigator({
   Profile: Profile,
   Calendar: {screen:Calendar},
   Weather: {screen:Weather},
-  Pacients: LlistaPac
+  Pacients: LlistaPac,
+  Comunication:{screen: VinclePacientMetge}
   //LogOut:{screen:LogOut},
   
 }, 

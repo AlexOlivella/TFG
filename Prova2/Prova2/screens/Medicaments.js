@@ -57,7 +57,7 @@ export default class Medicaments extends Component {
             if (this.state.selected[medicament])
                 medicaments.push(medicament)
         }
-        console.log(medicaments)
+        //console.log(medicaments)
 
         if (medicaments.length === 0)
             Alert.alert("Error", "Select at least 1 option")
@@ -78,7 +78,7 @@ export default class Medicaments extends Component {
 
                 }
             )
-            console.log("medicaments")
+            //console.log("medicaments")
         }
     }
     render() {

@@ -49,7 +49,7 @@ export default class Causes extends Component {
             if (this.state.selected[causa])
                 causes.push(causa)
         }
-        console.log(causes)
+        //console.log(causes)
 
         if (causes.length === 0)
             Alert.alert("Error", "Select at least 1 option")
@@ -66,7 +66,7 @@ export default class Causes extends Component {
 
                 }
             )
-            console.log("causes")
+            //console.log("causes")
         }
     }
     render() {

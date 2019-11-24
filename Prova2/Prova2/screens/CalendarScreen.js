@@ -32,7 +32,7 @@ export default class prova extends Component {
   render() {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
-    ////console.log(this.props)
+    //console.log(this.props)
     const { selectedStartDate } = this.state;
     const startDate = selectedStartDate ? selectedStartDate.toString() : '';
     return (
@@ -54,13 +54,13 @@ export default class prova extends Component {
           maxDate={'2012-05-30'}
           // Handler which gets executed on day press. Default = undefined
           onDayPress={day => {
-            console.log('selected day', day);
+            //console.log('selected day', day);
           }}
           // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
           monthFormat={'yyyy MM'}
           // Handler which gets executed when visible month changes in calendar. Default = undefined
           onMonthChange={month => {
-            console.log('month changed', month);
+            //console.log('month changed', month);
           }}
           // Hide month navigation arrows. Default = false
           hideArrows={true}

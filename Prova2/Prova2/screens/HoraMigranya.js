@@ -39,7 +39,7 @@ export default class HoraMigranya extends Component {
     };
 
     handleDatePicked2 = (date) => {
-        // console.log("A date final has been picked: ", date);
+        // //console.log("A date final has been picked: ", date);
         this.setState({ horaFinal: date.getTime() })
         this.hideDateTimePicker2();
 
@@ -78,9 +78,9 @@ export default class HoraMigranya extends Component {
             dataFinal: this.state.horaFinal
         })
 
-        console.log("dataInici:", this.state.horaInici)
-        console.log("datafinal:", this.state.horaFinal)
-        console.log("diferencia", this.state.horaFinal > new Date(this.state.horaInici))
+        //console.log("dataInici:", this.state.horaInici)
+        //console.log("datafinal:", this.state.horaFinal)
+        //console.log("diferencia", this.state.horaFinal > new Date(this.state.horaInici))
     }
     render() {
 

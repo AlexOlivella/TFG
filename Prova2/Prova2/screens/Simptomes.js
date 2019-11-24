@@ -58,7 +58,7 @@ export default class Simptomes extends Component {
             if (this.state.selected[simptoma])
                 simptomes.push(simptoma)
         }
-        console.log(simptomes)
+        //console.log(simptomes)
 
         if (simptomes.length === 0)
             Alert.alert("Error", "Select at least 1 option")
@@ -73,7 +73,7 @@ export default class Simptomes extends Component {
                     simptomes: simptomes
                 }
             )
-            console.log("simptomes")
+            //console.log("simptomes")
         }
     }
 

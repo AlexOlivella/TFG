@@ -1,52 +1,36 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { Header, Icon, SearchBar, List, ListItem, } from 'react-native-elements'
 
-export default class HomeScreen extends Component {
+export default class Pendings extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			llistaPacients: [],
-			loading: false,
-			search: '',
-			pendings:"",
-
-
-		};
-		this.arrayHolder = [];
-
+            llistaPendings: [],
+            refresh:"",
+        		};
 	}
 
-	static navigationOptions = {
-		header: null
+    static navigationOptions = {
+		headerStyle:{
+            backgroundColor: '#2089dc'
+        }
 	}
 
-	obrirDrawer = () => {
-		this.props.navigation.openDrawer();
-	}
-
-	async getPacients() {
+	async getPendings() {
 		var user = firebase.auth().currentUser;
 
-		var result = await FirebaseAPI.getPacientsFromMetge(user.uid)
-		//console.log("resultat", result)
-		this.setState({ llistaPacients: result })
+		var result = await FirebaseAPI.getPendingsFromMetge(user.uid)
+		console.log("resultat", result)
+		this.setState({ llistaPendings: result })
 	}
-	async getPendings(){
-		var user = firebase.auth().currentUser;
-		var result = await FirebaseAPI.getPendings(user.uid)
-		console.log("Pendings", result)
-		this.setState({ pendings: result})
-	}
-
-
+	
 	componentDidMount() {
-		this.getPacients()
 		this.getPendings()
 	}
 	renderHeader = () => {
@@ -87,12 +71,23 @@ export default class HomeScreen extends Component {
 			/>
 		);
 	};
-	openPendings(){
-		this.props.navigation.navigate("Pendings")
-	}
-	obteDades(user_uid) {
-		this.props.navigation.navigate("InfoPacient", { pacient: user_uid })
-	}
+	
+	
+    agregaPacient(uid_pacient){
+        var user = firebase.auth().currentUser
+        Alert.alert("Add pacient", "Do you want to add this pacient?",
+         [
+            { text: 'Cancel', onPress: () => { return null } },
+            {
+                text: 'Confirm', onPress: () => {
+                    FirebaseAPI.addPacient(user.uid, uid_pacient)
+                    this.setState({refresh: "hola"})
+                }
+            },
+        ],
+        { cancelable: false })
+    }
+
 	render() {
 		//console.log(this.props)
 		const { navigation } = this.props;
@@ -102,33 +97,16 @@ export default class HomeScreen extends Component {
 
 			<View style={styles.container}>
 				<StatusBar barStyle={"default"} />
-				<View>
-					<Header
-						style={{ width: '100%' }}
-						placement="left"
-						leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-						centerComponent={{ text: 'Pacient list', style: { color: '#fff' } }}
-						rightComponent={ <Icon name='people' onPress={()=> this.openPendings()}/>}
-					/>
-				</View>
-				<Text style={{fontSize: 40}}> Pendings: {this.state.pendings} </Text>
 				<FlatList
-					data={this.state.llistaPacients}
+					data={this.state.llistaPendings}
 					renderItem={({ item }) =>
-						<TouchableOpacity onPress={() => this.obteDades(item.uid)}>
+						<TouchableOpacity onPress={() => this.agregaPacient(item.uid)}>
 							<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
 								title={item.nom}
 							/>
 						</TouchableOpacity>
 					}
-					ListHeaderComponent={<SearchBar
-						placeholder="Type Here..."
-						lightTheme
-						round
-						containerStyle={{ backgroundColor: '#7BF0E6' }}
-						inputContainerStyle={{ backgroundColor: 'white' }}
-						onChangeText={(itemValue) => this.setState({ search: itemValue })}
-						value={this.state.search} />}
+					
 					ListFooterComponent={this.renderFooter}
 					ItemSeparatorComponent={this.renderSeparator}
 

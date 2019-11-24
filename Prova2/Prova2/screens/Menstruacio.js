@@ -34,7 +34,7 @@ export default class Menstruacio extends Component {
 
             }
         )
-        console.log("menstruacio")
+        //console.log("menstruacio")
     }
     render() {
 

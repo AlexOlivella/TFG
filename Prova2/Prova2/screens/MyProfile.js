@@ -14,21 +14,22 @@ export default class Register extends Component {
 
     constructor(props) {
         super(props);
-        const { navigation } = this.props;
-        const uid_user = navigation.state.params;
-        ////console.log(this.props)
+        //console.log(this.props)
         //console.log(user_email.email_user)
         this.state = {
             email: "",
-            username: "",
+            firstName: "",
+            lastName: "",
             gender: "",
             birthday: "",
-            uid: "",
         }
 
     };
     componentWillMount() {
         this.getUser();
+        console.ignoredYellowBox = [
+            'Setting a timer'
+        ]
     }
     static navigationOptions = {
         header: null
@@ -43,42 +44,46 @@ export default class Register extends Component {
     async getUser() {
         var user = firebase.auth().currentUser;
         //console.log("getUser", user)
-        if (user != null) {
-            let data = await FirebaseAPI.readUserData(user.uid)
-            console.log("Data: ", data);
-            this.setState({ uid: user.uid })
-            this.setState({
-                email: user.email,
-                username: data.username,
-                gender: data.gender,
-                birthday: this.state.birthday
-                
-            })
-            console.log("birthdy: " ,new Date(data.birthday))
-        }
+        let tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
+        let data = await FirebaseAPI.readUserData(user.uid, tipus)
+        console.log("Data: ", data);
+        this.setState({
+            email: user.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            gender: data.gender,
+            birthday: data.birthday
+
+        })
+
     }
 
     CheckTextInput = () => {
-        if (this.state.username != '') {
-            if (this.state.gender != '') {
-                if (this.state.birthday != '') {
-                    //alert('Success')
-                    return true;
+        if (this.state.firstName != '') {
+            if (this.state.lastName != '') {
+
+                if (this.state.gender != '') {
+                    if (this.state.birthday != '') {
+                        //alert('Success')
+                        return true;
+                    } else {
+                        alert('Please enter a birthday');
+                    }
                 } else {
-                    alert('Please enter a birthday');
+                    alert('Please enter a gender');
                 }
             } else {
-                alert('Please enter a gender');
+                alert('Please enter a last name');
             }
         } else {
-            alert('Please enter username');
+            alert('Please enter a first name');
         }
         return false;
     };
 
     obrirDrawer = () => {
-		this.props.navigation.openDrawer();
-	}
+        this.props.navigation.openDrawer();
+    }
     async updateProfile() {
         //this.updateEmail();
         //let contraCorrecte = this.updatePassword();
@@ -86,36 +91,37 @@ export default class Register extends Component {
         if (this.CheckTextInput()) {
             let resposta = await FirebaseAPI.updateProfile(
                 user.uid,
-                this.state.username, 
-                this.state.gender, 
+                this.state.firstName.trim(),
+                this.state.lastName.trim(),
+                this.state.gender,
                 this.state.birthday)
-            console.log("resposta: ", resposta)
+            //console.log("resposta: ", resposta)
         }
         ToastAndroid.show("Profile updated succesfully", ToastAndroid.SHORT)
     }
 
     showDateTimePicker = () => {
         this.setState({ isDateTimePickerVisible: true });
-      };
-    
-      hideDateTimePicker = () => {
+    };
+
+    hideDateTimePicker = () => {
         this.setState({ isDateTimePickerVisible: false });
-      };
-    
-      handleDatePicked = (date) => {
+    };
+
+    handleDatePicked = (date) => {
         //console.log("A date inicial has been picked: ", date);
         this.setState({ birthday: date.getTime() })
         this.hideDateTimePicker();
-    
-      };
+
+    };
 
     transformaData(time) {
         if (time) {
             let data = new Date(time);
             var date = data.getDate(); //Current Date
             var month = data.getMonth() + 1; //Current Month
-            var year = data.getFullYear() ; //Current Year
-            return date + '-' + month + '-' + year 
+            var year = data.getFullYear(); //Current Year
+            return date + '-' + month + '-' + year
         }
         else return ""
     }
@@ -126,22 +132,28 @@ export default class Register extends Component {
         return (
             <View style={styles.container}>
                 <Header
-						style={{width:'100%'}}
-						placement="left"
-						leftComponent={<Icon name='menu' onPress={ ()=> this.obrirDrawer()} />}
-						centerComponent={{ text: 'Change your profile', style: { color: '#fff' } }}
-					/>
-                
+                    style={{ width: '100%' }}
+                    placement="left"
+                    leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+                    centerComponent={{ text: 'Change your profile', style: { color: '#fff' } }}
+                />
+
                 <View style={styles.textView}>
                     <View style={styles.dades}>
                         <Text >Email</Text>
                         <Text>{this.state.email}</Text>
                     </View>
                     <View style={styles.dades}>
-                        <Text>Username</Text>
+                        <Text>First Name</Text>
                         <TextInput
-                            onChangeText={(v) => this.setState({ username: v.trim() })}>
-                            {this.state.username}</TextInput>
+                            onChangeText={(v) => this.setState({ firstName: v.trim() })}>
+                            {this.state.firstName}</TextInput>
+                    </View>
+                    <View style={styles.dades}>
+                        <Text>Last Name</Text>
+                        <TextInput
+                            onChangeText={(v) => this.setState({ lastName: v.trim() })}>
+                            {this.state.lastName}</TextInput>
                     </View>
                     <View style={styles.dades}>
                         <Text>Gender</Text>
@@ -161,18 +173,18 @@ export default class Register extends Component {
                         </View>
                     </View>
                     <View style={styles.dades}>
-                        <Text>Date of birthday</Text>
+                        <Text>Date of birth</Text>
                         <View style={{ width: "50%" }}>
-                        <DateTimePicker
-              isVisible={this.state.isDateTimePickerVisible}
-              onConfirm={this.handleDatePicked}
-              onCancel={this.hideDateTimePicker}
-              mode='date'
-            />                    
+                            <DateTimePicker
+                                isVisible={this.state.isDateTimePickerVisible}
+                                onConfirm={this.handleDatePicked}
+                                onCancel={this.hideDateTimePicker}
+                                mode='date'
+                            />
 
-            <TouchableOpacity onPress={this.showDateTimePicker} >
-              <Text >Select birthday {this.transformaData(this.state.birthday)}</Text>
-            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.showDateTimePicker} >
+                                <Text >Select birthday {this.transformaData(this.state.birthday)}</Text>
+                            </TouchableOpacity>
                         </View>
 
                     </View>

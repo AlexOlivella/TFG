@@ -62,7 +62,7 @@ export default class ZonaCap extends Component {
             if (this.state.selected[pain])
                 zonesCap.push(pain)
         }
-        console.log(zonesCap)
+        //console.log(zonesCap)
 
         if (zonesCap.length === 0)
             Alert.alert("Error", "Select at least 1 option")
@@ -77,7 +77,7 @@ export default class ZonaCap extends Component {
                     zonaCap: zonesCap
                 }
             )
-            console.log("zonacap")
+            //console.log("zonacap")
         }
 
 
@@ -86,7 +86,7 @@ export default class ZonaCap extends Component {
     render() {
         var { navigation } = this.props;
 
-        // console.log("STATE", this.state)
+        // //console.log("STATE", this.state)
         return (
             <View style={styles.container}>
                 <Header

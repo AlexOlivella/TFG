@@ -11,7 +11,8 @@ export default class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      firstName: "",
+      lastName: "",
       password: "",
       birthday: "",
       gender: "",
@@ -42,34 +43,38 @@ export default class Register extends Component {
 
   CheckTextInput = () => {
     //Handler for the Submit onPress
-    if (this.state.username != '') {
+    if (this.state.firstName != '') {
       //Check for the Name TextInput
-      if (this.state.password != '') {
-        //Check for the Email TextInput
-        if (this.state.email != '') {
-          if (this.state.gender != '') {
-            if (this.state.type != '') {
-              if (this.state.birthday != '') {
-                //alert('Success')
-                return true;
-              } else {
-                alert('Please enter a birthday');
+      if (this.state.firstName != '') {
+        if (this.state.password != '') {
+          //Check for the Email TextInput
+          if (this.state.email != '') {
+            if (this.state.gender != '') {
+              if (this.state.type != '') {
+                if (this.state.birthday != '') {
+                  //alert('Success')
+                  return true;
+                } else {
+                  alert('Please enter a birthday');
+                }
               }
-            }
-            else {
-              alert("Please enter a type of user")
+              else {
+                alert("Please enter a type of user")
+              }
+            } else {
+              alert('Please enter a gender');
             }
           } else {
-            alert('Please enter a gender');
+            alert('Please enter email');
           }
         } else {
-          alert('Please enter email');
+          alert('Please enter password');
         }
       } else {
-        alert('Please enter password');
+        alert('Please enter last name');
       }
     } else {
-      alert('Please enter username');
+      alert('Please enter first name');
     }
     return false;
   };
@@ -78,13 +83,14 @@ export default class Register extends Component {
     var navigate = navigation.navigate;
     if (this.CheckTextInput()) {
       let response = await FirebaseAPI.createUser(
-        this.state.username.trim(),
+        this.state.firstName.trim(),
+        this.state.lastName.trim(),
         this.state.password,
         this.state.email.trim(),
         this.state.gender,
         this.state.type,
         this.state.birthday);
-      console.log("birthday", this.state.birthday)
+      //console.log("birthday", this.state.birthday)
       if (response.isError) {
         //if(response.error == 200)
         if (response.error.code == "auth/invalid-email") {
@@ -102,17 +108,17 @@ export default class Register extends Component {
   }
   transformaData(time) {
     if (time) {
-        let data = new Date(time);
-        var date = data.getDate(); //Current Date
-        var month = data.getMonth() + 1; //Current Month
-        var year = data.getFullYear() ; //Current Year
-        return date + '-' + month + '-' + year 
+      let data = new Date(time);
+      var date = data.getDate(); //Current Date
+      var month = data.getMonth() + 1; //Current Month
+      var year = data.getFullYear(); //Current Year
+      return date + '-' + month + '-' + year
     }
     else return ""
-}
+  }
   render() {
 
-    ////console.log(this.props)
+    //console.log(this.props)
 
     return (
       <View style={styles.container}>
@@ -122,9 +128,16 @@ export default class Register extends Component {
         <View style={styles.textinput}>
           <View style={{ width: "100%" }}>
             <TextField
-              label="Username"
-              onChangeText={username => this.setState({ username })}
-              value={this.state.username}
+              label="First name"
+              onChangeText={firstName => this.setState({ firstName })}
+              value={this.state.firstName}
+            />
+          </View>
+          <View style={{ width: "100%" }}>
+            <TextField
+              label="Last name"
+              onChangeText={lastName => this.setState({ lastName })}
+              value={this.state.lastName}
             />
           </View>
 
@@ -178,7 +191,7 @@ export default class Register extends Component {
               onConfirm={this.handleDatePicked}
               onCancel={this.hideDateTimePicker}
               mode='date'
-            />                    
+            />
 
             <TouchableOpacity onPress={this.showDateTimePicker} >
               <Text >Select birthday {this.transformaData(this.state.birthday)}</Text>

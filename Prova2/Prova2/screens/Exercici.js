@@ -39,7 +39,7 @@ export default class Exercici extends Component {
                 exercicis: exercici
             }
         )
-        console.log("exercici")
+        //console.log("exercici")
 
         //}
         /* else{

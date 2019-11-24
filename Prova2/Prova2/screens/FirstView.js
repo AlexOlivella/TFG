@@ -40,7 +40,7 @@ export default class LoginScreen extends Component {
   render() {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
-    ////console.log(this.props)
+    //console.log(this.props)
     if (this.state.isLoading) {
       this.handleLoad();
       return (
