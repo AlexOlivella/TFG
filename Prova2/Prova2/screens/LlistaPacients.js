@@ -87,8 +87,12 @@ export default class HomeScreen extends Component {
 			/>
 		);
 	};
+	refresh(){
+		this.getPacients()
+		this.getPendings()	
+	}
 	openPendings(){
-		this.props.navigation.navigate("Pendings")
+		this.props.navigation.navigate("Pendings", {refresh: ()=> this.refresh()})
 	}
 	obteDades(user_uid) {
 		this.props.navigation.navigate("InfoPacient", { pacient: user_uid })

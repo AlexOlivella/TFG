@@ -12,7 +12,7 @@ export default class Pendings extends Component {
 		super(props);
 		this.state = {
             llistaPendings: [],
-            refresh:"",
+            refresh:this.props.navigation.state.params.refresh(),
         		};
 	}
 
@@ -80,8 +80,11 @@ export default class Pendings extends Component {
             { text: 'Cancel', onPress: () => { return null } },
             {
                 text: 'Confirm', onPress: () => {
-                    FirebaseAPI.addPacient(user.uid, uid_pacient)
-                    this.setState({refresh: "hola"})
+					FirebaseAPI.addPacient(user.uid, uid_pacient)
+					this.props.navigation.state.params.refresh()
+					this.getPendings()
+
+
                 }
             },
         ],

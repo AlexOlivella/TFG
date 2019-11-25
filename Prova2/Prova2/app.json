@@ -1,8 +1,8 @@
 {
-  "name": "Prova2",
-  "displayName": "Prova2",
+  "name": "TFG",
+  "displayName": "TFG",
   "expo": {
-    "name": "Prova2",
+    "name": "TFG",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
     "sdkVersion": "34.0.0",

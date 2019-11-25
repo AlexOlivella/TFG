@@ -68,6 +68,7 @@ export default class LlistaMigranyes extends Component {
 
     transformaData(time) {
         if (time) {
+            time = parseInt(time)
             let data = new Date(time);
             var date = data.getDate(); //Current Date
             var month = data.getMonth() + 1; //Current Month
@@ -97,7 +98,7 @@ export default class LlistaMigranyes extends Component {
                     renderItem={({ item }) =>
                         <TouchableOpacity onPress={() => this.obteDades(item)}>
                             <ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
-                                title={item}
+                                title={this.transformaData(item)}
                             />
                         </TouchableOpacity>
                     }
