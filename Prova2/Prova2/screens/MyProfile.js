@@ -183,7 +183,7 @@ export default class Register extends Component {
                             />
 
                             <TouchableOpacity onPress={this.showDateTimePicker} >
-                                <Text >Select birthday {this.transformaData(this.state.birthday)}</Text>
+                                <Text >{this.transformaData(this.state.birthday)}</Text>
                             </TouchableOpacity>
                         </View>
 

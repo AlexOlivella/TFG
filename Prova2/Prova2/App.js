@@ -23,9 +23,8 @@ import Menstruacio from './screens/Menstruacio'
 import Simptomes from './screens/Simptomes'
 import Summary from './screens/Summary'
 import HoraMigranya from './screens/HoraMigranya'
-import LlistaPacients from './screens/LlistaPacients'
+import LlistaData from './screens/LlistaUsuaris'
 import InfoPacient from './screens/InfoPacient'
-import VinclePacientMetge from './screens/VinclePacientMetge'
 import Pendings from './screens/Pendings'
 import InfoMigranya from './screens/InfoMigranya'
 import LlistaMigranyes from './screens/LlistaMigranyes'
@@ -77,8 +76,8 @@ const Profile = createStackNavigator({
   UpdateEmailPass:{screen: UpdateEmailPass}
 })
 
-const LlistaPac = createStackNavigator({
-  LlistaPacients:{screen:LlistaPacients},
+const LlistaUsuaris = createStackNavigator({
+  LlistaData:{screen:LlistaData},
   InfoPacient:{screen:InfoPacient},
   LlistaMigranyes:{screen:LlistaMigranyes},
   InfoMigranya:{screen:InfoMigranya},
@@ -91,8 +90,8 @@ const MainDrawer = createDrawerNavigator({
   Profile: Profile,
   Calendar: {screen:Calendar},
   Weather: {screen:Weather},
-  Pacients: LlistaPac,
-  Comunication:{screen: VinclePacientMetge}
+  Communication: LlistaUsuaris,
+  
   //LogOut:{screen:LogOut},
   
 }, 
