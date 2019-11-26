@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
@@ -31,21 +31,25 @@ export default class LlistaUsuaris extends Component {
 	}
 	componentWillMount() {
 		this.comprovarTipus()
-		this.getDades()
+
 	}
+	
 	refresh() {
 		this.comprovarTipus()
-		this.getDades()
+		
 
 	}
 	async comprovarTipus() {
 		var user = firebase.auth().currentUser;
 		resposta = await FirebaseAPI.comprovarTipusUsuari(user.uid)
-		console.log("Tipus d'usuari", resposta)
+		//console.log("Tipus d'usuari", resposta)
 		this.setState({ tipus: resposta })
+		this.getDades()
 	}
 
-
+	openAllDoctors(){
+		this.props.navigation.navigate("LlistaTotsDoctors", { refresh: () => this.refresh() })
+	}
 	openPendings() {
 		this.props.navigation.navigate("Pendings", { refresh: () => this.refresh() })
 	}
@@ -53,20 +57,21 @@ export default class LlistaUsuaris extends Component {
 		this.props.navigation.navigate("InfoPacient", { pacient: user_uid })
 	}
 	async getDades() {
+		var user = firebase.auth().currentUser;
 		if (this.state.tipus == "Pacient") {
-			let doctors = await FirebaseAPI.getAllMetges();
-			console.log("Metges", doctors)
+			let doctors = await FirebaseAPI.getDoctorsAdded(user.uid);
+			//console.log("Metges", doctors)
 			this.setState({
 				llistaData: doctors,
 			})
 
 		}
 		else if (this.state.tipus == "Doctor") {
-			var user = firebase.auth().currentUser;
+			
 			var pacients = await FirebaseAPI.getPacientsFromMetge(user.uid)
 			this.setState({ llistaData: pacients })
-			var pending = await FirebaseAPI.getPendings(user.uid)
-			console.log("Pendings", pending)
+			var pending = await FirebaseAPI.getNumPendings(user.uid)
+			//console.log("Pendings", pending)
 			this.setState({
 				pendings: pending,
 			})
@@ -74,14 +79,12 @@ export default class LlistaUsuaris extends Component {
 	}
 	agregarDoctor(uid_metge) {
 		var user = firebase.auth().currentUser
-		Alert.alert("Add doctor", "Do you want to add this doctor?",
+		Alert.alert("Export migraines", "Do you want to export your migraines to this doctor?",
 			[
 				{ text: 'Cancel', onPress: () => { return null } },
 				{
 					text: 'Confirm', onPress: () => {
-						if (user.uid != uid_metge)
-							FirebaseAPI.addDoctor(user.uid, uid_metge)
-						else alert("You can't add yourself as a doctor")
+						Alert.alert("Export done")
 					}
 				},
 			],
@@ -125,6 +128,9 @@ export default class LlistaUsuaris extends Component {
 		}
 	}
 
+	
+
+
 	render() {
 		//console.log(this.props)
 		/*if (this.state.loading) return (<View> <ActivityIndicator size="large" color="black" /> </View>)
@@ -150,6 +156,7 @@ export default class LlistaUsuaris extends Component {
 					placement="left"
 					leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
 					centerComponent={{ text: 'Doctors list', style: { color: '#fff' } }}
+					rightComponent={<Icon name='add' onPress={()=> this.openAllDoctors()}/>}
 				/>
 			}
 

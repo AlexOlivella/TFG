@@ -65,7 +65,6 @@ export default class HomeScreen extends Component {
 				</View>
 				<Text style={{ fontSize: 30 }}> Welcome to the app </Text>
 				<Text style={{ fontSize: 30 }}> {user.email} </Text>
-				<Button onPress={() => this.getMigranyes()} title="Get migranyes"></Button>
 				<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
 			</View>
 		);

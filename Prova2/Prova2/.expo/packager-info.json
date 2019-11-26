@@ -1,9 +1,9 @@
 {
   "expoServerNgrokUrl": "https://um-28z.anonymous.prova2.exp.direct",
   "packagerNgrokUrl": "https://packager.um-28z.anonymous.prova2.exp.direct",
-  "ngrokPid": 4572,
+  "ngrokPid": 10436,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 600,
+  "packagerPid": 2356,
   "devToolsPort": 19002
 }

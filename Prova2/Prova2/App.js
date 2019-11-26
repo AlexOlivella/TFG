@@ -28,7 +28,7 @@ import InfoPacient from './screens/InfoPacient'
 import Pendings from './screens/Pendings'
 import InfoMigranya from './screens/InfoMigranya'
 import LlistaMigranyes from './screens/LlistaMigranyes'
-
+import LlistaTotsDoctors from './screens/LlistaTotsDoctors'
 
 const AuthStack = createStackNavigator(
   {
@@ -82,6 +82,7 @@ const LlistaUsuaris = createStackNavigator({
   LlistaMigranyes:{screen:LlistaMigranyes},
   InfoMigranya:{screen:InfoMigranya},
   Pendings: {screen:Pendings},
+  LlistaTotsDoctors:{screen: LlistaTotsDoctors}
 })
 
 

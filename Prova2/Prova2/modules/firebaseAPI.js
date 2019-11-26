@@ -51,19 +51,19 @@ export async function comprovarTipusUsuari(uid) {
 			docRef = db.collection("Pacients").doc(uid);
 			await docRef.get().then(function (doc) {
 				if (doc.exists) {
-					console.log("Document data:", doc.data());
+					//console.log("Document data:", doc.data());
 					resposta = doc.data().type
 				} else {
 					// doc.data() will be undefined in this case
-					console.log("No such document!");
+					//console.log("No such document!");
 				}
 			}).catch(function (error) {
-				console.log("Error getting document:", error);
+				//console.log("Error getting document:", error);
 			});
 			return resposta;
 		}
 	}).catch(function (error) {
-		console.log("Error getting document:", error);
+		//console.log("Error getting document:", error);
 	});
 	return resposta;
 }
@@ -77,14 +77,14 @@ export async function readUserData(uid, tipus) {
 	let response
 	await docRef.get().then(function (doc) {
 		if (doc.exists) {
-			console.log("Document data:", doc.data());
+			//console.log("Document data:", doc.data());
 			response = doc.data();
 		} else {
 			// doc.data() will be undefined in this case
-			console.log("No such document!");
+			//console.log("No such document!");
 		}
 	}).catch(function (error) {
-		console.log("Error getting document:", error);
+		//console.log("Error getting document:", error);
 	});
 	return response
 }
@@ -165,7 +165,7 @@ export async function getPacientsFromMetge(uid_metge) {
 	return result
 }
 
-export async function getPendings(metge_uid) {
+export async function getNumPendings(metge_uid) {
 	let pendings = 0
 	var docRef = db.collection("Metges").doc(metge_uid).collection("llistaPacients")
 	await docRef.get().then(function (querySnapshot) {
@@ -181,8 +181,6 @@ export async function getPendings(metge_uid) {
 		});
 	return pendings
 }
-
-
 export async function getPendingsFromMetge(uid_metge) {
 	let result = []
 	var docRef = db.collection("Metges").doc(uid_metge).collection("llistaPacients")
@@ -200,12 +198,39 @@ export async function getPendingsFromMetge(uid_metge) {
 		});
 	return result
 }
-export async function getAllMetges() {
+export async function getDoctorsAdded(pacient_uid) {
 	let result = []
-	await db.collection("Metges").get().then(function (querySnapshot) {
+	let docRef = db.collection("Pacients").doc(pacient_uid).collection("llistaDoctors")
+	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
 			//console.log(doc.id, " => ", doc.data());
+			result.push({ uid: doc.uid, nom: doc.data().firstName + " " + doc.data().lastName })
+		});
+	});
+	return result
+}
+
+export async function getAllMetges() {
+	let result = []
+	var docRef = db.collection("Metges")
+	await docRef.get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			// doc.data() is never undefined for query doc snapshots
+			//console.log(doc.id, " => ", doc.data());
+			/*doc.forEach(function (query2) {
+				if (docRef.doc(pacient_uid))*/
+			result.push({ uid: doc.id, nom: doc.data().firstName + " " + doc.data().lastName })
+			//});
+		});
+	});
+	return result
+}
+export async function getLlistaDoctorsFromPacient(uid_pacient) {
+	let result = []
+	var docRef = db.collection("Pacients").doc(uid_pacient).collection("llistaDoctors")
+	await docRef.get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {	
 			result.push({ uid: doc.id, nom: doc.data().firstName + " " + doc.data().lastName })
 		});
 	});
@@ -213,13 +238,13 @@ export async function getAllMetges() {
 }
 
 export async function getDadesPacient(pacient_uid) {
-	let result 
+	let result
 	var docRef = db.collection("Pacients").doc(pacient_uid)
 
 	await docRef.get().then(function (doc) {
 		if (doc.exists) {
-			console.log("Document data:", doc.data());
-			result= doc.data()
+			//console.log("Document data:", doc.data());
+			result = doc.data()
 		} else {
 			// doc.data() will be undefined in this case
 			//console.log("No such document!");
@@ -251,28 +276,33 @@ export async function getInfoMigranya(pacient_uid, data_migranya) {
 			result = doc.data()
 		} else {
 			// doc.data() will be undefined in this case
-			console.log("No such document!");
+			//console.log("No such document!");
 		}
 	}).catch(function (error) {
-		console.log("Error getting document:", error);
+		//console.log("Error getting document:", error);
 	});
 	return result
 }
 
-export function addDoctor(pacient_uid, metge_uid) {
+
+export function addDoctor(pacient_uid, metge_uid, firstN, lastN) {
 	db.collection("Metges").doc(metge_uid).collection("llistaPacients").doc(pacient_uid).set({
+		firstName: firstN,
+		lastName: lastN,
 		estatSolicitud: "Pending"
 	});
 }
-export function addPacient(metge_uid, pacient_uid) {
+export function addPacient(metge_uid, pacient_uid, firstN, lastN) {
 	db.collection("Pacients").doc(pacient_uid).collection("llistaDoctors").doc(metge_uid).set({
-		doctor: metge_uid
+		firstName: firstN,
+		lastName: lastN
+
 	});
 	return db.collection("Metges").doc(metge_uid).collection("llistaPacients").doc(pacient_uid).update({
 		estatSolicitud: "Accepted"
 	})
 		.then(function () {
-			console.log("Document successfully updated!");
+			//console.log("Document successfully updated!");
 		})
 		.catch(function (error) {
 			// The document probably doesn't exist.
