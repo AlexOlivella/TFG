@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import firebase from 'firebase'
 import { Header } from 'react-native-elements';
@@ -25,6 +25,7 @@ export default class InfoMigranya extends Component {
             exercicis:"",
             impediments:"",
             medicaments:"",
+            isLoaded: false,
         }
     }
     static navigationOptions = {
@@ -37,7 +38,8 @@ export default class InfoMigranya extends Component {
         this.getInfoMigranya()
     }
     async getInfoMigranya() {
-        let result = await FirebaseAPI.getInfoMigranya(this.state.uid, this.state.migranya)
+        
+        let result = await FirebaseAPI.getInfoMigranya(this.state.uid, this.state.migranya, "Pacient")
         //console.log("Migranya " + this.state.migranya + " : ", result)
         this.setState({
             dataInici: this.state.migranya,
@@ -49,11 +51,12 @@ export default class InfoMigranya extends Component {
             impediments: result.impediments,
             exercicis: result.exercicis,
             menstruacio: result.menstruacio,
-            medicaments: result.medicaments
+            medicaments: result.medicaments, 
+            isLoaded: true
         })
     }
     render() {
-        
+        if (!this.state.isLoaded) return (<View style={[styles.container, {justifyContent: 'center'}]}><ActivityIndicator  size="large" /></View>)
         return (
             <View style={styles.container}>
                 <View>

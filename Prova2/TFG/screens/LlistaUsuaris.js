@@ -12,7 +12,7 @@ export default class LlistaUsuaris extends Component {
 		super(props);
 		this.state = {
 			llistaData: [],
-			loading: false,
+			isLoaded: false,
 			search: '',
 			pendings: "",
 			tipus: ""
@@ -33,10 +33,10 @@ export default class LlistaUsuaris extends Component {
 		this.comprovarTipus()
 
 	}
-	
+
 	refresh() {
 		this.comprovarTipus()
-		
+
 
 	}
 	async comprovarTipus() {
@@ -47,7 +47,7 @@ export default class LlistaUsuaris extends Component {
 		this.getDades()
 	}
 
-	openAllDoctors(){
+	openAllDoctors() {
 		this.props.navigation.navigate("LlistaTotsDoctors", { refresh: () => this.refresh() })
 	}
 	openPendings() {
@@ -63,17 +63,19 @@ export default class LlistaUsuaris extends Component {
 			//console.log("Metges", doctors)
 			this.setState({
 				llistaData: doctors,
+				isLoaded: true,
 			})
 
 		}
 		else if (this.state.tipus == "Doctor") {
-			
+
 			var pacients = await FirebaseAPI.getPacientsFromMetge(user.uid)
 			this.setState({ llistaData: pacients })
 			var pending = await FirebaseAPI.getNumPendings(user.uid)
 			//console.log("Pendings", pending)
 			this.setState({
 				pendings: pending,
+				isLoaded: true,
 			})
 		}
 	}
@@ -128,71 +130,72 @@ export default class LlistaUsuaris extends Component {
 		}
 	}
 
-	
+
 
 
 	render() {
 		//console.log(this.props)
 		/*if (this.state.loading) return (<View> <ActivityIndicator size="large" color="black" /> </View>)
 		else {*/
-			const { navigation } = this.props;
-			const uid_user = navigation.getParam('uid_user', 'NO-User');
-			var user = firebase.auth().currentUser;
-			let pending
-			let header
-			if (this.state.tipus == "Doctor") {
-				pending = <Text style={{ fontSize: 40 }}> Pendings: {this.state.pendings} </Text>
-				header = <Header
-					style={{ width: '100%' }}
-					placement="left"
-					leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-					centerComponent={{ text: 'Pacient list', style: { color: '#fff' } }}
-					rightComponent={<Icon name='people' onPress={() => this.openPendings()} />}
-				/>
-			}
-			else if (this.state.tipus == "Pacient") {
-				header = <Header
-					style={{ width: '100%' }}
-					placement="left"
-					leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-					centerComponent={{ text: 'Doctors list', style: { color: '#fff' } }}
-					rightComponent={<Icon name='add' onPress={()=> this.openAllDoctors()}/>}
-				/>
-			}
+		const { navigation } = this.props;
+		const uid_user = navigation.getParam('uid_user', 'NO-User');
+		var user = firebase.auth().currentUser;
+		let pending
+		let header
+		if (this.state.tipus == "Doctor") {
+			pending = <Text style={{ fontSize: 40 }}> Pendings: {this.state.pendings} </Text>
+			header = <Header
+				style={{ width: '100%' }}
+				placement="left"
+				leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+				centerComponent={{ text: 'Pacient list', style: { color: '#fff' } }}
+				rightComponent={<Icon name='people' onPress={() => this.openPendings()} />}
+			/>
+		}
+		else if (this.state.tipus == "Pacient") {
+			header = <Header
+				style={{ width: '100%' }}
+				placement="left"
+				leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+				centerComponent={{ text: 'Doctors list', style: { color: '#fff' } }}
+				rightComponent={<Icon name='add' onPress={() => this.openAllDoctors()} />}
+			/>
+		}
+		if (!this.state.isLoaded) return (<View style={[styles.container, {justifyContent: 'center'}]}><ActivityIndicator  size="large" /></View>)
+		if(this.state.llistaData.length==0) return (<View style={[styles.container, {justifyContent: 'center'}]}><Text>No such document!</Text></View>)
+		return (
 
-			return (
-
-				<View style={styles.container}>
-					<StatusBar barStyle={"default"} />
-					<View>
-						{header}
-					</View>
-					{pending}
-					<FlatList
-						data={this.state.llistaData}
-						renderItem={({ item }) =>
-							<TouchableOpacity onPress={() => this.clickOnUser(item.uid)}>
-								<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
-									title={item.nom}
-								/>
-							</TouchableOpacity>
-						}
-						ListHeaderComponent={<SearchBar
-							placeholder="Type Here..."
-							lightTheme
-							round
-							containerStyle={{ backgroundColor: '#7BF0E6' }}
-							inputContainerStyle={{ backgroundColor: 'white' }}
-							onChangeText={(itemValue) => this.setState({ search: itemValue })}
-							value={this.state.search} />}
-						ListFooterComponent={this.renderFooter}
-						ItemSeparatorComponent={this.renderSeparator}
-
-						keyExtractor={item => item.uid}
-					/>
-
+			<View style={styles.container}>
+				<StatusBar barStyle={"default"} />
+				<View>
+					{header}
 				</View>
-			);
+				{pending}
+				<FlatList
+					data={this.state.llistaData}
+					renderItem={({ item }) =>
+						<TouchableOpacity onPress={() => this.clickOnUser(item.uid)}>
+							<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
+								title={item.nom}
+							/>
+						</TouchableOpacity>
+					}
+					ListHeaderComponent={<SearchBar
+						placeholder="Type Here..."
+						lightTheme
+						round
+						containerStyle={{ backgroundColor: '#7BF0E6' }}
+						inputContainerStyle={{ backgroundColor: 'white' }}
+						onChangeText={(itemValue) => this.setState({ search: itemValue })}
+						value={this.state.search} />}
+					ListFooterComponent={this.renderFooter}
+					ItemSeparatorComponent={this.renderSeparator}
+
+					keyExtractor={item => item.uid}
+				/>
+
+			</View>
+		);
 		//}
 	}
 }

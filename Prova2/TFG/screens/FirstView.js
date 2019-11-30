@@ -44,7 +44,7 @@ export default class LoginScreen extends Component {
     if (this.state.isLoading) {
       this.handleLoad();
       return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#7BF0E6" }}>
           <ActivityIndicator size="large" color="black" />
         </View>
 

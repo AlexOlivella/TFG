@@ -6,15 +6,16 @@ import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { Header, Icon, SearchBar, List, ListItem, } from 'react-native-elements'
 
-export default class LlistaTotsDoctors extends Component {
+export default class Pendings extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			llistaDoctors: [],
+			llistaPendings: [],
 			refresh: this.props.navigation.state.params.refresh(),
 			firstName: "",
 			lastName: "",
+			isLoaded: false,
 		};
 	}
 
@@ -23,39 +24,31 @@ export default class LlistaTotsDoctors extends Component {
 			backgroundColor: '#2089dc'
 		}
 	}
+
+	async getPendings() {
+		var user = firebase.auth().currentUser;
+		var result = await FirebaseAPI.getPendingsFromMetge(user.uid)
+		//console.log("resultat", result)
+		this.setState({ llistaPendings: result, isLoaded:true })
+	}
 	async getDataUser() {
 		var user = firebase.auth().currentUser
-		let data = await FirebaseAPI.readUserData(user.uid, "Pacient")
+		let tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
+		let data = await FirebaseAPI.readUserData(user.uid, tipus)
 		this.setState({
 			firstName: data.firstName,
-			lastName: data.lastName
+			lastName: data.lastName,
 		})
+		//console.log("firstname:", this.state.firstName)
+
+		//console.log("lastName:", this.state.lastName)
+
 	}
-
-	async getAllMetges() {
-		var user = firebase.auth().currentUser
-		let doctors = await FirebaseAPI.getAllMetges();
-		let doctorsDinsUsuari = await FirebaseAPI.getLlistaDoctorsFromPacient(user.uid)
-		console.log("Tots els metges", doctors)
-		console.log("Metges de l'usuari", doctorsDinsUsuari)
-		let result = []
-		for (var i = 0; i < doctors.length; i++) {
-			for (var j = 0; j < doctorsDinsUsuari.length; j++) {
-				if (doctors[i].uid != doctorsDinsUsuari[j].uid)
-					result.push({uid:doctors[i].uid, nom:doctors[i].nom})
-			}
-
-		}
-		console.log("Doctors finals: ", result)
-
-		this.setState({
-			llistaDoctors: result,
-		})
-	}
-
 	componentDidMount() {
-		this.getDataUser()
-		this.getAllMetges()
+		this.getDataUser();
+
+		this.getPendings()
+		
 	}
 	renderHeader = () => {
 		return <SearchBar
@@ -97,16 +90,16 @@ export default class LlistaTotsDoctors extends Component {
 	};
 
 
-	agregaDoctor(uid_metge) {
+	agregaPacient(uid_pacient) {
 		var user = firebase.auth().currentUser
-		Alert.alert("Add doctor", "Do you want to add this doctor?",
+		Alert.alert("Add pacient", "Do you want to add this pacient?",
 			[
 				{ text: 'Cancel', onPress: () => { return null } },
 				{
 					text: 'Confirm', onPress: () => {
-						FirebaseAPI.addDoctor(user.uid, uid_metge, this.state.firstName, this.state.lastName)
+						FirebaseAPI.addPacient(user.uid, uid_pacient, this.state.firstName, this.state.lastName)
 						this.props.navigation.state.params.refresh()
-						this.getAllMetges()
+						this.getPendings()
 
 
 					}
@@ -120,14 +113,16 @@ export default class LlistaTotsDoctors extends Component {
 		const { navigation } = this.props;
 		const uid_user = navigation.getParam('uid_user', 'NO-User');
 		var user = firebase.auth().currentUser;
+		if (!this.state.isLoaded) return (<View style={[styles.container, {justifyContent: 'center'}]}><ActivityIndicator  size="large" /></View>)
+		if(this.state.llistaPendings.length==0) return (<View style={[styles.container, {justifyContent: 'center'}]}><Text>No such document!</Text></View>)
 		return (
 
 			<View style={styles.container}>
 				<StatusBar barStyle={"default"} />
 				<FlatList
-					data={this.state.llistaDoctors}
+					data={this.state.llistaPendings}
 					renderItem={({ item }) =>
-						<TouchableOpacity onPress={() => this.agregaDoctor(item.uid)}>
+						<TouchableOpacity onPress={() => this.agregaPacient(item.uid)}>
 							<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
 								title={item.nom}
 							/>

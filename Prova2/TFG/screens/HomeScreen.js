@@ -30,14 +30,7 @@ export default class HomeScreen extends Component {
 	componentDidMount(){
 		this.comprovaTipus()
 	}
-	async getMigranyes() {
-		var user = firebase.auth().currentUser;
-
-		var result = await FirebaseAPI.getMigranyes(user.uid)
-		//console.log("resultat", result)
-		//console.log("hora Inici",result[0]);
-	}
-
+	
 	async comprovaTipus(){
 		var user = firebase.auth().currentUser;
 

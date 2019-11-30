@@ -9,6 +9,7 @@ export default class Summary extends Component {
     static navigationOptions = {
         header: null
     }
+    
     async next() {
         var { navigation } = this.props;
         var dataInici = navigation.getParam('dataInici');
@@ -22,6 +23,7 @@ export default class Summary extends Component {
         var impediments = navigation.getParam('impediments')
         var medicaments = navigation.getParam('medicaments')
         var user = firebase.auth().currentUser;
+        var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
         await FirebaseAPI.createMigranya(
             user.uid,
             dataInici,
@@ -34,6 +36,7 @@ export default class Summary extends Component {
             exercicis,
             impediments,
             medicaments,
+            tipus,
         )
         this.props.navigation.navigate(
             "Home"

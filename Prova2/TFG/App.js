@@ -29,6 +29,9 @@ import Pendings from './screens/Pendings'
 import InfoMigranya from './screens/InfoMigranya'
 import LlistaMigranyes from './screens/LlistaMigranyes'
 import LlistaTotsDoctors from './screens/LlistaTotsDoctors'
+import MigranyesPropies from './screens/MigranyesPropies'
+import InfoMigranyesPropies from './screens/InfoMigranyesPropies'
+
 
 const AuthStack = createStackNavigator(
   {
@@ -85,13 +88,19 @@ const LlistaUsuaris = createStackNavigator({
   LlistaTotsDoctors:{screen: LlistaTotsDoctors}
 })
 
+const Migraines = createStackNavigator({
+  Migraines:{screen: MigranyesPropies},
+  InfoMigranyesPropies:{screen: InfoMigranyesPropies},
 
+})
 const MainDrawer = createDrawerNavigator({
   MainTabs: MainTabs,
-  Profile: Profile,
+  Migraines:Migraines,
   Calendar: {screen:Calendar},
   Weather: {screen:Weather},
   Communication: LlistaUsuaris,
+  Profile: Profile,
+
   
   //LogOut:{screen:LogOut},
   

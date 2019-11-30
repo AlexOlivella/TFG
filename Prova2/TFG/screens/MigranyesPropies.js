@@ -6,7 +6,7 @@ import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { Header, Icon, SearchBar, List, ListItem, } from 'react-native-elements'
 
-export default class LlistaMigranyes extends Component {
+export default class MigranyesPropies extends Component {
 
     constructor(props) {
         super(props);
@@ -15,7 +15,8 @@ export default class LlistaMigranyes extends Component {
             loading: false,
             search: '',
             pendings: "",
-            uid: this.props.navigation.getParam("pacient"),
+
+            isLoaded: false
 
 
         };
@@ -25,17 +26,17 @@ export default class LlistaMigranyes extends Component {
 
 
     static navigationOptions = {
-		headerStyle:{
-            backgroundColor: '#2089dc'
-        }
-	}
+        header: null
+    }
     componentDidMount() {
         this.getMigranyes()
     }
     async getMigranyes() {
-        let result = await FirebaseAPI.getLlistaMigranyes(this.state.uid)
+        var user = firebase.auth().currentUser
+        var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
+        let result = await FirebaseAPI.getLlistaMigranyes(user.uid, tipus)
         console.log("Migranyes", result)
-        this.setState({ llistaMigranyes: result })
+        this.setState({ llistaMigranyes: result, isLoaded: true })
     }
 
     renderFooter = () => {
@@ -82,16 +83,28 @@ export default class LlistaMigranyes extends Component {
     }
 
     obteDades(migranya_id) {
-        this.props.navigation.navigate("InfoMigranya", { pacient: this.state.uid, migranya: migranya_id })
+        var user = firebase.auth().currentUser
+        this.props.navigation.navigate("InfoMigranyesPropies", { pacient: user.uid, migranya: migranya_id })
     }
+    obrirDrawer = () => {
+        this.props.navigation.openDrawer();
+      }
     render() {
         //console.log(this.props)
         const { navigation } = this.props;
         const uid_user = navigation.getParam('uid_user', 'NO-User');
         var user = firebase.auth().currentUser;
+        if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
+        if (this.state.llistaMigranyes.length == 0) return (<View style={[styles.container, { justifyContent: 'center' }]}><Text>No such document!</Text></View>)
         return (
 
             <View style={styles.container}>
+                <Header
+                    style={{ width: '100%' }}
+                    placement="left"
+                    leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+                    centerComponent={{ text: 'Migraines', style: { color: '#fff' } }}
+                />
                 <StatusBar barStyle={"default"} />
                 <FlatList
                     data={this.state.llistaMigranyes}
