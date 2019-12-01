@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator,SafeAreaView, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
@@ -16,7 +16,7 @@ export default class LlistaMigranyes extends Component {
             search: '',
             pendings: "",
             uid: this.props.navigation.getParam("pacient"),
-            isLoaded:false
+            isLoaded: false
 
 
         };
@@ -26,10 +26,10 @@ export default class LlistaMigranyes extends Component {
 
 
     static navigationOptions = {
-		headerStyle:{
+        headerStyle: {
             backgroundColor: '#2089dc'
         }
-	}
+    }
     componentDidMount() {
         this.getMigranyes()
     }
@@ -37,7 +37,7 @@ export default class LlistaMigranyes extends Component {
         var user = firebase.auth().currentUser
         var tipus = await FirebaseAPI.comprovarTipusUsuari(this.state.uid)
         let result = await FirebaseAPI.getLlistaMigranyes(this.state.uid, tipus)
-        this.setState({ llistaMigranyes: result, isLoaded:true })
+        this.setState({ llistaMigranyes: result, isLoaded: true })
     }
 
     renderFooter = () => {
@@ -91,35 +91,38 @@ export default class LlistaMigranyes extends Component {
         const { navigation } = this.props;
         const uid_user = navigation.getParam('uid_user', 'NO-User');
         var user = firebase.auth().currentUser;
-        if (!this.state.isLoaded) return (<View style={[styles.container, {justifyContent: 'center'}]}><ActivityIndicator  size="large" /></View>)
-		if(this.state.llistaMigranyes.length==0) return (<View style={[styles.container, {justifyContent: 'center'}]}><Text>No such document!</Text></View>)
+        if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
+        if (this.state.llistaMigranyes.length == 0) return (<View style={[styles.container, { justifyContent: 'center' }]}><Text>No such document!</Text></View>)
         return (
 
             <View style={styles.container}>
                 <StatusBar barStyle={"default"} />
-                <FlatList
-                    data={this.state.llistaMigranyes}
-                    renderItem={({ item }) =>
-                        <TouchableOpacity onPress={() => this.obteDades(item)}>
-                            <ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
-                                title={this.transformaData(item)}
-                            />
-                        </TouchableOpacity>
-                    }
-                    ListHeaderComponent={<SearchBar
-                        placeholder="Type Here..."
-                        lightTheme
-                        round
-                        containerStyle={{ backgroundColor: '#7BF0E6' }}
-                        inputContainerStyle={{ backgroundColor: 'white' }}
-                        onChangeText={(itemValue) => this.setState({ search: itemValue })}
-                        value={this.state.search} />}
-                    ListFooterComponent={this.renderFooter}
-                    ItemSeparatorComponent={this.renderSeparator}
+                <SafeAreaView style={{ flex: 1 }}>
+                    <ScrollView style={{ flex: 1 }}>
+                        <FlatList
+                            data={this.state.llistaMigranyes}
+                            renderItem={({ item }) =>
+                                <TouchableOpacity onPress={() => this.obteDades(item)}>
+                                    <ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
+                                        title={this.transformaData(item)}
+                                    />
+                                </TouchableOpacity>
+                            }
+                            ListHeaderComponent={<SearchBar
+                                placeholder="Type Here..."
+                                lightTheme
+                                round
+                                containerStyle={{ backgroundColor: '#7BF0E6' }}
+                                inputContainerStyle={{ backgroundColor: 'white' }}
+                                onChangeText={(itemValue) => this.setState({ search: itemValue })}
+                                value={this.state.search} />}
+                            ListFooterComponent={this.renderFooter}
+                            ItemSeparatorComponent={this.renderSeparator}
 
-                    keyExtractor={item => item}
-                />
-
+                            keyExtractor={item => item}
+                        />
+                    </ScrollView >
+                </SafeAreaView>
             </View>
         );
     }

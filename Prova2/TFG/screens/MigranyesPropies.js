@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, SafeAreaView, ScrollView, Alert, ToastAndroid } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
@@ -88,7 +88,34 @@ export default class MigranyesPropies extends Component {
     }
     obrirDrawer = () => {
         this.props.navigation.openDrawer();
-      }
+    }
+
+    createMigraine() {
+		var user = firebase.auth().currentUser;
+
+		this.props.navigation.navigate("HoraMigranya")
+		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
+    }
+    
+    async deleteMigranya(migranya_id){
+        var user = firebase.auth().currentUser
+        var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
+        console.log("delete migranya", user.uid, migranya_id, tipus)
+        Alert.alert(
+            "Delete migraine",
+            "Do you want to delete this migraine?",
+            [
+				{ text: 'Cancel', onPress: () => { return null } },
+				{
+					text: 'Confirm', onPress: async () => {
+                        await FirebaseAPI.deleteMigranya(user.uid, migranya_id, tipus)
+                        ToastAndroid.show("Migraine succesfully deleted", ToastAndroid.SHORT)
+					}
+				},
+			],
+			{ cancelable: false }
+        )
+    }
     render() {
         //console.log(this.props)
         const { navigation } = this.props;
@@ -104,31 +131,38 @@ export default class MigranyesPropies extends Component {
                     placement="left"
                     leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
                     centerComponent={{ text: 'Migraines', style: { color: '#fff' } }}
+                    rightComponent={<Icon name='add' onPress={()=> this.createMigraine()} />}
                 />
                 <StatusBar barStyle={"default"} />
-                <FlatList
-                    data={this.state.llistaMigranyes}
-                    renderItem={({ item }) =>
-                        <TouchableOpacity onPress={() => this.obteDades(item)}>
-                            <ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
-                                title={this.transformaData(item)}
-                            />
-                        </TouchableOpacity>
-                    }
-                    ListHeaderComponent={<SearchBar
-                        placeholder="Type Here..."
-                        lightTheme
-                        round
-                        containerStyle={{ backgroundColor: '#7BF0E6' }}
-                        inputContainerStyle={{ backgroundColor: 'white' }}
-                        onChangeText={(itemValue) => this.setState({ search: itemValue })}
-                        value={this.state.search} />}
-                    ListFooterComponent={this.renderFooter}
-                    ItemSeparatorComponent={this.renderSeparator}
+                <SafeAreaView style={{ flex: 1 }}>
+                    <ScrollView style={{ flex: 1 }}>
+                        <FlatList
+                            data={this.state.llistaMigranyes}
+                            renderItem={({ item }) =>
+                                <TouchableOpacity 
+                                onPress={() => this.obteDades(item)}
+                                onLongPress={()=> this.deleteMigranya(item)}
+                                >
+                                    <ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
+                                        title={this.transformaData(item)}
+                                    />
+                                </TouchableOpacity>
+                            }
+                            ListHeaderComponent={<SearchBar
+                                placeholder="Type Here..."
+                                lightTheme
+                                round
+                                containerStyle={{ backgroundColor: '#7BF0E6' }}
+                                inputContainerStyle={{ backgroundColor: 'white' }}
+                                onChangeText={(itemValue) => this.setState({ search: itemValue })}
+                                value={this.state.search} />}
+                            ListFooterComponent={this.renderFooter}
+                            ItemSeparatorComponent={this.renderSeparator}
 
-                    keyExtractor={item => item}
-                />
-
+                            keyExtractor={item => item}
+                        />
+                    </ScrollView>
+                </SafeAreaView>
             </View>
         );
     }

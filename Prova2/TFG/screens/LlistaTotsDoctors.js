@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert,SafeAreaView, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
@@ -43,7 +43,7 @@ export default class LlistaTotsDoctors extends Component {
 		for (var i = 0; i < doctors.length; i++) {
 			for (var j = 0; j < doctorsDinsUsuari.length; j++) {
 				if (doctors[i].uid != doctorsDinsUsuari[j].uid)
-					result.push({uid:doctors[i].uid, nom:doctors[i].nom})
+					result.push({ uid: doctors[i].uid, nom: doctors[i].nom })
 			}
 
 		}
@@ -51,7 +51,7 @@ export default class LlistaTotsDoctors extends Component {
 
 		this.setState({
 			llistaDoctors: result,
-			isLoaded:true
+			isLoaded: true
 		})
 	}
 
@@ -122,28 +122,31 @@ export default class LlistaTotsDoctors extends Component {
 		const { navigation } = this.props;
 		const uid_user = navigation.getParam('uid_user', 'NO-User');
 		var user = firebase.auth().currentUser;
-		if (!this.state.isLoaded) return (<View style={[styles.container, {justifyContent: 'center'}]}><ActivityIndicator  size="large" /></View>)
-		if(this.state.llistaDoctors.length==0) return (<View style={[styles.container, {justifyContent: 'center'}]}><Text>No such document!</Text></View>)
+		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
+		if (this.state.llistaDoctors.length == 0) return (<View style={[styles.container, { justifyContent: 'center' }]}><Text>No such document!</Text></View>)
 		return (
 
 			<View style={styles.container}>
 				<StatusBar barStyle={"default"} />
-				<FlatList
-					data={this.state.llistaDoctors}
-					renderItem={({ item }) =>
-						<TouchableOpacity onPress={() => this.agregaDoctor(item.uid)}>
-							<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
-								title={item.nom}
-							/>
-						</TouchableOpacity>
-					}
+				<SafeAreaView style={{ flex: 1 }}>
+					<ScrollView style={{ flex: 1 }}>
+						<FlatList
+							data={this.state.llistaDoctors}
+							renderItem={({ item }) =>
+								<TouchableOpacity onPress={() => this.agregaDoctor(item.uid)}>
+									<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
+										title={item.nom}
+									/>
+								</TouchableOpacity>
+							}
 
-					ListFooterComponent={this.renderFooter}
-					ItemSeparatorComponent={this.renderSeparator}
+							ListFooterComponent={this.renderFooter}
+							ItemSeparatorComponent={this.renderSeparator}
 
-					keyExtractor={item => item}
-				/>
-
+							keyExtractor={item => item}
+						/>
+					</ScrollView>
+				</SafeAreaView>
 			</View>
 		);
 	}

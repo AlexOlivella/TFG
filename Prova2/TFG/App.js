@@ -31,7 +31,7 @@ import LlistaMigranyes from './screens/LlistaMigranyes'
 import LlistaTotsDoctors from './screens/LlistaTotsDoctors'
 import MigranyesPropies from './screens/MigranyesPropies'
 import InfoMigranyesPropies from './screens/InfoMigranyesPropies'
-
+import InfoMigranyesCalendari from './screens/InfoMigranyesCalendari'
 
 const AuthStack = createStackNavigator(
   {
@@ -52,28 +52,6 @@ const AuthStack = createStackNavigator(
   }
 );
 
-const MainTabs = createMaterialBottomTabNavigator({
-  
-  Weather: {
-    screen: Weather,
-    navigationOptions: {
-      tabBarLabel: 'Weather',
-    },
-  },
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: {
-      tabBarLabel: 'Home',
-    },
-  },
-  Calendar: {
-    screen: Calendar,
-    navigationOptions: {
-      tabBarLabel: 'Calendar',
-    },
-  },
-});
-
 const Profile = createStackNavigator({
   MyProfile:{screen: MyProfile},
   UpdateEmailPass:{screen: UpdateEmailPass}
@@ -93,10 +71,15 @@ const Migraines = createStackNavigator({
   InfoMigranyesPropies:{screen: InfoMigranyesPropies},
 
 })
+
+const Calendari = createStackNavigator({
+  Calendar:{screen:Calendar},
+  InfoMigranyesCalendari:{screen:InfoMigranyesCalendari}
+})
 const MainDrawer = createDrawerNavigator({
-  MainTabs: MainTabs,
+  Home: {screen:HomeScreen},
   Migraines:Migraines,
-  Calendar: {screen:Calendar},
+  Calendar: Calendari,
   Weather: {screen:Weather},
   Communication: LlistaUsuaris,
   Profile: Profile,

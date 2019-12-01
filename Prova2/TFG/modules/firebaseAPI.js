@@ -134,7 +134,17 @@ export async function createMigranya(uid, dIni, dFini, intensitat, zonaC, simpt,
 	});
 }
 
+export async function deleteMigranya(uid, data_migranya, tipus){
+	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid).collection("migranyes").doc(data_migranya)
 
+	else if (tipus == "Pacient")
+		var docRef = db.collection("Pacients").doc(uid).collection("migranyes").doc(data_migranya)
+	await docRef.delete().then(function() {
+		console.log("Document successfully deleted!");
+	}).catch(function(error) {
+		console.error("Error removing document: ", error);
+	});
+}
 export async function getPacientsFromMetge(uid_metge) {
 	let result = []
 	var docRef = db.collection("Metges").doc(uid_metge).collection("llistaPacients")
@@ -223,7 +233,6 @@ export async function getLlistaDoctorsFromPacient(uid_pacient) {
 	});
 	return result
 }
-
 export async function getDadesPacient(pacient_uid) {
 	let result
 	var docRef = db.collection("Pacients").doc(pacient_uid)
@@ -254,7 +263,6 @@ export async function getLlistaMigranyes(uid, tipus) {
 	});
 	return result
 }
-
 export async function getInfoMigranya(uid, data_migranya, tipus) {
 
 	let result
@@ -307,9 +315,11 @@ export async function getMigrainesByDate(uid, tipus, data) {
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
-			console.log("doc.id", doc.id, "data", data, "data/100 + 86399", data/1000 + 86399,  "data/100 ", data/1000 )
-			console.log((doc.id) > data/1000 /*&& parseInt(doc.id) <=( data/1000 + 86399)*/)
-			if (doc.id > data && doc.id <=( data/1000 + 86399)) {
+			console.log("doc.id", doc.id, "data", data, "data/1000 + 86399", data / 1000 + 86399, "data/1000 ", data / 1000)
+
+			console.log((doc.id / 1000 > data / 1000 - 3600) && (doc.id / 1000 < (data / 1000 - 3600 + 86399)))
+			if ((doc.id / 1000 > data / 1000 - 3600) && (doc.id / 1000 < (data / 1000 - 3600 + 86399))) {
+				//console.log((doc.id) > data/1000 && parseInt(doc.id) < (data/1000 + 86399))
 				console.log(doc.id);
 				result.push(doc.id)
 			}
@@ -317,3 +327,4 @@ export async function getMigrainesByDate(uid, tipus, data) {
 	});
 	return result
 }
+

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert,SafeAreaView, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
@@ -27,18 +27,18 @@ export default class VinclePacientMetge extends Component {
 	obrirDrawer = () => {
 		this.props.navigation.openDrawer();
 	}
-    async comprovaTipus(){
+	async comprovaTipus() {
 		var user = firebase.auth().currentUser;
 
 		let resposta = await FirebaseAPI.comprovarTipusUsuari(user.uid)
 		//console.log("resposta", resposta)
 	}
-	
+
 	componentDidMount() {
-        this.comprovaTipus()
-        this.obteMetges();
-    }
-    
+		this.comprovaTipus()
+		this.obteMetges();
+	}
+
 	renderFooter = () => {
 		if (!this.state.loading) return null;
 
@@ -66,27 +66,27 @@ export default class VinclePacientMetge extends Component {
 			/>
 		);
 	};
-    agregarDoctor(uid_metge){
-        var user = firebase.auth().currentUser
-        Alert.alert("Add doctor", "Do you want to add this doctor?",
-         [
-            { text: 'Cancel', onPress: () => { return null } },
-            {
-                text: 'Confirm', onPress: () => {
-                    if(user.uid!=uid_metge)
-                    FirebaseAPI.addDoctor(user.uid, uid_metge)
-                    else alert("You can't add yourself as a doctor")
-                }
-            },
-        ],
-        { cancelable: false })
-    }
-    async obteMetges(){
-        let result = await FirebaseAPI.getAllMetges();
-        console.log("Metges", result)
-        this.setState({llistaPacients: result})
-    }
-    
+	agregarDoctor(uid_metge) {
+		var user = firebase.auth().currentUser
+		Alert.alert("Add doctor", "Do you want to add this doctor?",
+			[
+				{ text: 'Cancel', onPress: () => { return null } },
+				{
+					text: 'Confirm', onPress: () => {
+						if (user.uid != uid_metge)
+							FirebaseAPI.addDoctor(user.uid, uid_metge)
+						else alert("You can't add yourself as a doctor")
+					}
+				},
+			],
+			{ cancelable: false })
+	}
+	async obteMetges() {
+		let result = await FirebaseAPI.getAllMetges();
+		console.log("Metges", result)
+		this.setState({ llistaPacients: result })
+	}
+
 	render() {
 		//console.log(this.props)
 		const { navigation } = this.props;
@@ -105,29 +105,32 @@ export default class VinclePacientMetge extends Component {
 						rightComponent={{ icon: '' }}
 					/>
 				</View>
-				<FlatList
-					data={this.state.llistaPacients}
-					renderItem={({ item }) =>
-						<TouchableOpacity onPress={() => this.agregarDoctor(item.uid)}>
-							<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
-								title={item.nom}
-							/>
-						</TouchableOpacity>
-					}
-					ListHeaderComponent={<SearchBar
-						placeholder="Type Here..."
-						lightTheme
-						round
-						containerStyle={{ backgroundColor: '#7BF0E6' }}
-						inputContainerStyle={{ backgroundColor: 'white' }}
-						onChangeText={(itemValue) => this.setState({ search: itemValue })}
-						value={this.state.search} />}
-					ListFooterComponent={this.renderFooter}
-					ItemSeparatorComponent={this.renderSeparator}
+				<SafeAreaView style={{ flex: 1 }}>
+					<ScrollView style={{ flex: 1 }}>
+						<FlatList
+							data={this.state.llistaPacients}
+							renderItem={({ item }) =>
+								<TouchableOpacity onPress={() => this.agregarDoctor(item.uid)}>
+									<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
+										title={item.nom}
+									/>
+								</TouchableOpacity>
+							}
+							ListHeaderComponent={<SearchBar
+								placeholder="Type Here..."
+								lightTheme
+								round
+								containerStyle={{ backgroundColor: '#7BF0E6' }}
+								inputContainerStyle={{ backgroundColor: 'white' }}
+								onChangeText={(itemValue) => this.setState({ search: itemValue })}
+								value={this.state.search} />}
+							ListFooterComponent={this.renderFooter}
+							ItemSeparatorComponent={this.renderSeparator}
 
-					keyExtractor={item => item}
-				/>
-
+							keyExtractor={item => item}
+						/>
+					</ScrollView>
+				</SafeAreaView>
 			</View>
 		);
 	}

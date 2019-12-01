@@ -84,7 +84,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("No")}
                             >
                                 <Text> No</Text>
@@ -93,7 +93,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Stress"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Stress")}>
                                 <Text>Stress</Text>
                             </TouchableHighlight>
@@ -101,7 +101,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Anxiety"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Anxiety")}>
                                 <Text>Anxiety</Text>
                             </TouchableHighlight>
@@ -111,7 +111,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Depression"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Depression")}>
                                 <Text>Depression</Text>
                             </TouchableHighlight>
@@ -119,7 +119,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Sleep a lot"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Sleep a lot")}>
                                 <Text>Sleep a lot</Text>
                             </TouchableHighlight>
@@ -127,7 +127,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Not sleep enough"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Not sleep enough")}>
                                 <Text>Not sleep enough</Text>
                             </TouchableHighlight>
@@ -138,7 +138,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Dehydration"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Dehydration")}>
                                 <Text>Dehydration</Text>
                             </TouchableHighlight>
@@ -149,7 +149,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Diet"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Diet")}>
                                 <Text>Diet</Text>
                             </TouchableHighlight>
@@ -157,7 +157,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Physical activity changes"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Physical activity changes")}>
                                 <Text>Physical activity changes</Text>
                             </TouchableHighlight>
@@ -167,7 +167,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Sunlight"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Sunlight")}>
                                 <Text>Sunlight</Text>
                             </TouchableHighlight>
@@ -175,7 +175,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Seeing intermitent lights"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Seeing intermitent lights")}>
                                 <Text>Seeing intermitent lights</Text>
                             </TouchableHighlight>
@@ -183,7 +183,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Smell"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Smell")}>
                                 <Text>Smell</Text>
                             </TouchableHighlight>
@@ -193,7 +193,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Loud noises"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Loud noises")}>
                                 <Text>Loud noises</Text>
                             </TouchableHighlight>
@@ -201,7 +201,7 @@ export default class Causes extends Component {
                                 style={
                                     this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                underlayColor='none'
+                                //underlayColor='none'
                                 onPress={() => this.select("Others")}>
                                 <Text>Others</Text>
                             </TouchableHighlight>
