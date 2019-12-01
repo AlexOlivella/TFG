@@ -69,19 +69,19 @@ export default class Exercici extends Component {
                     <View style={styles.lateral}>
                         <TouchableHighlight
                             style={styles.noSeleccionat}
-                            //underlayColor='none'
+                            underlayColor='none'
                             onPress={() => { this.next("No exercise") }}>
                             <Text>No</Text>
                         </TouchableHighlight>
                         <TouchableHighlight
                             style={styles.noSeleccionat}
-                            //underlayColor='none'
+                            underlayColor='none'
                             onPress={() => { this.next("Low") }}>
                             <Text>Low</Text>
                         </TouchableHighlight >
                         <TouchableHighlight
                             style={styles.noSeleccionat}
-                            //underlayColor='none'
+                            underlayColor='none'
                             onPress={() => { this.next("Moderate") }}>
                             <Text>Moderate</Text>
                         </TouchableHighlight>
@@ -89,13 +89,13 @@ export default class Exercici extends Component {
                     <View style={styles.lateral}>
                         <TouchableHighlight
                             style={styles.noSeleccionat}
-                            //underlayColor='none'
+                            underlayColor='none'
                             onPress={() => { this.next("Intense") }}>
                             <Text>Intense</Text>
                         </TouchableHighlight>
                         <TouchableHighlight
                             style={styles.noSeleccionat}
-                            //underlayColor='none'
+                            underlayColor='none'
                             onPress={() => { this.next("Very intense") }}>
                             <Text>Very intense</Text>
                         </TouchableHighlight>

@@ -9,7 +9,7 @@ import { createAppContainer, createSwitchNavigator,  } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-import Weather from './screens/Weather'
+import WeatherScreen from './screens/WeatherScreen'
 import MyProfile from './screens/MyProfile'
 import firebase from 'firebase'
 import UpdateEmailPass from './screens/UpdateEmailPass'
@@ -80,7 +80,7 @@ const MainDrawer = createDrawerNavigator({
   Home: {screen:HomeScreen},
   Migraines:Migraines,
   Calendar: Calendari,
-  Weather: {screen:Weather},
+  Weather: {screen:WeatherScreen},
   Communication: LlistaUsuaris,
   Profile: Profile,
 

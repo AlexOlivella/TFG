@@ -110,6 +110,8 @@ export default class MigranyesPropies extends Component {
 					text: 'Confirm', onPress: async () => {
                         await FirebaseAPI.deleteMigranya(user.uid, migranya_id, tipus)
                         ToastAndroid.show("Migraine succesfully deleted", ToastAndroid.SHORT)
+                        this.getMigranyes()
+
 					}
 				},
 			],

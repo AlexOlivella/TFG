@@ -27,16 +27,7 @@ export default class HomeScreen extends Component {
 		this.props.navigation.navigate("HoraMigranya")
 		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
 	}
-	componentDidMount(){
-		this.comprovaTipus()
-	}
 	
-	async comprovaTipus(){
-		var user = firebase.auth().currentUser;
-
-		let resposta = await FirebaseAPI.comprovarTipusUsuari(user.uid)
-		//console.log("resposta", resposta)
-	}
 	render() {
 		//console.log(this.props)
 		const { navigation } = this.props;

@@ -48,19 +48,19 @@ export default class Menstruacio extends Component {
                     <View style={styles.lateral}>
                     <TouchableHighlight
                         style={styles.noSeleccionat}
-                        //underlayColor='none'
+                        underlayColor='none'
                         onPress={() => this.next("No")}>
                         <Text>No</Text>
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={styles.noSeleccionat}
-                        //underlayColor='none'
+                        underlayColor='none'
                         onPress={() => this.next("Low")}>
                         <Text>Low</Text>
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={styles.noSeleccionat}
-                        //underlayColor='none'
+                        underlayColor='none'
                         onPress={() => this.next("Moderate")}>
                         <Text>Moderate</Text>
                     </TouchableHighlight>
@@ -68,13 +68,13 @@ export default class Menstruacio extends Component {
                     <View style={styles.lateral}>
                     <TouchableHighlight
                         style={styles.noSeleccionat}
-                        //underlayColor='none'
+                        underlayColor='none'
                         onPress={() => this.next("Hard")}>
                         <Text>Hard</Text>
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={styles.noSeleccionat}
-                        //underlayColor='none'
+                        underlayColor='none'
                         onPress={() => this.next("Soon")}>
                         <Text>Soon</Text>
                     </TouchableHighlight>

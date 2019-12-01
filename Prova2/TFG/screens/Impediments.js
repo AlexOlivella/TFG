@@ -79,7 +79,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("No")}>
                                 <Text>No</Text>
                             </TouchableHighlight>
@@ -87,7 +87,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["Move"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("Move")}>
                                 <Text>Move</Text>
                             </TouchableHighlight>
@@ -95,7 +95,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["Walk"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("Walk")}>
                                 <Text>Walk</Text>
                             </TouchableHighlight>
@@ -105,7 +105,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["Make exercise"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("Make exercise")}>
                                 <Text>Make exercise</Text>
                             </TouchableHighlight>
@@ -113,7 +113,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["Go to school"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("Go to school")}>
                                 <Text>Go to school</Text>
                             </TouchableHighlight>
@@ -121,7 +121,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["Go to work"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("Go to work")}>
                                 <Text>Go to work</Text>
                             </TouchableHighlight>
@@ -131,7 +131,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["Forced to go home"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("Forced to go home")}>
                                 <Text>Forced to go home</Text>
                             </TouchableHighlight>
@@ -139,7 +139,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["Breathe"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("Breathe")}>
                                 <Text>Breathe</Text>
                             </TouchableHighlight>
@@ -147,7 +147,7 @@ export default class Impediments extends Component {
                                 style={
                                     this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
                                 }
-                                //underlayColor='none'
+                                underlayColor='none'
                                 onPress={() => this.select("Others")}>
                                 <Text>Others</Text>
                             </TouchableHighlight>
