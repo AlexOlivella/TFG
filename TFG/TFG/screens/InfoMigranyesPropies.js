@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import firebase from 'firebase'
-import { Header } from 'react-native-elements';
+import { Header, Icon } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 
 
 export default class InfoMigranyesPropies extends Component {
@@ -16,25 +17,25 @@ export default class InfoMigranyesPropies extends Component {
             uid: this.props.navigation.getParam("pacient"),
             migranya: this.props.navigation.getParam("migranya"),
             dataInici: "",
-            dataFinal:"",
-            intensitatDolor:"",
-            zonaCap:"",
-            simptomes:"",
-            causes:"",
-            menstruacio:"",
-            exercicis:"",
-            impediments:"",
-            medicaments:"",
+            dataFinal: "",
+            intensitatDolor: "",
+            zonaCap: "",
+            simptomes: "",
+            causes: "",
+            menstruacio: "",
+            exercicis: "",
+            impediments: "",
+            medicaments: "",
             isLoaded: false,
         }
     }
     static navigationOptions = {
-		headerStyle:{
+        headerStyle: {
             backgroundColor: '#2089dc'
         }
     }
-    
-    componentDidMount(){
+
+    componentDidMount() {
         console.log("usuari: ", this.state.uid, "migranya: ", this.state.migranya)
         this.getInfoMigranya()
     }
@@ -52,25 +53,61 @@ export default class InfoMigranyesPropies extends Component {
             impediments: result.impediments,
             exercicis: result.exercicis,
             menstruacio: result.menstruacio,
-            medicaments: result.medicaments, 
+            medicaments: result.medicaments,
             isLoaded: true
         })
     }
     render() {
-        if (!this.state.isLoaded) return (<View style={[styles.container, {justifyContent: 'center'}]}><ActivityIndicator  size="large" /></View>)
+        if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
         return (
             <View style={styles.container}>
-                <View>
+                <View style={styles.columna}>
+                    <Ionicons name="clock-start"></Ionicons>
                     <Text> {this.state.dataInici}</Text>
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="clock-end"></Ionicons>
                     <Text> {this.state.dataFinal}</Text>
+
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="emoji-sad"></Ionicons>
                     <Text> {this.state.intensitatDolor}</Text>
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="location-searching"/>
                     <Text> {this.state.zonaCap}</Text>
+
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="solution1"></Ionicons>
                     <Text> {this.state.simptomes}</Text>
+
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="bed"></Ionicons>
                     <Text> {this.state.causes}</Text>
+
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="office-building"></Ionicons>
                     <Text> {this.state.impediments}</Text>
+
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="rus-fast"></Ionicons>
                     <Text> {this.state.exercicis}</Text>
+
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="ios-water"></Ionicons>
                     <Text> {this.state.menstruacio}</Text>
+
+                </View>
+                <View style={styles.columna}>
+                    <Ionicons name="pills"></Ionicons>
                     <Text> {this.state.medicaments}</Text>
+
                 </View>
             </View>
         );
@@ -80,8 +117,11 @@ export default class InfoMigranyesPropies extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent:"space-between",
         backgroundColor: '#7BF0E6',
-    }
+    },
+    columna: {
+        flexDirection: 'row',
+
+    },
 });

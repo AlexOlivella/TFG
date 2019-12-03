@@ -91,13 +91,13 @@ export default class MigranyesPropies extends Component {
     }
 
     createMigraine() {
-		var user = firebase.auth().currentUser;
+        var user = firebase.auth().currentUser;
 
-		this.props.navigation.navigate("HoraMigranya")
-		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
+        this.props.navigation.navigate("HoraMigranya")
+        //await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
     }
-    
-    async deleteMigranya(migranya_id){
+
+    async deleteMigranya(migranya_id) {
         var user = firebase.auth().currentUser
         var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
         console.log("delete migranya", user.uid, migranya_id, tipus)
@@ -105,17 +105,17 @@ export default class MigranyesPropies extends Component {
             "Delete migraine",
             "Do you want to delete this migraine?",
             [
-				{ text: 'Cancel', onPress: () => { return null } },
-				{
-					text: 'Confirm', onPress: async () => {
+                { text: 'Cancel', onPress: () => { return null } },
+                {
+                    text: 'Confirm', onPress: async () => {
                         await FirebaseAPI.deleteMigranya(user.uid, migranya_id, tipus)
                         ToastAndroid.show("Migraine succesfully deleted", ToastAndroid.SHORT)
                         this.getMigranyes()
 
-					}
-				},
-			],
-			{ cancelable: false }
+                    }
+                },
+            ],
+            { cancelable: false }
         )
     }
     render() {
@@ -133,7 +133,11 @@ export default class MigranyesPropies extends Component {
                     placement="left"
                     leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
                     centerComponent={{ text: 'Migraines', style: { color: '#fff' } }}
-                    rightComponent={<Icon name='add' onPress={()=> this.createMigraine()} />}
+                    rightComponent={
+                        <View style={{ flexDirection:'row', justifyContent:"space-between"}}>
+                            <Icon name="edit" onPress={()=> alert("dit")}/>
+                            <Icon name='add' onPress={() => this.createMigraine()} />
+                        </View>}
                 />
                 <StatusBar barStyle={"default"} />
                 <SafeAreaView style={{ flex: 1 }}>
@@ -141,9 +145,9 @@ export default class MigranyesPropies extends Component {
                         <FlatList
                             data={this.state.llistaMigranyes}
                             renderItem={({ item }) =>
-                                <TouchableOpacity 
-                                onPress={() => this.obteDades(item)}
-                                onLongPress={()=> this.deleteMigranya(item)}
+                                <TouchableOpacity
+                                    onPress={() => this.obteDades(item)}
+                                    onLongPress={() => this.deleteMigranya(item)}
                                 >
                                     <ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
                                         title={this.transformaData(item)}

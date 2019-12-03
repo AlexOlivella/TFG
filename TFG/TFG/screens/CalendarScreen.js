@@ -18,7 +18,7 @@ export default class prova extends Component {
       loading: false,
       search: '',
       pendings: "",
-
+      markedDays:[],
       isLoaded: true
     }
     this.arrayHolder = [];
@@ -82,7 +82,9 @@ export default class prova extends Component {
     }
     else return ""
   }
-
+  markDays(month){
+    
+  }
   obteDades(migranya_id) {
     var user = firebase.auth().currentUser
     this.props.navigation.navigate("InfoMigranyesCalendari", { pacient: user.uid, migranya: migranya_id })
