@@ -1,9 +1,0 @@
-{
-  "expoServerNgrokUrl": "https://ng-a2g.anonymous.tfg.exp.direct",
-  "packagerNgrokUrl": "https://packager.ng-a2g.anonymous.tfg.exp.direct",
-  "ngrokPid": 1716,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 15660,
-  "devToolsPort": 19002
-}
