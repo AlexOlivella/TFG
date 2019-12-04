@@ -101,7 +101,7 @@ export default class Register extends Component {
         }
         else alert(response.error.code)
       } else {
-        ToastAndroid.show("Welcome to the MigranyApp", ToastAndroid.SHORT)
+        ToastAndroid.show("Welcome to the MiMo", ToastAndroid.SHORT)
         navigate("Home")
       }
     }

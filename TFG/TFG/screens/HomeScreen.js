@@ -15,7 +15,7 @@ export default class HomeScreen extends Component {
 
 	}
 
-	
+
 	obrirDrawer = () => {
 		this.props.navigation.openDrawer();
 	}
@@ -27,7 +27,7 @@ export default class HomeScreen extends Component {
 		this.props.navigation.navigate("HoraMigranya")
 		//await FirebaseAPI.createMigranya(user.uid, this.getCurrentTime(), "estatAnim", "medicament", "zonaCos")
 	}
-	
+
 	render() {
 		//console.log(this.props)
 		const { navigation } = this.props;
@@ -47,9 +47,11 @@ export default class HomeScreen extends Component {
 						centerComponent={{ text: 'Home', style: { color: '#fff' } }}
 					/>
 				</View>
-				<Text style={{ fontSize: 30 }}> Welcome to the app </Text>
+				<Text style={{ fontSize: 30 }}> Welcome to MiMo </Text>
 				<Text style={{ fontSize: 30 }}> {user.email} </Text>
-				<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
+				<View style={{ justifyContent:'flex-end'}}>
+					<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
+				</View>
 			</View>
 		);
 	}
