@@ -1,9 +1,9 @@
 {
   "expoServerNgrokUrl": "https://3m-7gs.anonymous.tfg.exp.direct",
   "packagerNgrokUrl": "https://packager.3m-7gs.anonymous.tfg.exp.direct",
-  "ngrokPid": 8884,
+  "ngrokPid": 3584,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 15904,
+  "packagerPid": 14576,
   "devToolsPort": 19002
 }
