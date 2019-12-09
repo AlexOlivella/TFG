@@ -37,8 +37,8 @@ export default class LlistaTotsDoctors extends Component {
 		var user = firebase.auth().currentUser
 		let doctors = await FirebaseAPI.getAllMetges();
 		let doctorsDinsUsuari = await FirebaseAPI.getLlistaDoctorsFromPacient(user.uid)
-		console.log("Tots els metges", doctors)
-		console.log("Metges de l'usuari", doctorsDinsUsuari)
+		//console.log("Tots els metges", doctors)
+		//console.log("Metges de l'usuari", doctorsDinsUsuari)
 		let result = []
 		for (var i = 0; i < doctors.length; i++) {
 			for (var j = 0; j < doctorsDinsUsuari.length; j++) {
@@ -47,7 +47,7 @@ export default class LlistaTotsDoctors extends Component {
 			}
 
 		}
-		console.log("Doctors finals: ", result)
+		//console.log("Doctors finals: ", result)
 
 		this.setState({
 			llistaDoctors: result,

@@ -46,7 +46,7 @@ export default class Register extends Component {
         //console.log("getUser", user)
         let tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
         let data = await FirebaseAPI.readUserData(user.uid, tipus)
-        console.log("Data: ", data);
+        //console.log("Data: ", data);
         this.setState({
             email: user.email,
             firstName: data.firstName,

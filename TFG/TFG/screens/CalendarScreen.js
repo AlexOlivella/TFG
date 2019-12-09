@@ -48,7 +48,7 @@ export default class prova extends Component {
   async getCites(data) {
     var user = firebase.auth().currentUser
     let result = await FirebaseAPI.getAppointmentsByDate(user.uid, data)
-    console.log("Cites doctor: ", result)
+    //console.log("Cites doctor: ", result)
     this.setState({ llistaCites: result })
   }
 
@@ -87,10 +87,16 @@ export default class prova extends Component {
       var date = data.getDate(); //Current Date
       var month = data.getMonth() + 1; //Current Month
       var year = data.getFullYear(); //Current Year
-      var hours = data.getHours(); //Current Hours
+      var hour= data.getHours(); //Current Hours
       var min = data.getMinutes(); //Current Minutes
       var sec = data.getSeconds(); //Current Seconds
-      return date + '-' + month + '-' + year + ' ' + hours + ':' + min + ':' + sec
+      if (min < 10) {
+        min = '0' + min;
+      }
+      if (hour < 10) {
+        hour = '0' + hour;
+      }
+      return date + '-' + month + '-' + year + ' ' + hour+ ':' + min
     }
     else return ""
   }
@@ -137,6 +143,10 @@ export default class prova extends Component {
     );
   };
 
+  seeDetailsAppointment(data_appointment) {
+    this.props.navigation.navigate("AppointmentDetails", { day: data_appointment })
+  }
+
   render() {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
@@ -178,7 +188,7 @@ export default class prova extends Component {
                 //maxDate={'2012-05-30'}
                 // Handler which gets executed on day press. Default = undefined
                 onDayPress={day => {
-                  console.log('selected day', day);
+                  //console.log('selected day', day);
                   this.setState({ isLoaded: false })
                   this.getMigraines(day.timestamp)
                   if (this.state.tipus == "Doctor") {
@@ -219,7 +229,7 @@ export default class prova extends Component {
                 <FlatList
                   data={this.state.llistaCites}
                   renderItem={({ item }) =>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.seeDetailsAppointment(item)}>
                       <ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
                         title={this.transformaData(item)}
                       />
@@ -246,6 +256,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
 
-    backgroundColor: '#7BF0E6',
+    backgroundColor: '#fff',
   }
 });

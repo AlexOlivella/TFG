@@ -83,7 +83,7 @@ export default class VinclePacientMetge extends Component {
 	}
 	async obteMetges() {
 		let result = await FirebaseAPI.getAllMetges();
-		console.log("Metges", result)
+		//console.log("Metges", result)
 		this.setState({ llistaPacients: result })
 	}
 

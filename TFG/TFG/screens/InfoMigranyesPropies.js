@@ -36,7 +36,7 @@ export default class InfoMigranyesPropies extends Component {
     }
 
     componentDidMount() {
-        console.log("usuari: ", this.state.uid, "migranya: ", this.state.migranya)
+        //console.log("usuari: ", this.state.uid, "migranya: ", this.state.migranya)
         this.getInfoMigranya()
     }
     async getInfoMigranya() {

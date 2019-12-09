@@ -63,11 +63,14 @@ export default class LoginScreen extends Component {
             var date = data.getDate(); //Current Date
             var month = data.getMonth() + 1; //Current Month
             var year = data.getFullYear(); //Current Year
-            var hours = data.getHours(); //Current Hours
+            var hour = data.getHours(); //Current Hours
             var min = data.getMinutes(); //Current Minutes
 
             if (min < 10) {
                 min = '0' + min;
+            }
+            if (hour < 10) {
+                hour = '0' + hour;
             }
 
             var mes
@@ -91,7 +94,7 @@ export default class LoginScreen extends Component {
             else if (date == 3 || date == 23) terminologia = "rd"
             else terminologia = "th"
 
-            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hours + ':' + min
+            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hour + ':' + min
         }
         else return ""
     }
@@ -141,17 +144,20 @@ export default class LoginScreen extends Component {
         if (this.checkTextInput()) {
             if (this.state.day > new Date()) {
                 if (this.state.value == 0) {
-                    console.log(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
+                    //console.log(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
                     error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
                 }
                 else {
-                    console.log(user.uid, this.state.pacient, this.state.day)
+                    //console.log(user.uid, this.state.pacient, this.state.day)
                     error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.pacient, this.state.day)
                 }
-                console.log(error)
+                //console.log(error)
 
                 if (error) alert(error)
-                else ToastAndroid.show("Appointment succesfully added", ToastAndroid.SHORT)
+                else {
+                    ToastAndroid.show("Appointment succesfully added", ToastAndroid.SHORT)
+                    this.props.navigation.navigate("Calendar")
+                }
 
             }
             else alert("Select a day after today")

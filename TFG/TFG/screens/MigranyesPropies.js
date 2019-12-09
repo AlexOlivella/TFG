@@ -35,7 +35,7 @@ export default class MigranyesPropies extends Component {
         var user = firebase.auth().currentUser
         var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
         let result = await FirebaseAPI.getLlistaMigranyes(user.uid, tipus)
-        console.log("Migranyes", result)
+        //console.log("Migranyes", result)
         this.setState({ llistaMigranyes: result, isLoaded: true })
     }
 
@@ -74,10 +74,16 @@ export default class MigranyesPropies extends Component {
             var date = data.getDate(); //Current Date
             var month = data.getMonth() + 1; //Current Month
             var year = data.getFullYear(); //Current Year
-            var hours = data.getHours(); //Current Hours
+            var hour= data.getHours(); //Current Hours
             var min = data.getMinutes(); //Current Minutes
             var sec = data.getSeconds(); //Current Seconds
-            return date + '-' + month + '-' + year + ' ' + hours + ':' + min + ':' + sec
+            if (min < 10) {
+                min = '0' + min;
+              }
+              if (hour < 10) {
+                hour = '0' + hour;
+              }
+            return date + '-' + month + '-' + year + ' ' + hour+ ':' + min
         }
         else return ""
     }
@@ -100,7 +106,7 @@ export default class MigranyesPropies extends Component {
     async deleteMigranya(migranya_id) {
         var user = firebase.auth().currentUser
         var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
-        console.log("delete migranya", user.uid, migranya_id, tipus)
+        //console.log("delete migranya", user.uid, migranya_id, tipus)
         Alert.alert(
             "Delete migraine",
             "Do you want to delete this migraine?",

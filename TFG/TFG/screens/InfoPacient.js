@@ -38,7 +38,7 @@ export default class InfoPacient extends Component {
 
     async getInfoPacient() {
         let result = await FirebaseAPI.getDadesPacient(this.state.uid)
-        console.log("result", result)
+        //console.log("result", result)
         this.setState({
             firstName: result.firstName,
             lastName: result.lastName,

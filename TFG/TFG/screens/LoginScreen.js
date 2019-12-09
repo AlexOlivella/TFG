@@ -24,7 +24,7 @@ export default class LoginScreen extends Component {
     //To hide the ActionBar/NavigationBar
     header: null,
   };
-  CheckTextInput = (email,password) => {
+  CheckTextInput = (email, password) => {
     //Handler for the Submit onPress
     //Check for the Name TextInput
     if (email != '') {
@@ -45,7 +45,7 @@ export default class LoginScreen extends Component {
   async signIn(email, password) {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
-    if (this.CheckTextInput(email,password)) {
+    if (this.CheckTextInput(email, password)) {
       let response = await FirebaseAPI.signInUser(email.trim(), password)
       if (response.isError) {
         //if(response.error == 200)
@@ -63,18 +63,12 @@ export default class LoginScreen extends Component {
       } else {
         navigate("Home")
         //this.props.navigation.navigate('MyProfile', {uid_user: user.uid})
-       // //console.log(user)
+        // //console.log(user)
       }
     }
   }
-  developer() {
-    if (this.state.email == "" && this.state.password == "" && this.state.contador == "2"){
-      this.signIn("i@i.com", "password");
-      this.setState({contador:0})
-    }
-    else {
-      this.signIn(this.state.email, this.state.password)
-    }
+  signIn() {
+    this.signIn(this.state.email, this.state.password)
   }
   render() {
     var { navigation } = this.props;
@@ -105,14 +99,13 @@ export default class LoginScreen extends Component {
         <View style={styles.seccioBotons}>
           <View style={{ width: "90%", paddingBottom: 10 }}>
             <Button onPress={() => {
-              this.setState({ contador: this.state.contador + 1 });
-              this.developer();
+              this.signIn();
               //console.log(this.state.contador)
             }} title="Sign in"> </Button>
 
           </View>
           <Text style={{ fontSize: 15 }}>  No account yet?
-          <Text onPress={() => { navigate("Register")}} style={{ fontWeight: 'bold', fontSize: 15 }} > Create one</Text>
+          <Text onPress={() => { navigate("Register") }} style={{ fontWeight: 'bold', fontSize: 15 }} > Create one</Text>
           </Text>
         </View>
       </View>

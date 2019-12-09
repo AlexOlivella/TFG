@@ -138,7 +138,7 @@ export async function deleteMigranya(uid, data_migranya, tipus) {
 	else if (tipus == "Pacient")
 		var docRef = db.collection("Pacients").doc(uid).collection("migranyes").doc(data_migranya)
 	await docRef.delete().then(function () {
-		console.log("Document successfully deleted!");
+		//console.log("Document successfully deleted!");
 	}).catch(function (error) {
 		console.error("Error removing document: ", error);
 	});
@@ -311,12 +311,12 @@ export async function getMigrainesByDate(uid, tipus, data) {
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
-			console.log("doc.id", doc.id, "data", data, "data/1000 + 86399", data / 1000 + 86399, "data/1000 ", data / 1000)
+			//console.log("doc.id", doc.id, "data", data, "data/1000 + 86399", data / 1000 + 86399, "data/1000 ", data / 1000)
 
-			console.log((doc.id / 1000 > data / 1000 - 3600) && (doc.id / 1000 < (data / 1000 - 3600 + 86399)))
+			//console.log((doc.id / 1000 > data / 1000 - 3600) && (doc.id / 1000 < (data / 1000 - 3600 + 86399)))
 			if ((doc.id / 1000 > data / 1000 - 3600) && (doc.id / 1000 < (data / 1000 - 3600 + 86399))) {
 				//console.log((doc.id) > data/1000 && parseInt(doc.id) < (data/1000 + 86399))
-				console.log(doc.id);
+				//console.log(doc.id);
 				result.push(doc.id)
 			}
 		});
@@ -326,7 +326,7 @@ export async function getMigrainesByDate(uid, tipus, data) {
 export async function afegirCitaPacient(metge_uid, pacient, data) {
 	let errorR
 	var docRef = db.collection("Metges").doc(metge_uid).collection("citesPacients").doc(data.toString())
-	return ºdocRef.get().then(async function (doc) {
+	return docRef.get().then(async function (doc) {
 		if (doc.exists) {
 			errorR = "You already have an appointment at this date and hour"
 			return errorR
@@ -335,17 +335,17 @@ export async function afegirCitaPacient(metge_uid, pacient, data) {
 				pacientName: pacient,
 				diaHora: data
 			}).then(function (docRef) {
-				console.log("Document successfully written!");
+				//console.log("Document successfully written!");
 			}).catch(function (error) {
 				console.error("Error writing document: ", error);
 			});;
 		}
 	}).catch(function (error) {
-		console.log("Error getting document:", error);
+		//console.log("Error getting document:", error);
 	});
 
 }
-export async function getAppointmentsByDate(uid, data){
+export async function getAppointmentsByDate(uid, data) {
 	let result = []
 	var docRef = db.collection("Metges").doc(uid).collection("citesPacients")
 	await docRef.get().then(function (querySnapshot) {
@@ -353,10 +353,63 @@ export async function getAppointmentsByDate(uid, data){
 			// doc.data() is never undefined for query doc snapshots
 			if ((doc.id / 1000 > data / 1000 - 3600) && (doc.id / 1000 < (data / 1000 - 3600 + 86399))) {
 				//console.log((doc.id) > data/1000 && parseInt(doc.id) < (data/1000 + 86399))
-				console.log(doc.id);
+				//console.log(doc.id);
 				result.push(doc.id)
 			}
 		});
 	});
 	return result
-} 
+}
+export async function getDadesAppointment(uid, data) {
+	let result = []
+	var docRef = db.collection("Metges").doc(uid).collection("citesPacients").doc(data.toString())
+	await docRef.get().then(function (doc) {
+		if (doc.exists) {
+			//console.log("Document data:", doc.data().pacientName);
+			result = doc.data().pacientName
+		} else {
+			// doc.data() will be undefined in this case
+			//console.log("No such document!");
+		}
+	}).catch(function (error) {
+		//console.log("Error getting document:", error);
+	});
+	return result
+}
+export async function updateAppointment(metge_uid, pacient, data, dataUpdate) {
+	var docRef = db.collection("Metges").doc(metge_uid).collection("citesPacients").doc(data.toString())
+	let errorR
+	var docUpdate = db.collection("Metges").doc(metge_uid).collection("citesPacients").doc(dataUpdate.toString())
+	return docUpdate.get().then(async function (doc) {
+		if (doc.exists) {
+			errorR = "You already have an appointment at this date and hour"
+			return errorR
+		} else {
+			await docRef.delete().then(async function () {
+				docUpdate.set({
+					pacientName: pacient,
+					diaHora: data
+				}).then(function (docRef) {
+					//console.log("Document successfully written!");
+				}).catch(function (error) {
+					console.error("Error writing document: ", error);
+				});;
+
+			}).catch(function (error) {
+				console.error("Error removing document: ", error);
+			});
+		}
+	}).catch(function (error) {
+		//console.log("Error getting document:", error);
+	});
+
+}
+export async function deleteAppointment(metge_uid, data) {
+	var docRef = db.collection("Metges").doc(metge_uid).collection("citesPacients").doc(data.toString())
+
+	docRef.delete().then(function () {
+		//console.log("Document successfully deleted!");
+	}).catch(function (error) {
+		console.error("Error removing document: ", error);
+	});
+}
