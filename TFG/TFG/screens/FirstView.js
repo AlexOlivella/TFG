@@ -54,7 +54,7 @@ export default class LoginScreen extends Component {
       return (
         <View style={styles.container}>
           <View style={styles.seccioTitol}>
-            <Text style={{ fontSize: 30 }}> MiMo </Text>
+            <Text style={{ fontSize: 30 }}> Mygraine </Text>
           </View>
           <View style={styles.seccioBoto}>
             <View style={{ width: "90%", paddingBottom: 10 }}>
@@ -70,20 +70,20 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7BF0E6',
+    backgroundColor: '#fff',
 
   },
   seccioTitol: {
     flex: 3,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#7BF0E6',
+    backgroundColor: '#fff',
   },
   seccioBoto: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#7BF0E6',
+    backgroundColor: '#fff',
   },
 
 });

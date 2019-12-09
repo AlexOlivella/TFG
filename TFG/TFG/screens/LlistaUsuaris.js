@@ -70,12 +70,12 @@ export default class LlistaUsuaris extends Component {
 		else if (this.state.tipus == "Doctor") {
 
 			var pacients = await FirebaseAPI.getPacientsFromMetge(user.uid)
-			this.setState({ llistaData: pacients })
 			var pending = await FirebaseAPI.getNumPendings(user.uid)
 			//console.log("Pendings", pending)
 			this.setState({
 				pendings: pending,
 				isLoaded: true,
+				llistaData:pacients
 			})
 		}
 	}

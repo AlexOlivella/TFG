@@ -32,6 +32,7 @@ import LlistaTotsDoctors from './screens/LlistaTotsDoctors'
 import MigranyesPropies from './screens/MigranyesPropies'
 import InfoMigranyesPropies from './screens/InfoMigranyesPropies'
 import InfoMigranyesCalendari from './screens/InfoMigranyesCalendari'
+import AfegirCitaPacient from './screens/AfegirCitaPacient'
 
 const AuthStack = createStackNavigator(
   {
@@ -74,7 +75,8 @@ const Migraines = createStackNavigator({
 
 const Calendari = createStackNavigator({
   Calendar:{screen:Calendar},
-  InfoMigranyesCalendari:{screen:InfoMigranyesCalendari}
+  InfoMigranyesCalendari:{screen:InfoMigranyesCalendari},
+  AfegirCitaPacient:{screen:AfegirCitaPacient}
 })
 const MainDrawer = createDrawerNavigator({
   Home: {screen:HomeScreen},

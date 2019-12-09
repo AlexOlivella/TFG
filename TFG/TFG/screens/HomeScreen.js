@@ -47,9 +47,11 @@ export default class HomeScreen extends Component {
 						centerComponent={{ text: 'Home', style: { color: '#fff' } }}
 					/>
 				</View>
-				<Text style={{ fontSize: 30 }}> Welcome to MiMo </Text>
-				<Text style={{ fontSize: 30 }}> {user.email} </Text>
-				<View style={{ justifyContent:'flex-end'}}>
+				<View style={{flex:3,justifyContent:'center', alignItems:'center'}}>
+					<Text style={{ fontSize: 30 }}> Welcome to Mygraine </Text>
+				</View>
+				
+				<View style={{flex:2,  justifyContent:'center', paddingHorizontal:10}}>
 					<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
 				</View>
 			</View>
@@ -62,10 +64,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 
-		backgroundColor: '#7BF0E6',
-	},
-	toolbar: {
-		height: 56,
-		backgroundColor: '#FBEAFF'
+		backgroundColor: '#fff',
 	},
 });
