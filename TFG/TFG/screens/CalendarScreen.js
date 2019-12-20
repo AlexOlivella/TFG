@@ -121,7 +121,7 @@ export default class prova extends Component {
     var carregar
     if (!this.state.isLoaded) carregar = <View><ActivityIndicator size="large"></ActivityIndicator></View>
     return (
-      <View>
+      <View style={{flex:1}}>
         <View style={{ justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>Migraines list</Text></View>
         {carregar}
 
@@ -221,7 +221,9 @@ export default class prova extends Component {
               />}
             </View>
             <Swipeable
-              renderRightActions={this.renderRightComponent}>
+              renderRightActions={this.renderRightComponent}
+              >
+              
               <View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>Appointments list</Text></View>
                 {carregar}

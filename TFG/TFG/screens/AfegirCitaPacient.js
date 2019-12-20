@@ -60,12 +60,14 @@ export default class LoginScreen extends Component {
         if (time) {
             time = parseInt(time)
             let data = new Date(time);
-            var date = data.getDate(); //Current Date
-            var month = data.getMonth() + 1; //Current Month
-            var year = data.getFullYear(); //Current Year
-            var hour = data.getHours(); //Current Hours
-            var min = data.getMinutes(); //Current Minutes
-
+            const date = data.getDate(); //Current Date
+            const month = (data.getMonth()); //Current Month
+            const year = data.getFullYear(); //Current Year
+            const hour= data.getHours(); //Current Hours
+            const min = data.getMinutes(); //Current Minutes
+            const day = data.getDay();
+            
+            console.log(month)
             if (min < 10) {
                 min = '0' + min;
             }
@@ -73,28 +75,16 @@ export default class LoginScreen extends Component {
                 hour = '0' + hour;
             }
 
-            var mes
-            var dia
             var terminologia
-            this.daysArray.map((item, key) => {
-                if (key == new Date().getDay()) {
-                    dia = item
-
-                }
-            })
-            this.monthsArray.map((item, key) => {
-                if (key == new Date().getMonth()) {
-                    mes = item
-                }
-            })
-
-
+            const dia =this.daysArray[day]
+            const mes = this.monthsArray[month]
+        
             if (date == 1 || date == 21 || date == 31) terminologia = "st"
             else if (date == 2 || date == 22) terminologia = "nd"
             else if (date == 3 || date == 23) terminologia = "rd"
             else terminologia = "th"
 
-            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hour + ':' + min
+            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hour+ ':' + min
         }
         else return ""
     }
