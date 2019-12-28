@@ -8,8 +8,8 @@ import { Header, Icon } from 'react-native-elements'
 import { FloatingAction } from "react-native-floating-action";
 //import CircleMenu from '@ramotion/react-native-circle-menu'
 //import CircleButton from 'react-native-circle-button';
-import CircleButton from 'react-native-circle-button';
-import ActionButton from 'react-native-circular-action-menu';
+//import CircleButton from 'react-native-circle-button';
+//import ActionButton from 'react-native-circular-action-menu';
 
 
 export default class HomeScreen extends Component {
@@ -157,7 +157,7 @@ export default class HomeScreen extends Component {
 					position='center'
 					floatingIcon={<Image source={require('./ullIcon.png')}></Image>}
 				/>*/}
-				<ActionButton buttonColor="rgba(231,76,60,1)">
+				{/*<ActionButton buttonColor="rgba(231,76,60,1)">
 					<ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
 						<Icon name="android-create" style={styles.actionButtonIcon} />
 					</ActionButton.Item>
@@ -167,7 +167,7 @@ export default class HomeScreen extends Component {
 					<ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => { }}>
 						<Icon name="android-done-all" style={styles.actionButtonIcon} />
 					</ActionButton.Item>
-				</ActionButton>
+			</ActionButton>*/}
 			</View>
 		);
 	}
