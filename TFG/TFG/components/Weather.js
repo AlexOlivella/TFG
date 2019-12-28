@@ -36,7 +36,7 @@ const Weather = ({ weather, temperature, day, date }) => {
         );
     } else {
         return (
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#7BF0E6" }}>
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#fff" }}>
                 <ActivityIndicator size="large"></ActivityIndicator>
             </View>
         )

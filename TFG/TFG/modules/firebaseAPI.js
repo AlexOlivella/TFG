@@ -249,16 +249,19 @@ export async function getDadesPacient(pacient_uid) {
 }
 export async function getLlistaMigranyes(uid, tipus) {
 	let result = []
+	let result2 = []
 	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid).collection("migranyes")
 	else if (tipus == "Pacient") var docRef = db.collection("Pacients").doc(uid).collection("migranyes")
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
 			//console.log(doc.id, " => ", doc.data());
-			result.push(doc.id)
+			result.push({data:doc.id, intensitat: doc.data().intensitatDolor})
+			
 		});
+		result2 = result.reverse()
 	});
-	return result
+	return result2
 }
 export async function getInfoMigranya(uid, data_migranya, tipus) {
 
@@ -306,8 +309,9 @@ export function addPacient(metge_uid, pacient_uid, firstN, lastN) {
 }
 export async function getMigrainesByDate(uid, tipus, data) {
 	let result = []
-	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid).collection("migranyes")
-	else if (tipus == "Pacient") var docRef = db.collection("Pacients").doc(uid).collection("migranyes")
+	var docRef
+	if (tipus == "Doctor")  docRef = db.collection("Metges").doc(uid).collection("migranyes")
+	else if (tipus == "Pacient")  docRef = db.collection("Pacients").doc(uid).collection("migranyes")
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
@@ -317,15 +321,17 @@ export async function getMigrainesByDate(uid, tipus, data) {
 			if ((doc.id / 1000 > data / 1000 - 3600) && (doc.id / 1000 < (data / 1000 - 3600 + 86399))) {
 				//console.log((doc.id) > data/1000 && parseInt(doc.id) < (data/1000 + 86399))
 				//console.log(doc.id);
-				result.push(doc.id)
+				result.push({data: doc.id, intensitat:doc.data().intensitatDolor, dataEnd: doc.data().dataFinal})
 			}
 		});
+		result = result.reverse()
+		//console.log(result)
 	});
 	return result
 }
 export async function afegirCitaPacient(metge_uid, pacient, data) {
 	let errorR
-	var docRef = db.collection("Metges").doc(metge_uid).collection("citesPacients").doc(data.toString())
+	var docRef = db.collection("Metges").doc(metge_uid).collection("cites").doc(data.toString())
 	return docRef.get().then(async function (doc) {
 		if (doc.exists) {
 			errorR = "You already have an appointment at this date and hour"
@@ -345,9 +351,11 @@ export async function afegirCitaPacient(metge_uid, pacient, data) {
 	});
 
 }
-export async function getAppointmentsByDate(uid, data) {
+export async function getAppointmentsByDate(uid, data, tipus) {
 	let result = []
-	var docRef = db.collection("Metges").doc(uid).collection("citesPacients")
+	var docRef 
+	if(tipus=="Doctor") docRef= db.collection("Metges").doc(uid).collection("cites")
+	else docRef = db.collection("Pacients").doc(uid).collection("cites")
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
@@ -362,7 +370,7 @@ export async function getAppointmentsByDate(uid, data) {
 }
 export async function getDadesAppointment(uid, data) {
 	let result = []
-	var docRef = db.collection("Metges").doc(uid).collection("citesPacients").doc(data.toString())
+	var docRef = db.collection("Metges").doc(uid).collection("cites").doc(data.toString())
 	await docRef.get().then(function (doc) {
 		if (doc.exists) {
 			//console.log("Document data:", doc.data().pacientName);
@@ -377,9 +385,9 @@ export async function getDadesAppointment(uid, data) {
 	return result
 }
 export async function updateAppointment(metge_uid, pacient, data, dataUpdate) {
-	var docRef = db.collection("Metges").doc(metge_uid).collection("citesPacients").doc(data.toString())
+	var docRef = db.collection("Metges").doc(metge_uid).collection("cites").doc(data.toString())
 	let errorR
-	var docUpdate = db.collection("Metges").doc(metge_uid).collection("citesPacients").doc(dataUpdate.toString())
+	var docUpdate = db.collection("Metges").doc(metge_uid).collection("cites").doc(dataUpdate.toString())
 	return docUpdate.get().then(async function (doc) {
 		if (doc.exists) {
 			errorR = "You already have an appointment at this date and hour"
@@ -405,11 +413,36 @@ export async function updateAppointment(metge_uid, pacient, data, dataUpdate) {
 
 }
 export async function deleteAppointment(metge_uid, data) {
-	var docRef = db.collection("Metges").doc(metge_uid).collection("citesPacients").doc(data.toString())
+	var docRef = db.collection("Metges").doc(metge_uid).collection("cites").doc(data.toString())
 
 	docRef.delete().then(function () {
 		//console.log("Document successfully deleted!");
 	}).catch(function (error) {
 		console.error("Error removing document: ", error);
 	});
+}
+
+export async function getMarkedDays(uid, tipus){
+	let result = []
+	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid)
+	else if (tipus == "Pacient") var docRef = db.collection("Pacients").doc(uid)
+	await docRef.collection("migranyes").get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			// doc.data() is never undefined for query doc snapshots
+			//console.log(doc.id, " => ", doc.data().intensitatDolor);
+			result.push({key:'migraine', data: doc.id, intensitat: doc.data().intensitatDolor})
+		});
+	});
+	let result2 = []
+	await docRef.collection("cites").get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			// doc.data() is never undefined for query doc snapshots
+			//console.log(doc.id, " => ", doc.data());
+			result2.push({key:'appointment', data: doc.id, intensitat: 11})
+		});
+	});
+
+	var resultFinal = result.concat(result2)
+	//console.log("resultFinal", resultFinal)
+	return resultFinal
 }

@@ -22,6 +22,22 @@ export default class MigranyesPropies extends Component {
         };
         this.arrayHolder = [];
 
+        this.daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        this.monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        this.colorsDots = [
+            '#7cb1b9',
+            '#96b897',
+            '#b3bd74',
+            '#d0c255',
+            '#f2c93d',
+            '#e7a93c',
+            '#de8d3e',
+            '#d6713b',
+            '#d3573d',
+            '#cf4140',
+            '#B93B69',
+            'black'
+        ]
     }
 
 
@@ -71,19 +87,30 @@ export default class MigranyesPropies extends Component {
         if (time) {
             time = parseInt(time)
             let data = new Date(time);
-            var date = data.getDate(); //Current Date
-            var month = data.getMonth() + 1; //Current Month
-            var year = data.getFullYear(); //Current Year
-            var hour= data.getHours(); //Current Hours
-            var min = data.getMinutes(); //Current Minutes
-            var sec = data.getSeconds(); //Current Seconds
+            const date = data.getDate(); //Current Date
+            const month = (data.getMonth()); //Current Month
+            const year = data.getFullYear(); //Current Year
+            let hour = data.getHours(); //Current Hours
+            let min = data.getMinutes(); //Current Minutes
+            const day = data.getDay();
+
             if (min < 10) {
                 min = '0' + min;
-              }
-              if (hour < 10) {
+            }
+            if (hour < 10) {
                 hour = '0' + hour;
-              }
-            return date + '-' + month + '-' + year + ' ' + hour+ ':' + min
+            }
+
+            var terminologia
+            const dia = this.daysArray[day]
+            const mes = this.monthsArray[month]
+
+            if (date == 1 || date == 21 || date == 31) terminologia = "st"
+            else if (date == 2 || date == 22) terminologia = "nd"
+            else if (date == 3 || date == 23) terminologia = "rd"
+            else terminologia = "th"
+
+            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hour + ':' + min
         }
         else return ""
     }
@@ -130,7 +157,30 @@ export default class MigranyesPropies extends Component {
         const uid_user = navigation.getParam('uid_user', 'NO-User');
         var user = firebase.auth().currentUser;
         if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
-        if (this.state.llistaMigranyes.length == 0) return (<View style={[styles.container, { justifyContent: 'center' }]}><Text>No such document!</Text></View>)
+        if (this.state.llistaMigranyes.length == 0)
+            return (
+                <View style={[styles.container,]}>
+                    <Header
+                        style={{ width: '100%' }}
+                        placement="left"
+                        leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+                        centerComponent={{ text: 'Migraines', style: { color: '#fff' } }}
+                        rightComponent={
+                            <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
+                                <Icon name="edit" onPress={() => alert("dit")} />
+                                <Icon name='add' onPress={() => this.createMigraine()} />
+                            </View>}
+                    />
+                    <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: 10, }}>
+                        <View></View>
+                        <Text style={{ fontSize: 30 }}>You didn't register any attack yet, try to add one!</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ fontSize: 25 }}>Click here! ---></Text>
+                            <Icon size={40} name='add' onPress={() => this.createMigraine()} />
+                        </View>
+                        <View></View>
+                    </View>
+                </View>)
         return (
 
             <View style={styles.container}>
@@ -140,8 +190,7 @@ export default class MigranyesPropies extends Component {
                     leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
                     centerComponent={{ text: 'Migraines', style: { color: '#fff' } }}
                     rightComponent={
-                        <View style={{ flexDirection:'row', justifyContent:"space-between"}}>
-                            <Icon name="edit" onPress={()=> alert("dit")}/>
+                        <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                             <Icon name='add' onPress={() => this.createMigraine()} />
                         </View>}
                 />
@@ -152,26 +201,26 @@ export default class MigranyesPropies extends Component {
                             data={this.state.llistaMigranyes}
                             renderItem={({ item }) =>
                                 <TouchableOpacity
-                                    onPress={() => this.obteDades(item)}
-                                    onLongPress={() => this.deleteMigranya(item)}
+                                    onPress={() => this.obteDades(item.data)}
+                                    onLongPress={() => this.deleteMigranya(item.data)}
                                 >
-                                    <ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
-                                        title={this.transformaData(item)}
+                                    <ListItem containerStyle={{ backgroundColor: this.colorsDots[parseInt(item.intensitat)], /*borderBottomWidth: 1, borderBottomColor: 'white'*/ }}
+                                        title={this.transformaData(item.data)}
                                     />
                                 </TouchableOpacity>
                             }
-                            ListHeaderComponent={<SearchBar
+                            /*ListHeaderComponent={<SearchBar
                                 placeholder="Type Here..."
                                 lightTheme
                                 round
                                 containerStyle={{ backgroundColor: '#7BF0E6' }}
                                 inputContainerStyle={{ backgroundColor: 'white' }}
                                 onChangeText={(itemValue) => this.setState({ search: itemValue })}
-                                value={this.state.search} />}
+                                value={this.state.search} />}*/
                             ListFooterComponent={this.renderFooter}
                             ItemSeparatorComponent={this.renderSeparator}
 
-                            keyExtractor={item => item}
+                            keyExtractor={item => item.data}
                         />
                     </ScrollView>
                 </SafeAreaView>
@@ -185,7 +234,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
 
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
     flatview: {
         justifyContent: 'center',

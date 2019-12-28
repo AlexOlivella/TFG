@@ -41,7 +41,7 @@ export default class IntensitatDolor extends Component {
                 <Header
                 centerComponent={{text:'Pain scale', style: { color: '#fff', fontSize: 20 }}}
                 ></Header>
-
+                
                 <View style={{ flex: 6 }}>
                     <TouchableOpacity style={[{ backgroundColor: '#7cb1b9' }, styles.painRow]} onPress={() => this.next(0)}>
                         <Text style={styles.text}>No pain</Text>
@@ -83,7 +83,7 @@ export default class IntensitatDolor extends Component {
                         <Text style={styles.text}>Unbearable pain</Text>
                         <Text style={styles.text}>9</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[{ backgroundColor: '#cf4140' }, styles.painRow]} onPress={() => this.next(10)}>
+                    <TouchableOpacity style={[{ backgroundColor: '#B93B69' }, styles.painRow]} onPress={() => this.next(10)}>
                         <Text style={styles.text}>Worst pain imaginable</Text>
                         <Text style={styles.text}>10</Text>
                     </TouchableOpacity>

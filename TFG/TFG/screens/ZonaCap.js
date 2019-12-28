@@ -96,47 +96,47 @@ export default class ZonaCap extends Component {
                 <View style={{ flex: 2 , justifyContent:'center'}}>
                     <View style={styles.lateral}>
                         <TouchableOpacity style={{}} onPress={() => this.select("Front left head")}>
-                            <Image source={require('./davantDaltEsquerra.png')}></Image>
+                            <Image source={require('./images/davantDaltEsquerra.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={{}} onPress={() => this.select("Front right head")}>
-                            <Image source={require('./davantDaltDreta.png')}></Image>
+                            <Image source={require('./images/davantDaltDreta.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={{}} onPress={() => this.select("Back left head")}>
-                            <Image source={require('./darrereCapEsquerra.png')}></Image>
+                            <Image source={require('./images/darrereCapEsquerra.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={{}} onPress={() => this.select("Back right head")}>
-                            <Image source={require('./darrereCapDreta.png')}></Image>
+                            <Image source={require('./images/darrereCapDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.lateral}>
                         <TouchableOpacity style={{}} onPress={() => this.select("Front left face")}>
-                            <Image source={require('./caraEsquerra.png')}></Image>
+                            <Image source={require('./images/caraEsquerra.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={{}} onPress={() => this.select("Front right face")}>
-                            <Image source={require('./davantCaraDreta.png')}></Image>
+                            <Image source={require('./images/davantCaraDreta.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={{}} onPress={() => this.select("Back left face")}>
-                            <Image source={require('./darrereCaraEsquerra.png')}></Image>
+                            <Image source={require('./images/darrereCaraEsquerra.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={{}} onPress={() => this.select("Back right face")}>
-                            <Image source={require('./darrereCaraDreta.png')}></Image>
+                            <Image source={require('./images/darrereCaraDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.lateral}>
                         {this.state.selected["Front left neck"] &&
                             <TouchableOpacity style={styles.headPart} onPress={() => this.select("Front left neck")}>
-                                <Image source={require('./collDavantEsquerra.png')}></Image>
+                                <Image source={require('./images/collDavantEsquerra.png')}></Image>
                             </TouchableOpacity> || <TouchableOpacity style={{}} onPress={() => this.select("Front left neck")}>
-                                <Image source={require('./collDavantEsquerra.png')}></Image>
+                                <Image source={require('./images/collDavantEsquerra.png')}></Image>
                             </TouchableOpacity>}
                         <TouchableOpacity style={{}} onPress={() => this.select("Front right neck")}>
-                            <Image source={require('./davantCollDreta.png')}></Image>
+                            <Image source={require('./images/davantCollDreta.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={{}} onPress={() => this.select("Back left neck")}>
-                            <Image source={require('./darrereCollEsquerra.png')}></Image>
+                            <Image source={require('./images/darrereCollEsquerra.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity style={{}} onPress={() => this.select("Back right neck")}>
-                            <Image source={require('./darrereCollDreta.png')}></Image>
+                            <Image source={require('./images/darrereCollDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={{ width: "100%", }} onPress={() => this.select("None of this")}>

@@ -26,19 +26,12 @@ export default class WeatherScreen extends React.Component {
 	getCurrentTime = () => {
 		let hour = new Date().getHours();
 		let minutes = new Date().getMinutes();
-
+		let day = new Date().getDay();
 		if (minutes < 10) {
 			minutes = '0' + minutes;
 		}
-
-		
-		this.setState({ currentTime: hour + ':' + minutes});
-
-		this.daysArray.map((item, key) => {
-			if (key == new Date().getDay()) {
-				this.setState({ currentDay: item });
-			}
-		})
+		const dia = this.daysArray[day]
+		this.setState({ currentDay: dia, currentTime: hour + ':' + minutes });
 	}
 
 	componentWillUnmount() {
