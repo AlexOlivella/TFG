@@ -74,8 +74,8 @@ export default class AppointmentDetails extends Component {
             const date = data.getDate(); //Current Date
             const month = (data.getMonth()); //Current Month
             const year = data.getFullYear(); //Current Year
-            var hour= data.getHours(); //Current Hours
-            var min = data.getMinutes(); //Current Minutes
+            const hour= data.getHours(); //Current Hours
+            const min = data.getMinutes(); //Current Minutes
             const day = data.getDay();
             
             console.log(month)

@@ -42,7 +42,7 @@ export default class LoginScreen extends Component {
   };
 
 
-  async signIn(email, password) {
+  async signInA(email, password) {
     var { navigation } = this.props;
     var navigate = navigation.navigate;
     if (this.CheckTextInput(email, password)) {
@@ -68,7 +68,7 @@ export default class LoginScreen extends Component {
     }
   }
   signIn() {
-    this.signIn(this.state.email, this.state.password)
+    this.signInA(this.state.email, this.state.password)
   }
   render() {
     var { navigation } = this.props;

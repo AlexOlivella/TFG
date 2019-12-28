@@ -1,3 +1,4 @@
+
 import firebase from './../src/config';
 
 const db = firebase.firestore();

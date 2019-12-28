@@ -60,12 +60,12 @@ export default class LoginScreen extends Component {
         if (time) {
             time = parseInt(time)
             let data = new Date(time);
-            var date = data.getDate(); //Current Date
-            var month = (data.getMonth()); //Current Month
-            var year = data.getFullYear(); //Current Year
-            var hour= data.getHours(); //Current Hours
-            var min = data.getMinutes(); //Current Minutes
-            var day = data.getDay();
+            const date = data.getDate(); //Current Date
+            const month = (data.getMonth()); //Current Month
+            const year = data.getFullYear(); //Current Year
+            const hour= data.getHours(); //Current Hours
+            const min = data.getMinutes(); //Current Minutes
+            const day = data.getDay();
             
             console.log(month)
             if (min < 10) {
