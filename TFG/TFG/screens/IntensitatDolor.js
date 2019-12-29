@@ -40,10 +40,10 @@ export default class IntensitatDolor extends Component {
             //0-1:#7cb1b9, 1-2: #96b897, 2-3:#b3bd74, 3-4:#d0c255, 4-5:#f2c93d, 5-6:#e7a93c, 6-7:#de8d3e, 7-8:#d6713b, 8-9:#d3573d, 9-10:#cf4140
             <View style={styles.container}>
                 <Header
-                centerComponent={{text:'Pain scale', style: { color: '#fff', fontSize: 20 }}}
+                centerComponent={{text:'Select your pain scale', style: { color: '#fff', fontSize: 20 }}}
                 ></Header>
                 
-                <View style={{ flex: 6 }}>
+                <View style={{ flex: 10 }}>
                     <TouchableOpacity style={[{ backgroundColor: '#7cb1b9' }, styles.painRow]} onPress={() => this.next(0)}>
                         <Text style={styles.text}>No pain</Text>
                         <Text style={styles.text}> 0</Text>
@@ -89,7 +89,7 @@ export default class IntensitatDolor extends Component {
                         <Text style={styles.text}>10</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ width: "100%" }}>
+                <View style={{flex:2, width: "100%", justifyContent:'center', alignItems:'stretch' }}>
                     { /*<Button
                         onPress={() => {
                             this.next()
@@ -115,6 +115,7 @@ export default class IntensitatDolor extends Component {
                             )
                         }}
                         title="Cancel"
+                        
                     >
                     </Button>
                 </View>
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         /*alignItems: 'center',*/
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
     painRow: {
         flexDirection: "row",

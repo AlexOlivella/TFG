@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from '
 import { Header, Icon } from 'react-native-elements'
 import DateTimePicker from "react-native-modal-datetime-picker";
 
-
 export default class HoraMigranya extends Component {
 
     constructor(props) {
@@ -51,23 +50,23 @@ export default class HoraMigranya extends Component {
     }
 
     transformaData(time) {
-        if (time && time!="Happening") {
+        if (time && time != "Happening") {
             let data = new Date(time);
             var date = data.getDate(); //Current Date
             var month = data.getMonth() + 1; //Current Month
-            var year = data.getFullYear() ; //Current Year
-            var hour= data.getHours(); //Current Hours
+            var year = data.getFullYear(); //Current Year
+            var hour = data.getHours(); //Current Hours
             var min = data.getMinutes(); //Current Minutes
             var sec = data.getSeconds(); //Current Seconds
             if (min < 10) {
                 min = '0' + min;
-              }
-              if (hour < 10) {
+            }
+            if (hour < 10) {
                 hour = '0' + hour;
-              }
-            return date + '-' + month + '-' + year + ' ' + hour+ ':' + min
+            }
+            return date + '-' + month + '-' + year + ' ' + hour + ':' + min
         }
-        else if(time=="Happening") return time
+        else if (time == "Happening") return time
         else return ""
     }
 
@@ -93,7 +92,7 @@ export default class HoraMigranya extends Component {
         return (
             <View style={styles.container}>
                 <Header
-                    centerComponent={{ text: 'Attack time', style: { color: '#fff', fontSize: 20 } }}
+                    centerComponent={{ text: 'Select the attack time', style: { color: '#fff', fontSize: 20 } }}
                 ></Header>
                 <DateTimePicker
                     isVisible={this.state.isDateTimePickerVisible}
@@ -102,75 +101,122 @@ export default class HoraMigranya extends Component {
                     mode='datetime'
                 />
 
-                <View style={{ flex: 4 }}>
-
-                    <Text style={styles.textSeccio}>Start time: {this.transformaData(this.state.horaInici)}</Text>
+                <View style={{ flex: 3, paddingHorizontal: 10, justifyContent: 'space-around', }}>
+                    <View style={{ alignItems: 'center' }}>
+                        <Text style={{ fontSize: 30 }}>Start time: </Text>
+                        <Text style={{ fontSize: 25 }}>{this.transformaData(this.state.horaInici)}</Text>
+                    </View>
                     <View style={styles.lateral}>
-                        <TouchableOpacity style={styles.iconos} onPress={() => this.setState({ horaInici: new Date().getTime() - 60 * 60 * 1000 })}>
-                            <Text style={styles.text}>1 hour ago</Text>
 
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.iconos} onPress={() => this.setState({ horaInici: new Date().getTime() })}>
-                            <Text style={styles.text}>Now</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.iconos} onPress={this.showDateTimePicker} >
-                            <Text style={styles.text}>Other moment</Text>
-                        </TouchableOpacity>
-
+                        <View style={styles.rodonaIcon}>
+                            <TouchableOpacity style={[styles.icons, { backgroundColor: '#7584D8' }]} onPress={() => this.setState({ horaInici: new Date().getTime() - 60 * 60 * 1000 })}>
+                                <Image style={{ width: 75, height: 75 }} source={require('./images/timeblank2.png')}></Image>
+                            </TouchableOpacity>
+                            <Text style={styles.textBoto}>
+                                1 hour ago
+                            </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableOpacity style={styles.icons} onPress={() => this.setState({ horaInici: new Date().getTime() })}>
+                                <Image style={{ width: 75, height: 75 }} source={require('./images/timeblank2.png')}></Image>
+                            </TouchableOpacity>
+                            <Text style={styles.textBoto}>
+                                Now
+                            </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableOpacity style={styles.icons} onPress={this.showDateTimePicker}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/calendar-clock.png')}></Image>
+                            </TouchableOpacity>
+                            <Text style={styles.textBoto}>
+                                Other
+                            </Text>
+                            <Text style={styles.textBoto}>
+                                moment
+                            </Text>
+                        </View>
                     </View>
                 </View>
-                <View style={{ flex: 4 }}>
-                    <DateTimePicker
-                        isVisible={this.state.isDateTimePickerVisible2}
-                        onConfirm={this.handleDatePicked2}
-                        onCancel={this.hideDateTimePicker2}
-                        mode='datetime'
-                    />
-                    <Text style={styles.textSeccio}>End time: {this.transformaData(this.state.horaFinal)}</Text>
+
+                <DateTimePicker
+                    isVisible={this.state.isDateTimePickerVisible2}
+                    onConfirm={this.handleDatePicked2}
+                    onCancel={this.hideDateTimePicker2}
+                    mode='datetime'
+                />
+                <View style={{ flex: 3, paddingHorizontal: 10, justifyContent: 'space-around', }}>
+                    <View style={{ alignItems: 'center' }}>
+                        <Text style={{ fontSize: 30 }}>End time: </Text>
+                        <Text style={{ fontSize: 25 }}>{this.transformaData(this.state.horaFinal)}</Text>
+                    </View>
                     <View style={styles.lateral}>
-                        <TouchableOpacity style={styles.iconos} onPress={() => this.setState({ horaFinal: "Happening" })}>
-                            <Text style={{ fontSize: 20 }}>Happening</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconos} onPress={() => this.setState({ horaFinal: new Date().getTime() })}>
-                            <Text style={styles.text}>Now </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconos} onPress={this.showDateTimePicker2}>
-                            <Text style={styles.text}>Other moment</Text>
-                        </TouchableOpacity>
+
+                        {/*<View style={styles.rodonaIcon}>
+                            <TouchableOpacity style={[styles.icons, { backgroundColor: '#7584D8' }]} onPress={() => this.setState({ horaFinal: "Happening" })}>
+                                <Image style={{ width: 75, height: 75 }} source={require('./images/timeblank2.png')}></Image>
+                            </TouchableOpacity>
+                            <Text style={styles.textBoto}>
+                                Happening
+                            </Text>
+                        </View>*/}
+                        <View style={styles.rodonaIcon}>
+                            <TouchableOpacity style={[styles.icons]} onPress={() => this.setState({ horaFinal: new Date().getTime() })}>
+                                <Image style={{ width: 75, height: 75 }} source={require('./images/timeblank2.png')}></Image>
+                            </TouchableOpacity>
+                            <Text style={styles.textBoto}>
+                                Now
+                            </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableOpacity style={styles.icons} onPress={this.showDateTimePicker2}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/calendar-clock.png')}></Image>
+                            </TouchableOpacity>
+                            <Text style={styles.textBoto}>
+                                Other
+                            </Text>
+                            <Text style={styles.textBoto}>
+                                moment
+                            </Text>
+                        </View>
 
                     </View>
-                </View>
-                <View style={{ flex: 1 }}>
-                    <Button
-                        onPress={() => {
-                            this.next()
-                        }}
-                        title="Next"
-                    >
 
-                    </Button>
-                    <Button
-                        onPress={() => {
-                            Alert.alert(
-                                'Cancel',
-                                'Do you want to cancel this process?',
-                                [
-                                    { text: 'Cancel', onPress: () => { return null } },
-                                    {
-                                        text: 'Confirm', onPress: () => {
-                                            this.props.navigation.navigate("Home")
-                                        }
-                                    },
-                                ],
-                                { cancelable: false }
-                            )
-                        }}
-                        title="Cancel"
-                    >
-                    </Button>
                 </View>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
+                    <View style={{width:'48%'}}>
+                        <Button
+                            onPress={() => {
+                                Alert.alert(
+                                    'Cancel',
+                                    'Do you want to cancel this process?',
+                                    [
+                                        { text: 'Cancel', onPress: () => { return null } },
+                                        {
+                                            text: 'Confirm', onPress: () => {
+                                                this.props.navigation.navigate("Home")
+                                            }
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                )
+                            }}
+                            title="Cancel"
+                        >
+                        </Button>
+                        </View>
+                        <View style={{width:'48%',}}>
+                        <Button
+                            onPress={() => {
+                                this.next()
+                            }}
+                            title="Next"
+                            
+                        >
+
+                        </Button>
+                    </View>
+                    </View>
+                
             </View >
         );
     }
@@ -180,14 +226,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         /*alignItems: 'center',*/
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
     text: {
         fontSize: 25
     },
     lateral: {
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        paddingHorizontal: 10
     },
     iconos: {
         borderWidth: 1,
@@ -202,5 +249,20 @@ const styles = StyleSheet.create({
     textSeccio: {
         fontSize: 30
     },
-
+    rodonaIcon: {
+        flex: 1,
+        alignItems: 'center'
+    },
+    icons: {
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 80,
+        height: 80,
+        backgroundColor: '#38B3EF',
+        borderRadius: 50,
+    },
+    textBoto: {
+        fontSize: 20
+    },
 });

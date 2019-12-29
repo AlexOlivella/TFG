@@ -90,7 +90,7 @@ export default class ZonaCap extends Component {
         return (
             <View style={styles.container}>
                 <Header
-                centerComponent={{text:'Pain zone', style: { color: '#fff' }}}>
+                centerComponent={{text:'Select your pain zone', style: { color: '#fff', fontSize: 20 }}}>
 
                 </Header>
                 <View style={{ flex: 2 , justifyContent:'center'}}>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
     lateral: {
         flexDirection: 'row',

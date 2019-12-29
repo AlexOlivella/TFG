@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, Image } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
@@ -48,11 +48,11 @@ export default class HomeScreen extends Component {
 						centerComponent={{ text: 'Home', style: { color: '#fff' } }}
 					/>
 				</View>
-				<View style={{flex:3,justifyContent:'center', alignItems:'center'}}>
+				<View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
 					<Text style={{ fontSize: 30 }}> Welcome to Mygraine </Text>
 				</View>
-				
-				<View style={{flex:2,  justifyContent:'center', paddingHorizontal:10}}>
+
+				<View style={{ flex: 2, justifyContent: 'center', paddingHorizontal: 10 }}>
 					<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
 				</View>
 			</View>
