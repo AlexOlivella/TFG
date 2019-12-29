@@ -182,41 +182,47 @@ export default class HoraMigranya extends Component {
                     </View>
 
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent:'space-between', alignItems:'center'}}>
-                    <View style={{width:'48%'}}>
-                        <Button
-                            onPress={() => {
-                                Alert.alert(
-                                    'Cancel',
-                                    'Do you want to cancel this process?',
-                                    [
-                                        { text: 'Cancel', onPress: () => { return null } },
-                                        {
-                                            text: 'Confirm', onPress: () => {
-                                                this.props.navigation.navigate("Home")
-                                            }
-                                        },
-                                    ],
-                                    { cancelable: false }
-                                )
-                            }}
-                            title="Cancel"
-                        >
-                        </Button>
-                        </View>
-                        <View style={{width:'48%',}}>
-                        <Button
-                            onPress={() => {
-                                this.next()
-                            }}
-                            title="Next"
-                            
-                        >
+                <View style={styles.seccioBotons}>
 
-                        </Button>
-                    </View>
-                    </View>
-                
+                    <TouchableOpacity
+                        onPress={() => {
+                            Alert.alert(
+                                'Cancel',
+                                'Do you want to cancel this process?',
+                                [
+                                    { text: 'Cancel', onPress: () => { return null } },
+                                    {
+                                        text: 'Confirm', onPress: () => {
+                                            this.props.navigation.navigate("Home")
+                                        }
+                                    },
+                                ],
+                                { cancelable: false }
+                            )
+                        }}
+                        title="Cancel"
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>CANCEL</Text>
+
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        this.next()
+                    }}
+                        title="Next"
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+
+
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>NEXT</Text>
+
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
             </View >
         );
     }
@@ -264,5 +270,14 @@ const styles = StyleSheet.create({
     },
     textBoto: {
         fontSize: 20
+    },
+    seccioBotons: {
+        flex: 1,
+        flexDirection: 'row',
+
+        justifyContent: 'space-around',
+        alignItems: 'center',
+
+
     },
 });

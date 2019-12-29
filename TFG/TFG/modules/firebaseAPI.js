@@ -96,8 +96,12 @@ export const updateSingleData = (email) => {
 	});
 }*/
 
-export async function updateProfile(uid, firstName, lastName, newGender, newBirthday) {
-	var docRef = db.collection("Pacients").doc(uid);
+export async function updateProfile(uid, tipus, firstName, lastName, newGender, newBirthday) {
+	if (tipus == "Doctor")
+		var docRef = db.collection("Metges").doc(uid)
+
+	else if (tipus == "Pacient")
+		var docRef = db.collection("Pacients").doc(uid)
 	return await docRef.update({
 		firstName: firstName,
 		lastName: lastName,
@@ -105,8 +109,7 @@ export async function updateProfile(uid, firstName, lastName, newGender, newBirt
 		birthday: newBirthday,
 	}).then(function () {
 		//console.log("Document successfully updated!");
-	})
-		.catch(function (error) {
+	}).catch(function (error) {
 			// The document probably doesn't exist.
 			console.error("Error updating document: ", error);
 		});
@@ -257,8 +260,8 @@ export async function getLlistaMigranyes(uid, tipus) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
 			//console.log(doc.id, " => ", doc.data());
-			result.push({data:doc.id, intensitat: doc.data().intensitatDolor})
-			
+			result.push({ data: doc.id, intensitat: doc.data().intensitatDolor })
+
 		});
 		result2 = result.reverse()
 	});
@@ -311,8 +314,8 @@ export function addPacient(metge_uid, pacient_uid, firstN, lastN) {
 export async function getMigrainesByDate(uid, tipus, data) {
 	let result = []
 	var docRef
-	if (tipus == "Doctor")  docRef = db.collection("Metges").doc(uid).collection("migranyes")
-	else if (tipus == "Pacient")  docRef = db.collection("Pacients").doc(uid).collection("migranyes")
+	if (tipus == "Doctor") docRef = db.collection("Metges").doc(uid).collection("migranyes")
+	else if (tipus == "Pacient") docRef = db.collection("Pacients").doc(uid).collection("migranyes")
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
@@ -322,7 +325,7 @@ export async function getMigrainesByDate(uid, tipus, data) {
 			if ((doc.id / 1000 > data / 1000 - 3600) && (doc.id / 1000 < (data / 1000 - 3600 + 86399))) {
 				//console.log((doc.id) > data/1000 && parseInt(doc.id) < (data/1000 + 86399))
 				//console.log(doc.id);
-				result.push({data: doc.id, intensitat:doc.data().intensitatDolor, dataEnd: doc.data().dataFinal})
+				result.push({ data: doc.id, intensitat: doc.data().intensitatDolor, dataEnd: doc.data().dataFinal })
 			}
 		});
 		result = result.reverse()
@@ -354,8 +357,8 @@ export async function afegirCitaPacient(metge_uid, pacient, data) {
 }
 export async function getAppointmentsByDate(uid, data, tipus) {
 	let result = []
-	var docRef 
-	if(tipus=="Doctor") docRef= db.collection("Metges").doc(uid).collection("cites")
+	var docRef
+	if (tipus == "Doctor") docRef = db.collection("Metges").doc(uid).collection("cites")
 	else docRef = db.collection("Pacients").doc(uid).collection("cites")
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
@@ -423,7 +426,7 @@ export async function deleteAppointment(metge_uid, data) {
 	});
 }
 
-export async function getMarkedDays(uid, tipus){
+export async function getMarkedDays(uid, tipus) {
 	let result = []
 	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid)
 	else if (tipus == "Pacient") var docRef = db.collection("Pacients").doc(uid)
@@ -431,7 +434,7 @@ export async function getMarkedDays(uid, tipus){
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
 			//console.log(doc.id, " => ", doc.data().intensitatDolor);
-			result.push({key:'migraine', data: doc.id, intensitat: doc.data().intensitatDolor})
+			result.push({ key: 'migraine', data: doc.id, intensitat: doc.data().intensitatDolor })
 		});
 	});
 	let result2 = []
@@ -439,7 +442,7 @@ export async function getMarkedDays(uid, tipus){
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
 			//console.log(doc.id, " => ", doc.data());
-			result2.push({key:'appointment', data: doc.id, intensitat: 11})
+			result2.push({ key: 'appointment', data: doc.id, intensitat: 11 })
 		});
 	});
 

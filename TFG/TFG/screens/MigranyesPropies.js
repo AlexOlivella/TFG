@@ -165,10 +165,10 @@ export default class MigranyesPropies extends Component {
                         style={{ width: '100%' }}
                         placement="left"
                         leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-                        centerComponent={{ text: 'Migraines', style: { color: '#fff' } }}
+                        centerComponent={{ text: 'Migraines', style: { color: '#fff', fontSize:20 } }}
                         rightComponent={
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                                <Icon name="edit" onPress={() => alert("dit")} />
+                                {/*<Icon name="edit" onPress={() => alert("dit")} />*/}
                                 <Icon name='add' onPress={() => this.createMigraine()} />
                             </View>}
                     />
@@ -189,7 +189,7 @@ export default class MigranyesPropies extends Component {
                     style={{ width: '100%' }}
                     placement="left"
                     leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-                    centerComponent={{ text: 'Migraines', style: { color: '#fff' } }}
+                    centerComponent={{ text: 'Migraines', style: { color: '#fff',fontSize:20  } }}
                     rightComponent={
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                             <Icon name='add' onPress={() => this.createMigraine()} />

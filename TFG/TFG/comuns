@@ -1,0 +1,11 @@
+COLORS:
+
+Color header: '#2089dc'
+Color botons: '#2196F3'
+
+
+MIDES:
+headerTintColor: '#fff',
+headerTitleStyle: {
+    fontSize:20,
+},

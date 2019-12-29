@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Alert, ToastAndroid, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Alert, ToastAndroid, TouchableOpacity, ActivityIndicator } from 'react-native';
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { TextField } from 'react-native-material-textfield';
@@ -22,6 +22,9 @@ export default class Register extends Component {
             lastName: "",
             gender: "",
             birthday: "",
+            dateSelected: false,
+            isLoaded: false,
+
         }
 
     };
@@ -52,8 +55,8 @@ export default class Register extends Component {
             firstName: data.firstName,
             lastName: data.lastName,
             gender: data.gender,
-            birthday: data.birthday
-
+            birthday: data.birthday,
+            isLoaded: true,
         })
 
     }
@@ -88,9 +91,11 @@ export default class Register extends Component {
         //this.updateEmail();
         //let contraCorrecte = this.updatePassword();
         var user = firebase.auth().currentUser;
+        var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
         if (this.CheckTextInput()) {
-            let resposta = await FirebaseAPI.updateProfile(
+            await FirebaseAPI.updateProfile(
                 user.uid,
+                tipus,
                 this.state.firstName.trim(),
                 this.state.lastName.trim(),
                 this.state.gender,
@@ -110,7 +115,7 @@ export default class Register extends Component {
 
     handleDatePicked = (date) => {
         //console.log("A date inicial has been picked: ", date);
-        this.setState({ birthday: date.getTime() })
+        this.setState({ birthday: date.getTime(), dateSelected: true })
         this.hideDateTimePicker();
 
     };
@@ -121,6 +126,8 @@ export default class Register extends Component {
             var date = data.getDate(); //Current Date
             var month = data.getMonth() + 1; //Current Month
             var year = data.getFullYear(); //Current Year
+            if (date < 10) date = '0' + date
+            if (month < 10) month = '0' + month
             return date + '-' + month + '-' + year
         }
         else return ""
@@ -129,34 +136,54 @@ export default class Register extends Component {
     render() {
         var { navigation } = this.props;
         var navigate = navigation.navigate;
+        if (!this.state.isLoaded) return (
+            <View >
+                <Header
+                    style={{ width: '100%' }}
+                    placement="left"
+                    leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+                    centerComponent={{ text: 'Change your profile', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+                />
+                <View>
+                    <ActivityIndicator size="large" color='black'></ActivityIndicator>
+                </View>
+            </View>)
+
         return (
             <View style={styles.container}>
                 <Header
                     style={{ width: '100%' }}
                     placement="left"
                     leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-                    centerComponent={{ text: 'Change your profile', style: { color: '#fff' } }}
+                    centerComponent={{ text: 'Change your profile', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                 />
 
                 <View style={styles.textView}>
+
                     <View style={styles.dades}>
-                        <Text >Email</Text>
-                        <Text>{this.state.email}</Text>
+                        <View style={{ width: '50%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>First Name</Text>
+                        </View>
+                        <View style={{ width: '50%' }}>
+                            <TextInput style={{ fontSize: 20 }}
+                                onChangeText={(v) => this.setState({ firstName: v.trim() })}>
+                                {this.state.firstName}</TextInput>
+                        </View>
                     </View>
                     <View style={styles.dades}>
-                        <Text>First Name</Text>
-                        <TextInput
-                            onChangeText={(v) => this.setState({ firstName: v.trim() })}>
-                            {this.state.firstName}</TextInput>
+                        <View style={{ width: '50%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Last Name</Text>
+                        </View>
+                        <View style={{ width: '50%' }}>
+                            <TextInput style={{ fontSize: 20 }}
+                                onChangeText={(v) => this.setState({ lastName: v.trim() })}>
+                                {this.state.lastName}</TextInput>
+                        </View>
                     </View>
                     <View style={styles.dades}>
-                        <Text>Last Name</Text>
-                        <TextInput
-                            onChangeText={(v) => this.setState({ lastName: v.trim() })}>
-                            {this.state.lastName}</TextInput>
-                    </View>
-                    <View style={styles.dades}>
-                        <Text>Gender</Text>
+                        <View style={{ width: '50%', justifyContent: 'flex-end' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Gender</Text>
+                        </View>
                         <View style={{ width: "50%", }}>
                             <Dropdown
                                 data={[{
@@ -166,33 +193,39 @@ export default class Register extends Component {
                                 }, {
                                     value: "Other"
                                 }]}
-                                style={{ fontSize: 12 }}
+                                style={{ fontSize: 20 }}
                                 value={this.state.gender}
                                 onChangeText={(itemValue) => this.setState({ gender: itemValue })}
                             />
                         </View>
                     </View>
                     <View style={styles.dades}>
-                        <Text>Date of birth</Text>
-                        <View style={{ width: "50%" }}>
+                        <View style={{ width: '50%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Date of birth</Text>
+                        </View>
+                        <View style={{ width: "50%", }}>
+
                             <DateTimePicker
                                 isVisible={this.state.isDateTimePickerVisible}
                                 onConfirm={this.handleDatePicked}
                                 onCancel={this.hideDateTimePicker}
                                 mode='date'
                             />
-
-                            <TouchableOpacity onPress={this.showDateTimePicker} >
-                                <Text >{this.transformaData(this.state.birthday)}</Text>
-                            </TouchableOpacity>
+                            <View style={styles.addName}>
+                                <TouchableOpacity onPress={this.showDateTimePicker} >
+                                    <View>
+                                        <Text style={{ fontSize: 20, borderBottomColor: '#B4A9A9', borderBottomWidth: 1, }}>{this.transformaData(this.state.birthday)}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-
                     </View>
                 </View>
-                <View style={styles.seccioBuida}></View>
+
                 <View style={styles.seccioBotons}>
-                    <View style={{ width: "90%" }} >
-                        <Button onPress={() => {
+
+                    <TouchableOpacity
+                        onPress={() => {
                             Alert.alert(
                                 'Update profile',
                                 'Do you want to confirm this changes?',
@@ -207,9 +240,22 @@ export default class Register extends Component {
                                 { cancelable: false }
                             )
 
-                        }} title="Update Profile"> </Button>
-                        <Button onPress={() => { navigate("UpdateEmailPass") }} title="Update Email and Password"></Button>
-                    </View>
+                        }}
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>UPDATE PROFILE</Text>
+
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => { navigate("UpdateEmailPass") }}
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>UPDATE PASSWORD</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View >
 
@@ -221,39 +267,26 @@ export default class Register extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#7BF0E6',
-    },
-    seccioTitol: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
     dades: {
-        width: "100%",
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'white',
-        marginBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#2089dc',
     },
     textView: {
         flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
         fontSize: 40,
         paddingHorizontal: 10,
-    },
-    seccioBuida: {
-        flex: 1,
+        justifyContent: 'space-around'
     },
     seccioBotons: {
         flex: 1,
-        justifyContent: 'flex-start',
+        flexDirection: 'row',
+
+        justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#7BF0E6',
-        marginTop: 10,
+
 
     },
 

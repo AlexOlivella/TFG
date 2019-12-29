@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Alert, TouchableOpacity, Image, ToastAndroid } from 'react-native';
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { TextField } from 'react-native-material-textfield';
 import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from 'react-native-datepicker'
 import { tsThisType } from '@babel/types';
+import Icon from 'react-native-elements'
 
 export default class Register extends Component {
 
@@ -16,118 +17,169 @@ export default class Register extends Component {
         //console.log(this.props)
         //console.log(user_email.email_user)
         this.state = {
-            email: "",
             currentPassword: "",
-            uid: "",
             newPassword: "",
             confirmPassword: "",
         }
 
     };
 
-    static navigationOptions ={
-        headerStyle:{
-            backgroundColor: '#7BF0E6'
-        }
-    }
+    static navigationOptions = {
+        title: "Change password",
+        headerStyle: {
+            backgroundColor: '#2089dc',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontSize: 20,
+        },
 
+    }
     reauthenticate = (currentPassword) => {
         var user = firebase.auth().currentUser;
         var cred = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
         return user.reauthenticateWithCredential(cred);
     }
 
-    updatePassword() {
-        if (this.state.newPassword == this.state.confirmedPassword) {
-            this.reauthenticate(this.state.currentPassword).then(() => {
-                var user = firebase.auth().currentUser;
+    changePassword = () => {
+        if (this.state.newPassword != this.state.currentPassword) {
+            if (this.state.confirmPassword == this.state.newPassword) {
 
-                user.updatePassword(this.state.newPassword).then(function () {
-                    // Alert.alert("Password was changed");
-                }).catch(function (error) {
-                    Alert.alert(error.message)
-                })
-            }).catch((error) => {
-                Alert.alert(error.message)
-
-            });
-            return true
+                this.reauthenticate(this.state.currentPassword).then(() => {
+                    var user = firebase.auth().currentUser;
+                    user.updatePassword(this.state.newPassword).then(() => {
+                        this.setState({ currentPassword: "", newPassword: "", confirmPassword: "" })
+                        ToastAndroid.show("Password succesfully updated", ToastAndroid.SHORT)
+                        this.props.navigation.navigate("Home")
+                    }).catch((error) => {
+                        Alert.alert("Error", error.message);
+                    });
+                }).catch((error) => {
+                    Alert.alert("Error", error.message);
+                });
+            }
+            else Alert.alert("Error", "The new passwords don't match")
         }
-        else {
-            alert("The new passwords don't match")
-            return false
-        }
-    }
-    updateEmail() {
-        this.reauthenticate(this.state.currentPassword).then(() => {
-            var user = firebase.auth().currentUser;
-
-            user.updateEmail(this.state.newEmail).then(function () {
-                //Alert.alert("Email was changed");
-            }).catch(function (error) {
-                Alert.alert(error.message)
-            })
-        }).catch((error) => {
-            Alert.alert(error.message)
-
-        });
-
+        else Alert.alert("Error", "The new password can't be the same as the old password")
     }
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.seccioTitol}>
-                    <Text style={{ fontSize: 30 }}> Change your profile</Text>
-                </View>
+                {/*<View style={styles.seccioTitol}>
+                    <Text style={{ fontSize: 20 }}>Change your email and/or password</Text>
+        </View>*/}
+
                 <View style={styles.textView}>
-                    <View style={styles.dades}>
-                        <Text>Email</Text>
-                        <Text>{this.state.email}</Text>
-                    </View>
-                    <View style={styles.dades}>
-                        <Text>Current Password</Text>
-                        <TextInput
-                            secureTextEntry={true}
 
-                            onChangeText={(v) => this.setState({ currentPassword: v })}>
-                        </TextInput>
+                    {/*<View style={styles.dades}>
+                        <View style={{ width: '50%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Email</Text>
+                        </View>
+                        <View style={{ width: '50%' }}>
+                            <TextInput 
+                            style={{ fontSize: 20 }} 
+                                onChangeText={(v) => this.setState({ email: v.trim() })}
+                                keyboardType
+                                >
+                                {this.state.email}
+                            </TextInput>
+                        </View>
+        </View>*/}
+                    <View style={styles.dades}>
+                        <View style={{ width: '50%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Current password</Text>
+                        </View>
+                        <View style={{ width: '50%' }}>
+                            <TextInput
+                                style={{ fontSize: 20 }}
+                                secureTextEntry={true}
+                                placeholder="Current password"
+                                autoCapitalize='none'
+                                value={this.state.currentPassword}
+                                onChangeText={(text) => this.setState({ currentPassword: text })}
+                            >
+                            </TextInput>
+                        </View>
                     </View>
                     <View style={styles.dades}>
-                        <Text>New Password</Text>
-                        <TextInput
-                            secureTextEntry={true}
-                            onChangeText={(v) => this.setState({ newPassword: v })}>
-                        </TextInput>
+                        <View style={{ width: '50%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>New password</Text>
+                        </View>
+                        <View style={{ width: '50%' }}>
+                            <TextInput
+                                style={{ fontSize: 20 }}
+                                secureTextEntry={true}
+                                placeholder="New password"
+                                autoCapitalize='none'
+                                value={this.state.newPassword}
+                                onChangeText={(text) => this.setState({ newPassword: text })}
+                            >
+                            </TextInput>
+                        </View>
                     </View>
                     <View style={styles.dades}>
-                        <Text>Confirm Password</Text>
-                        <TextInput
-                            secureTextEntry={true}
-
-                            onChangeText={(v) => this.setState({ confirmPassword: v })}>
-                        </TextInput>
+                        <View style={{ width: '50%' }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Confirm password</Text>
+                        </View>
+                        <View style={{ width: '50%' }}>
+                            <TextInput
+                                style={{ fontSize: 20 }}
+                                secureTextEntry={true}
+                                placeholder="Confirm password"
+                                autoCapitalize='none'
+                                value={this.state.confirmPassword}
+                                onChangeText={(text) => this.setState({ confirmPassword: text })}
+                            >
+                            </TextInput>
+                        </View>
                     </View>
                 </View>
-                <View style={styles.seccioBuida}></View>
-                <View style={styles.seccioBotons}>
-                    <View style={{ width: "90%" }} >
-                        <Button onPress={() => {
-                            Alert.alert(
-                                'Update email',
-                                'Do you want to confirm this changes?',
-                                [
-                                    { text: 'Cancel', onPress: () => { return null } },
-                                    {
-                                        text: 'Confirm', onPress: () => {
-                                            this.updateEmail();
-                                        }
-                                    },
-                                ],
-                                { cancelable: false }
-                            )
 
-                        }} title="Update Profile"> </Button>
-                    </View>
+                <View style={styles.seccioBotons}>
+                    {/*<TouchableOpacity onPress={() =>
+                        Alert.alert(
+                            'Update email',
+                            'Do you want to confirm this changes?',
+                            [
+                                { text: 'Cancel', onPress: () => { return null } },
+                                {
+                                    text: 'Confirm', onPress: () => {
+                                        this.changeEmail(this.state.currentPassword, this.state.email)
+
+                                    }
+                                },
+                            ],
+                            { cancelable: false }
+                        )}
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>UPDATE EMAIL</Text>
+
+                        </View>
+                        </TouchableOpacity>*/}
+                    <TouchableOpacity onPress={() =>
+                        Alert.alert(
+                            'Update password',
+                            'Do you want to confirm this changes?',
+                            [
+                                { text: 'Cancel', onPress: () => { return null } },
+                                {
+                                    text: 'Confirm', onPress: () => {
+                                        this.changePassword()
+
+                                    }
+                                },
+                            ],
+                            { cancelable: false }
+                        )}
+                        style={{ width: '90%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>UPDATE PASSWORD</Text>
+
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View >
 
@@ -139,39 +191,30 @@ export default class Register extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
     seccioTitol: {
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#7BF0E6',
     },
     dades: {
-        width: "100%",
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'white',
-        marginBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#2089dc',
     },
     textView: {
         flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
         fontSize: 40,
         paddingHorizontal: 10,
-    },
-    seccioBuida: {
-        flex: 1,
+        justifyContent: 'space-around'
     },
     seccioBotons: {
         flex: 1,
-        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#7BF0E6',
-        marginTop: 10,
+
 
     },
 
