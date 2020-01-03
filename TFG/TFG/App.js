@@ -35,24 +35,16 @@ import InfoMigranyesCalendari from './screens/InfoMigranyesCalendari'
 import AfegirCitaPacient from './screens/AfegirCitaPacient'
 import AppointmentDetails from './screens/AppointmentDetails'
 import EditAppointment from './screens/EditAppointment'
+import ForgotPassword from './screens/ForgotPassword'
+
 
 const AuthStack = createStackNavigator(
   {
-    FirstView: {
-      screen: FirstView
-    },
-    Login: {
-      screen: LoginScreen
-    },
-    Register: {
-      screen: Register
-    },
+    FirstView: {screen: FirstView},
+    Login: {screen: LoginScreen},
+    Register: {screen: Register},
+    ForgotPassword:{screen:ForgotPassword}
   },
-  {
-    navigationOptions: ({ navigation }) => ({
-      header: null,
-    })
-  }
 );
 
 const Profile = createStackNavigator({

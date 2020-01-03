@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert,SafeAreaView, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert, SafeAreaView, ScrollView, Image } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
@@ -16,13 +16,25 @@ export default class LlistaTotsDoctors extends Component {
 			firstName: "",
 			lastName: "",
 			isLoaded: false,
+			llistaDoctorsAux: [],
+			search: '',
 		};
-	}
+		this.arrayHolder = [];
 
+	}
 	static navigationOptions = {
 		headerStyle: {
 			backgroundColor: '#2089dc'
-		}
+		},
+		headerTitle: 'All doctors',
+		headerTintColor: '#fff',
+		headerTitleStyle: {
+			fontSize: 20,
+		},
+	}
+	componentDidMount() {
+		this.getDataUser()
+		this.getAllMetges()
 	}
 	async getDataUser() {
 		var user = firebase.auth().currentUser
@@ -39,65 +51,63 @@ export default class LlistaTotsDoctors extends Component {
 		let doctorsDinsUsuari = await FirebaseAPI.getLlistaDoctorsFromPacient(user.uid)
 		//console.log("Tots els metges", doctors)
 		//console.log("Metges de l'usuari", doctorsDinsUsuari)
-		let result = []
-		for (var i = 0; i < doctors.length; i++) {
-			for (var j = 0; j < doctorsDinsUsuari.length; j++) {
-				if (doctors[i].uid != doctorsDinsUsuari[j].uid)
-					result.push({ uid: doctors[i].uid, nom: doctors[i].nom })
-			}
+		let result = doctors
+		console.log("result Inicial: ", result)
+		if (doctorsDinsUsuari.length != 0) {
+			for (var i = 0; i < doctors.length; i++) {
+				for (var j = 0; j < doctorsDinsUsuari.length; j++) {
+					//console.log("doctors[i].uid: ", doctors[i].uid, " doctorsDinsUsuari[j].uid: ", doctorsDinsUsuari[j].uid)
+					//if (doctors[i].uid != doctorsDinsUsuari[j].uid) {
+					console.log("result Bucle: ", result)
+					if (doctors[i].uid == doctorsDinsUsuari[j].uid) {
+						result.splice(i, 1)
+						//result.push({ uid: doctors[i].uid, nom: doctors[i].nom })
+						console.log("result Dins de if: ", result)
+					}
+				}
 
+			}
+		}
+		else if (doctorsDinsUsuari.length == 0) {
+			for (var i = 0; i < doctors.length; i++) {
+				result.push({ uid: doctors[i].uid, nom: doctors[i].nom })
+				console.log("result amb doctors dins usuari == 0: ", result)
+			}
 		}
 		//console.log("Doctors finals: ", result)
 
 		this.setState({
 			llistaDoctors: result,
-			isLoaded: true
+			isLoaded: true,
+			llistaDoctorsAux: result,
+		}, function () {
+			this.arrayholder = result
 		})
 	}
 
-	componentDidMount() {
-		this.getDataUser()
-		this.getAllMetges()
+
+	search = text => {
+		console.log(text);
+	};
+	clear = () => {
+		this.search.clear();
+	};
+	SearchFilterFunction(text) {
+		//passing the inserted text in textinput
+		const newData = this.arrayholder.filter(function (item) {
+			//applying filter for the inserted text in search bar
+			const itemData = item.nom ? item.nom.toUpperCase() : ''.toUpperCase();
+			const textData = text.toUpperCase();
+			return itemData.indexOf(textData) > -1;
+		});
+
+		this.setState({
+			//setting the filtered newData on datasource
+			//After setting the data it will automatically re-render the view
+			llistaDoctors: newData,
+			search: text,
+		});
 	}
-	renderHeader = () => {
-		return <SearchBar
-			placeholder="Type Here..."
-			lightTheme
-			round
-			containerStyle={{ backgroundColor: '#7BF0E6' }}
-			inputContainerStyle={{ backgroundColor: 'white' }}
-			onChangeText={(itemValue) => this.setState({ search: itemValue })}
-			value={this.state.search} />;
-	};
-
-	renderFooter = () => {
-		if (!this.state.loading) return null;
-
-		return (
-			<View
-				style={{
-					paddingVertical: 20,
-					borderTopWidth: 1,
-					borderColor: "#7BF0E6"
-				}}
-			>
-				<ActivityIndicator animating size="large" />
-			</View>
-		);
-	};
-	renderSeparator = () => {
-		return (
-			<View
-				style={{
-					height: 1,
-					width: "86%",
-					backgroundColor: "#7BF0E6",
-					marginLeft: "14%"
-				}}
-			/>
-		);
-	};
-
 
 	agregaDoctor(uid_metge) {
 		var user = firebase.auth().currentUser
@@ -107,10 +117,8 @@ export default class LlistaTotsDoctors extends Component {
 				{
 					text: 'Confirm', onPress: () => {
 						FirebaseAPI.addDoctor(user.uid, uid_metge, this.state.firstName, this.state.lastName)
-						this.props.navigation.state.params.refresh()
 						this.getAllMetges()
-
-
+						alert("Doctor added successfully, wait until you get accepted!")
 					}
 				},
 			],
@@ -122,28 +130,38 @@ export default class LlistaTotsDoctors extends Component {
 		const { navigation } = this.props;
 		const uid_user = navigation.getParam('uid_user', 'NO-User');
 		var user = firebase.auth().currentUser;
-		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
-		if (this.state.llistaDoctors.length == 0) return (<View style={[styles.container, { justifyContent: 'center' }]}><Text>No such document!</Text></View>)
+		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center', paddingHorizontal: 10 }]}><ActivityIndicator size="large" /></View>)
+		if (this.state.llistaDoctorsAux.length == 0) return (
+			<View style={[styles.container, { justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10 }]}>
+				<Text style={{ fontSize: 30 }}>There are no doctors in our database or you have already added them all, wait until we have a new one!</Text>
+				<Image style={{ width: 50, height: 50 }} source={require('./images/sadImage.png')}></Image>
+			</View>)
 		return (
 
 			<View style={styles.container}>
-				<StatusBar barStyle={"default"} />
 				<SafeAreaView style={{ flex: 1 }}>
 					<ScrollView style={{ flex: 1 }}>
+						<SearchBar
+							round
+							searchIcon={{ size: 24 }}
+							onChangeText={text => this.SearchFilterFunction(text)}
+							onClear={text => this.SearchFilterFunction('')}
+							placeholder="Type Here..."
+							value={this.state.search}
+							lightTheme
+							containerStyle={{ backgroundColor: '#2089dc' }}
+							inputContainerStyle={{ backgroundColor: 'white' }}
+						/>
 						<FlatList
 							data={this.state.llistaDoctors}
 							renderItem={({ item }) =>
 								<TouchableOpacity onPress={() => this.agregaDoctor(item.uid)}>
-									<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
+									<ListItem containerStyle={{ backgroundColor: "#fff", borderBottomWidth: 1, borderColor: '#2089dc' }}
 										title={item.nom}
 									/>
 								</TouchableOpacity>
 							}
-
-							ListFooterComponent={this.renderFooter}
-							ItemSeparatorComponent={this.renderSeparator}
-
-							keyExtractor={item => item}
+							keyExtractor={item => item.uid}
 						/>
 					</ScrollView>
 				</SafeAreaView>
@@ -157,7 +175,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 
-		backgroundColor: '#7BF0E6',
+		backgroundColor: '#fff',
 	},
 	flatview: {
 		justifyContent: 'center',

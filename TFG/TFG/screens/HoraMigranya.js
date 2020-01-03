@@ -64,6 +64,12 @@ export default class HoraMigranya extends Component {
             if (hour < 10) {
                 hour = '0' + hour;
             }
+            if(date < 10){
+                date = '0' + date;
+            }
+            if(month < 10){
+                month = '0' + month;
+            }
             return date + '-' + month + '-' + year + ' ' + hour + ':' + min
         }
         else if (time == "Happening") return time

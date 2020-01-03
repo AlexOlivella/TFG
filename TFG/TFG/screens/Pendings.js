@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert,SafeAreaView, ScrollView } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, Button, FlatList, TouchableOpacity, ActivityIndicator, Alert, SafeAreaView, ScrollView, Image } from 'react-native';
 import { Dimensions } from 'react-native'
 const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
@@ -16,20 +16,38 @@ export default class Pendings extends Component {
 			firstName: "",
 			lastName: "",
 			isLoaded: false,
+			search: '',
 		};
+		this.arrayHolder = [];
+
 	}
 
 	static navigationOptions = {
 		headerStyle: {
 			backgroundColor: '#2089dc'
-		}
+		},
+		headerTitle: 'Pending pacients',
+		headerTintColor: '#fff',
+		headerTitleStyle: {
+			fontSize: 20,
+		},
 	}
+	componentDidMount() {
+		this.getDataUser();
+		this.getPendings()
 
+	}
 	async getPendings() {
 		var user = firebase.auth().currentUser;
 		var result = await FirebaseAPI.getPendingsFromMetge(user.uid)
 		//console.log("resultat", result)
-		this.setState({ llistaPendings: result, isLoaded: true })
+		this.setState({
+			llistaPendings: result,
+			isLoaded: true,
+			llistaPendingsAux: result
+		}, function () {
+			this.arrayholder = result
+		})
 	}
 	async getDataUser() {
 		var user = firebase.auth().currentUser
@@ -44,50 +62,6 @@ export default class Pendings extends Component {
 		//console.log("lastName:", this.state.lastName)
 
 	}
-	componentDidMount() {
-		this.getDataUser();
-
-		this.getPendings()
-
-	}
-	renderHeader = () => {
-		return <SearchBar
-			placeholder="Type Here..."
-			lightTheme
-			round
-			containerStyle={{ backgroundColor: '#7BF0E6' }}
-			inputContainerStyle={{ backgroundColor: 'white' }}
-			onChangeText={(itemValue) => this.setState({ search: itemValue })}
-			value={this.state.search} />;
-	};
-
-	renderFooter = () => {
-		if (!this.state.loading) return null;
-
-		return (
-			<View
-				style={{
-					paddingVertical: 20,
-					borderTopWidth: 1,
-					borderColor: "#7BF0E6"
-				}}
-			>
-				<ActivityIndicator animating size="large" />
-			</View>
-		);
-	};
-	renderSeparator = () => {
-		return (
-			<View
-				style={{
-					height: 1,
-					width: "86%",
-					backgroundColor: "#7BF0E6",
-					marginLeft: "14%"
-				}}
-			/>
-		);
-	};
 
 
 	agregaPacient(uid_pacient) {
@@ -100,41 +74,72 @@ export default class Pendings extends Component {
 						FirebaseAPI.addPacient(user.uid, uid_pacient, this.state.firstName, this.state.lastName)
 						this.props.navigation.state.params.refresh()
 						this.getPendings()
-
-
 					}
 				},
 			],
 			{ cancelable: false })
 	}
+	search = text => {
+		console.log(text);
+	};
+	clear = () => {
+		this.search.clear();
+	};
+	SearchFilterFunction(text) {
+		//passing the inserted text in textinput
+		const newData = this.arrayholder.filter(function (item) {
+			//applying filter for the inserted text in search bar
+			const itemData = item.nom ? item.nom.toUpperCase() : ''.toUpperCase();
+			const textData = text.toUpperCase();
+			return itemData.indexOf(textData) > -1;
+		});
 
+		this.setState({
+			//setting the filtered newData on datasource
+			//After setting the data it will automatically re-render the view
+			llistaPendings: newData,
+			search: text,
+		});
+	}
 	render() {
 		//console.log(this.props)
 		const { navigation } = this.props;
 		const uid_user = navigation.getParam('uid_user', 'NO-User');
 		var user = firebase.auth().currentUser;
 		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
-		if (this.state.llistaPendings.length == 0) return (<View style={[styles.container, { justifyContent: 'center' }]}><Text>No such document!</Text></View>)
+		if (this.state.llistaPendingsAux.length == 0) return (
+			<View style={[styles.container, { justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10 }]}>
+				<Text style={{ fontSize: 30 }}>You don't have any pending pacient request, ask some pacients to add you as their doctor</Text>
+
+				<Image source={require("./images/smile.jpeg")} style={{ width: 50, height: 50 }}></Image>
+			</View>
+		)
 		return (
 
 			<View style={styles.container}>
-				<StatusBar barStyle={"default"} />
 				<SafeAreaView style={{ flex: 1 }}>
 					<ScrollView style={{ flex: 1 }}>
+						<SearchBar
+							round
+							searchIcon={{ size: 24 }}
+							onChangeText={text => this.SearchFilterFunction(text)}
+							onClear={text => this.SearchFilterFunction('')}
+							placeholder="Type Here..."
+							value={this.state.search}
+							lightTheme
+							containerStyle={{ backgroundColor: '#2089dc' }}
+							inputContainerStyle={{ backgroundColor: 'white' }}
+						/>
 						<FlatList
 							data={this.state.llistaPendings}
 							renderItem={({ item }) =>
 								<TouchableOpacity onPress={() => this.agregaPacient(item.uid)}>
-									<ListItem containerStyle={{ backgroundColor: "#7BF0E6", borderBottomWidth: 1, borderBottomColor: 'white' }}
+									<ListItem containerStyle={{ backgroundColor: "#fff", borderBottomWidth: 1, borderColor: '#2089dc' }}
 										title={item.nom}
 									/>
 								</TouchableOpacity>
 							}
-
-							ListFooterComponent={this.renderFooter}
-							ItemSeparatorComponent={this.renderSeparator}
-
-							keyExtractor={item => item}
+							keyExtractor={item => item.uid}
 						/>
 					</ScrollView>
 				</SafeAreaView>
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 
-		backgroundColor: '#7BF0E6',
+		backgroundColor: '#fff',
 	},
 	flatview: {
 		justifyContent: 'center',

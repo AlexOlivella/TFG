@@ -182,7 +182,7 @@ export default class Register extends Component {
                     </View>
                     <View style={styles.dades}>
                         <View style={{ width: '50%', justifyContent: 'flex-end' }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Gender</Text>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', paddingBottom:10 }}>Gender</Text>
                         </View>
                         <View style={{ width: "50%", }}>
                             <Dropdown
@@ -253,7 +253,7 @@ export default class Register extends Component {
                         style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
                     >
                         <View >
-                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>UPDATE PASSWORD</Text>
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>CHANGE PASSWORD</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

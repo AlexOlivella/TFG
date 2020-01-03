@@ -55,7 +55,7 @@ export default class prova extends Component {
     this.markDays()
     var user = firebase.auth().currentUser
     var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
-    this.getDades(new Date())
+    //this.getDades(new Date())
     this.setState({ tipus: tipus })
 
   }
@@ -310,7 +310,7 @@ export default class prova extends Component {
           style={{ width: '100%' }}
           placement="left"
           leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-          centerComponent={{ text: 'Calendar', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Calendar', style: { color: '#fff', fontSize: 20 } }}
           rightComponent={<Icon name='add' onPress={() => this.afegirCita()} />}
         />
 

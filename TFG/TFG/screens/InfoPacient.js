@@ -28,9 +28,14 @@ export default class InfoPacient extends Component {
     }
 
     static navigationOptions = {
+        title: "Pacient info",
         headerStyle: {
             backgroundColor: '#2089dc'
-        }
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontSize: 20,
+        },
     }
     componentDidMount() {
         this.getInfoPacient()
@@ -59,7 +64,7 @@ export default class InfoPacient extends Component {
             var date = data.getDate(); //Current Date
             var month = data.getMonth() + 1; //Current Month
             var year = data.getFullYear(); //Current Year
-            
+
             return date + '-' + month + '-' + year
         }
         else return ""
@@ -69,14 +74,51 @@ export default class InfoPacient extends Component {
 
         return (
             <View style={styles.container}>
-                <Text>First Name: {this.state.firstName}</Text>
-                <Text>Last Name: {this.state.lastName}</Text>
-                <Text>Gender: {this.state.gender}</Text>
-                <Text>Birthday: {this.transformaData(this.state.birthday)}</Text>
-                <TouchableOpacity onPress={() => this.obteMigranyes()}>
-                    <Text>Migraines</Text>
-                </TouchableOpacity>
-
+                <View style={{ flex: 1 }}></View>
+                <View style={styles.infoContainer}>
+                    <View style={styles.lateral}>
+                        <View style={styles.info}>
+                            <Text style={styles.constants}>First Name:</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.variables}>{this.state.firstName}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.lateral}>
+                        <View style={styles.info}>
+                            <Text style={styles.constants}>Last Name:</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.variables}>{this.state.lastName}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.lateral}>
+                        <View style={styles.info}>
+                            <Text style={styles.constants}>Gender:</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.variables}>{this.state.gender}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.lateral}>
+                        <View style={styles.info}>
+                            <Text style={styles.constants}>Birthday:</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.variables}>{this.transformaData(this.state.birthday)}</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity
+                        style={{ width: '90%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                        onPress={() => this.obteMigranyes()}
+                    >
+                        <View>
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>SEE PACIENT MIGRAINES</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     };
@@ -87,40 +129,28 @@ export default class InfoPacient extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
-    seccioTitol: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        backgroundColor: '#7BF0E6',
-    },
-    dades: {
-        width: "100%",
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'white',
-        marginBottom: 10,
-    },
-    textView: {
+    infoContainer: {
         flex: 3,
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
+        justifyContent: 'space-between',
         paddingHorizontal: 10,
     },
-    seccioBuida: {
-        flex: 1,
+    lateral: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: '#2089dc',
     },
-    seccioBotons: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#7BF0E6',
-        marginTop: 10,
+    info: {
+        width: "50%"
+    },
+    constants: {
+        fontSize: 20,
+        fontWeight: 'bold',
 
     },
+    variables: {
+        fontSize: 20,
+    }
 
 });

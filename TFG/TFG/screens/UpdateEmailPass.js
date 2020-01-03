@@ -7,6 +7,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from 'react-native-datepicker'
 import { tsThisType } from '@babel/types';
 import Icon from 'react-native-elements'
+import PasswordInputText from 'react-native-hide-show-password-input';
 
 export default class Register extends Component {
 
@@ -86,51 +87,39 @@ export default class Register extends Component {
                         </View>
         </View>*/}
                     <View style={styles.dades}>
-                        <View style={{ width: '50%' }}>
+                        <View style={{ width: '50%',justifyContent:'flex-end',paddingBottom:10  }}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Current password</Text>
                         </View>
                         <View style={{ width: '50%' }}>
-                            <TextInput
-                                style={{ fontSize: 20 }}
-                                secureTextEntry={true}
-                                placeholder="Current password"
-                                autoCapitalize='none'
+                            <PasswordInputText
+                                getRef={input => this.input = input}
                                 value={this.state.currentPassword}
-                                onChangeText={(text) => this.setState({ currentPassword: text })}
-                            >
-                            </TextInput>
+                                onChangeText={(currentPassword) => this.setState({ currentPassword })}
+                            />
                         </View>
                     </View>
                     <View style={styles.dades}>
-                        <View style={{ width: '50%' }}>
+                        <View style={{ width: '50%', justifyContent:'flex-end',paddingBottom:10 }}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>New password</Text>
                         </View>
                         <View style={{ width: '50%' }}>
-                            <TextInput
-                                style={{ fontSize: 20 }}
-                                secureTextEntry={true}
-                                placeholder="New password"
-                                autoCapitalize='none'
+                            <PasswordInputText
+                                getRef={input => this.input = input}
                                 value={this.state.newPassword}
-                                onChangeText={(text) => this.setState({ newPassword: text })}
-                            >
-                            </TextInput>
+                                onChangeText={(newPassword) => this.setState({ newPassword })}
+                            />
                         </View>
                     </View>
                     <View style={styles.dades}>
-                        <View style={{ width: '50%' }}>
+                        <View style={{ width: '50%',justifyContent:'flex-end',paddingBottom:10  }}>
                             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Confirm password</Text>
                         </View>
                         <View style={{ width: '50%' }}>
-                            <TextInput
-                                style={{ fontSize: 20 }}
-                                secureTextEntry={true}
-                                placeholder="Confirm password"
-                                autoCapitalize='none'
+                            <PasswordInputText
+                                getRef={input => this.input = input}
                                 value={this.state.confirmPassword}
-                                onChangeText={(text) => this.setState({ confirmPassword: text })}
-                            >
-                            </TextInput>
+                                onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+                            />
                         </View>
                     </View>
                 </View>

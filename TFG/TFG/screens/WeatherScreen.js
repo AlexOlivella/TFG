@@ -94,7 +94,7 @@ export default class WeatherScreen extends React.Component {
 					style={{ width: '100%' }}
 					placement="left"
 					leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-					centerComponent={{ text: 'Weather', style: { color: '#fff' } }}
+					centerComponent={{ text: 'Weather', style: { color: '#fff', fontSize:20 } }}
 				/>
 				{this.state.isLoading ? <ActivityIndicator size="large" /> : <Weather
 					weather={this.state.weatherCondition}

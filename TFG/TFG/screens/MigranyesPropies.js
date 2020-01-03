@@ -22,7 +22,6 @@ export default class MigranyesPropies extends Component {
 
         };
         this.arrayHolder = [];
-
         this.daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         this.monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         this.colorsDots = [
@@ -195,7 +194,6 @@ export default class MigranyesPropies extends Component {
                             <Icon name='add' onPress={() => this.createMigraine()} />
                         </View>}
                 />
-                <StatusBar barStyle={"default"} />
                 <SafeAreaView style={{ flex: 1 }}>
                     <ScrollView style={{ flex: 1 }}>
                         <FlatList
@@ -210,17 +208,6 @@ export default class MigranyesPropies extends Component {
                                     />
                                 </TouchableOpacity>
                             }
-                            /*ListHeaderComponent={<SearchBar
-                                placeholder="Type Here..."
-                                lightTheme
-                                round
-                                containerStyle={{ backgroundColor: '#7BF0E6' }}
-                                inputContainerStyle={{ backgroundColor: 'white' }}
-                                onChangeText={(itemValue) => this.setState({ search: itemValue })}
-                                value={this.state.search} />}*/
-                            ListFooterComponent={this.renderFooter}
-                            ItemSeparatorComponent={this.renderSeparator}
-
                             keyExtractor={item => item.data}
                         />
                     </ScrollView>
@@ -234,20 +221,6 @@ export default class MigranyesPropies extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
         backgroundColor: '#fff',
     },
-    flatview: {
-        justifyContent: 'center',
-
-    },
-    name: {
-        fontSize: 18,
-        paddingHorizontal: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: "grey"
-    },
-    email: {
-        color: 'red'
-    }
 });

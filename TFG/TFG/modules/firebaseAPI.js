@@ -71,9 +71,8 @@ export async function comprovarTipusUsuari(uid) {
 
 export async function readUserData(uid, tipus) {
 	let docRef
-	if (tipus == "Doctor")
-		docRef = db.collection("Metges").doc(uid);
-	else docRef = db.collection("Pacients").doc(uid)
+	if (tipus == "Doctor") docRef = db.collection("Metges").doc(uid);
+	else if(tipus == "Pacient") docRef = db.collection("Pacients").doc(uid)
 	//console.log(uid, docRef)
 	let response
 	await docRef.get().then(function (doc) {
@@ -89,12 +88,6 @@ export async function readUserData(uid, tipus) {
 	});
 	return response
 }
-/*
-export const updateSingleData = (email) => {
-		firebase.database().ref('Pacients/').update({
-		email,
-	});
-}*/
 
 export async function updateProfile(uid, tipus, firstName, lastName, newGender, newBirthday) {
 	if (tipus == "Doctor")
@@ -110,9 +103,9 @@ export async function updateProfile(uid, tipus, firstName, lastName, newGender, 
 	}).then(function () {
 		//console.log("Document successfully updated!");
 	}).catch(function (error) {
-			// The document probably doesn't exist.
-			console.error("Error updating document: ", error);
-		});
+		// The document probably doesn't exist.
+		console.error("Error updating document: ", error);
+	});
 }
 export async function createMigranya(uid, dIni, dFini, intensitat, zonaC, simpt, caus, menst, exerc, imped, medi, tipus) {
 	if (tipus == "Doctor")
@@ -215,7 +208,7 @@ export async function getAllMetges() {
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
 			// doc.data() is never undefined for query doc snapshots
-			//console.log(doc.id, " => ", doc.data());
+			//console.log("all doctors", doc.id, " => ", doc.data());
 			/*doc.forEach(function (query2) {
 				if (docRef.doc(pacient_uid))*/
 			result.push({ uid: doc.id, nom: doc.data().firstName + " " + doc.data().lastName })
@@ -229,6 +222,7 @@ export async function getLlistaDoctorsFromPacient(uid_pacient) {
 	var docRef = db.collection("Pacients").doc(uid_pacient).collection("llistaDoctors")
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
+			//console.log("doctors from pacient", doc.id, " => ", doc.data())
 			result.push({ uid: doc.id, nom: doc.data().firstName + " " + doc.data().lastName })
 		});
 	});
@@ -425,7 +419,6 @@ export async function deleteAppointment(metge_uid, data) {
 		console.error("Error removing document: ", error);
 	});
 }
-
 export async function getMarkedDays(uid, tipus) {
 	let result = []
 	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid)
@@ -449,4 +442,30 @@ export async function getMarkedDays(uid, tipus) {
 	var resultFinal = result.concat(result2)
 	//console.log("resultFinal", resultFinal)
 	return resultFinal
+}
+export async function desagregaPacient(uid, user_uid) {
+	var docRef = db.collection("Metges").doc(uid).collection("llistaPacients").doc(user_uid)
+	return await docRef.delete().then(function () {
+		console.log("Document successfully deleted!");
+		db.collection("Pacients").doc(user_uid).collection("llistaDoctors").doc(uid).delete().then(function () {
+			console.log("Document successfully deleted!");
+		}).catch(function (error) {
+			console.error("Error removing document: ", error);
+		});
+	}).catch(function (error) {
+		console.error("Error removing document: ", error);
+	});
+}
+export async function desagregaDoctor(uid, user_uid) {
+	var docRef = db.collection("Pacients").doc(uid).collection("llistaDoctors").doc(user_uid)
+	return await docRef.delete().then(function () {
+		console.log("Document successfully deleted!");
+		db.collection("Metges").doc(user_uid).collection("llistaPacients").doc(uid).delete().then(function () {
+			console.log("Document successfully deleted!");
+		}).catch(function (error) {
+			console.error("Error removing document: ", error);
+		});
+	}).catch(function (error) {
+		console.error("Error removing document: ", error);
+	});
 }

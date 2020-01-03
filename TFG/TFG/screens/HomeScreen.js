@@ -45,7 +45,7 @@ export default class HomeScreen extends Component {
 						style={{ width: '100%' }}
 						placement="left"
 						leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-						centerComponent={{ text: 'Home', style: { color: '#fff' } }}
+						centerComponent={{ text: 'Home', style: { color: '#fff', fontSize:20 } }}
 					/>
 				</View>
 				<View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>

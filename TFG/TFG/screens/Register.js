@@ -5,6 +5,7 @@ import * as FirebaseAPI from '../modules/firebaseAPI';
 import { TextField } from 'react-native-material-textfield';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { Dropdown } from 'react-native-material-dropdown';
+import PasswordInputText from 'react-native-hide-show-password-input';
 
 export default class Register extends Component {
 
@@ -142,12 +143,11 @@ export default class Register extends Component {
           </View>
 
           <View style={{ width: "100%" }}>
-            <TextField
-              label="Password"
-              onChangeText={(v) => this.setState({ password: v })}
-              autoCapitalize="none"
+          <PasswordInputText
+              getRef={input => this.input = input}
               value={this.state.password}
-              secureTextEntry={true} />
+              onChangeText={(password) => this.setState({ password })}
+            />
           </View>
 
           <View style={{ width: "100%" }}>

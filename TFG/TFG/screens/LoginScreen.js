@@ -3,6 +3,8 @@ import { Platform, StyleSheet, Text, View, Button, TextInput, TouchableHighlight
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI';
 import { TextField } from 'react-native-material-textfield';
+import { Icon } from 'react-native-elements'
+import PasswordInputText from 'react-native-hide-show-password-input';
 
 
 
@@ -79,35 +81,44 @@ export default class LoginScreen extends Component {
           <Text style={{ fontSize: 30 }}>Logo</Text>
         </View>
         <View style={styles.seccioEscriure}>
-          <View style={{ width: "100%" }}>
+          <View style={{}}>
+
             <TextField
               label="Email"
               onChangeText={email => this.setState({ email })}
               autoCapitalize="none"
               value={this.state.email}
+              style={{ width: '80%' }}
             />
           </View>
-          <View style={{ width: "100%" }}>
-            <TextField
+          <View style={{}}>
+            {/*<Icon name='lock'></Icon>*/}
+            {/* <TextField
               label="Password"
               onChangeText={(v) => this.setState({ password: v })}
               autoCapitalize="none"
               value={this.state.password}
-              secureTextEntry={true} />
+              secureTextEntry={true} />*/}
+            <PasswordInputText
+              getRef={input => this.input = input}
+              value={this.state.password}
+              onChangeText={(password) => this.setState({ password })}
+            />
           </View>
         </View>
-        <View style={styles.seccioBotons}>
-          <View style={{ width: "90%", paddingBottom: 10 }}>
-            <Button onPress={() => {
-              this.signIn();
-              //console.log(this.state.contador)
-            }} title="Sign in"> </Button>
+        <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 10 }}>
+          <Button onPress={() => {
+            this.signIn();
+            //console.log(this.state.contador)
+          }} title="Sign in"
 
-          </View>
-          <Text style={{ fontSize: 15 }}>  No account yet?
-          <Text onPress={() => { navigate("Register") }} style={{ fontWeight: 'bold', fontSize: 15 }} > Create one</Text>
-          </Text>
+          > </Button>
         </View>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+          <Text style={{ fontSize: 16, color: 'orange' }} onPress={() => { navigate("Register") }}>No account yet? Create one</Text>
+          <Text style={{ fontSize: 16, color: 'blue' }} onPress={() => { navigate("ForgotPassword") }}>Forgot Password?</Text>
+        </View>
+        <View style={{ flex: 1 }}></View>
       </View>
 
     );
@@ -118,28 +129,24 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7BF0E6',
+    backgroundColor: '#fff',
   },
   seccioTitol: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#7BF0E6',
 
   },
   seccioEscriure: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#7BF0E6',
-    paddingHorizontal: 10
-
+    flex: 3,
+    paddingHorizontal:10,
+    justifyContent:'center',
   },
   seccioBotons: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#7BF0E6',
+    backgroundColor: 'red'
 
   },
   boto: {
