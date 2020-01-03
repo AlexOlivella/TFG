@@ -224,7 +224,7 @@ export default class LlistaUsuaris extends Component {
 				rightComponent={<Icon name='add' onPress={() => this.openAllDoctors()} />}
 			/>
 		}
-		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
+		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" color='black' /></View>)
 		if (this.state.llistaDataAux.length == 0 && this.state.tipus == "Doctor") return (
 			<View style={styles.container}>
 				{header}

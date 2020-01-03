@@ -144,7 +144,7 @@ export default class Register extends Component {
                     leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
                     centerComponent={{ text: 'Change your profile', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                 />
-                <View>
+                <View style={{justifyContent:'center', alignItems:'center'}}>
                     <ActivityIndicator size="large" color='black'></ActivityIndicator>
                 </View>
             </View>)

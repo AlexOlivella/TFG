@@ -265,9 +265,7 @@ export async function getInfoMigranya(uid, data_migranya, tipus) {
 
 	let result
 	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid).collection("migranyes").doc(data_migranya)
-
-	else if (tipus == "Pacient")
-		var docRef = db.collection("Pacients").doc(uid).collection("migranyes").doc(data_migranya)
+	else if (tipus == "Pacient")var docRef = db.collection("Pacients").doc(uid).collection("migranyes").doc(data_migranya)
 	await docRef.get().then(function (doc) {
 		if (doc.exists) {
 			//console.log("Document data:", doc.data());
