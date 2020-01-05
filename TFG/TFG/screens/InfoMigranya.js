@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid, ActivityIndicator, SafeAreaView, ScrollView } from 'react-native';
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import firebase from 'firebase'
 import { Icon, Header } from 'react-native-elements';
@@ -72,7 +72,7 @@ export default class InfoMigranya extends Component {
     async getInfoMigranya() {
 
         let result = await FirebaseAPI.getInfoMigranya(this.state.uid, this.state.migranya, "Pacient")
-        console.log("Migranya " + this.state.migranya + " : ", result)
+        //console.log("Migranya " + this.state.migranya + " : ", result)
         this.setState({
             dataInici: this.state.migranya,
             dataFinal: result.dataFinal,
@@ -91,7 +91,8 @@ export default class InfoMigranya extends Component {
     getDuration(dIni, dFi) {
         if (dIni && dFi) {
             let data = new Date(dFi - dIni)
-            var hour = data.getHours();
+            console.log("data", data)
+            var hour = data.getHours() - 1;
             var min = data.getMinutes();
             return hour + 'h' + min + 'm'
         }
@@ -120,51 +121,116 @@ export default class InfoMigranya extends Component {
         }
         else return ""
     }
-
+    transformaArrays(array) {
+        let resultat = ""
+        for (i = 0; i < array.length; i++) {
+            if (i == 0) resultat += array[i]
+            else resultat += ", " + array[i]
+        }
+        return resultat
+    }
     render() {
         if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
         return (
-            <View style={styles.container}>
-
-                <View style={{ flexDirection: 'row', backgroundColor: '#6483DE', paddingVertical: 5 }}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                        <Image source={require('./images/calendar-clock.png')}></Image>
-                        <Text style={styles.titolsHora}>DURATION</Text>
-                    </View>
-                    <View style={{ flex: 4, flexDirection: 'row', justifyContent: 'space-around' }}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={styles.titolsHora}>START</Text>
-                            <Text style={styles.horesMin}>{this.transformaHoraMin(this.state.dataInici)}</Text>
-                            <Text style={styles.data}>{this.transformaDiaMesAny(this.state.dataInici)}</Text>
-                        </View>
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={styles.titolsHora}>END</Text>
-                            <Text style={styles.horesMin}>{this.transformaHoraMin(this.state.dataFinal)}</Text>
-                            <Text style={styles.data}>{this.transformaDiaMesAny(this.state.dataFinal)}</Text>
-                        </View>
-                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            <SafeAreaView style={styles.container}>
+                <ScrollView>
+                    <View style={{ flexDirection: 'row', backgroundColor: '#6483DE', paddingVertical: 5, borderBottomColor: '#fff', borderBottomWidth: 1 }}>
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+                            <Image source={require('./images/calendar-clock.png')}></Image>
                             <Text style={styles.titolsHora}>DURATION</Text>
-                            <Text style={styles.horesMin}>{this.getDuration(this.state.dataInici, this.state.dataFinal)}</Text>
+                        </View>
+                        <View style={{ flex: 4, flexDirection: 'row', justifyContent: 'space-around' }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={styles.titolsHora}>START</Text>
+                                <Text style={styles.horesMin}>{this.transformaHoraMin(this.state.dataInici)}</Text>
+                                <Text style={styles.data}>{this.transformaDiaMesAny(this.state.dataInici)}</Text>
+                            </View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={styles.titolsHora}>END</Text>
+                                <Text style={styles.horesMin}>{this.transformaHoraMin(this.state.dataFinal)}</Text>
+                                <Text style={styles.data}>{this.transformaDiaMesAny(this.state.dataFinal)}</Text>
+                            </View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={styles.titolsHora}>DURATION</Text>
+                                <Text style={styles.horesMin}>{this.getDuration(this.state.dataInici, this.state.dataFinal)}</Text>
+                            </View>
                         </View>
                     </View>
-                </View>
-                <View style={{ flexDirection: 'row',backgroundColor: '#6483DE',  }}>
-                    <View style={{flex:1, backgroundColor:'#6483DE', justifyContent:'center', alignItems:'center', paddingVertical:5}}>
-                        <Image style={{width:40, height:40}} source={require('./images/flash.png')}></Image>
-                        <Text style={styles.titolsHora}>INTENSITY</Text>
+                    <View style={styles.vistaGeneral}>
+                        <View style={styles.vistaColumna}>
+                            <Image style={{ width: 40, height: 40 }} source={require('./images/flash.png')}></Image>
+                            <Text style={styles.titolsHora}>INTENSITY</Text>
+                        </View>
+                        <View style={{ flex: 4, borderBottomColor: '#6483DE', borderBottomWidth: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: this.colorsDots[parseInt(this.state.intensitatDolor)] }}>
+                            <Text style={styles.horesMin}>{this.intensity[parseInt(this.state.intensitatDolor)]}</Text>
+                        </View>
                     </View>
-                    <View style={{flex:4, justifyContent:'center', alignItems:'center', backgroundColor:this.colorsDots[parseInt(this.state.intensitatDolor)]}}>
-                        <Text style={styles.horesMin}>{this.intensity[parseInt(this.state.intensitatDolor)]}</Text>
+                    <View style={styles.vistaGeneral}>
+                        <View style={styles.vistaColumna}>
+                            <Image style={{ width: 60, height: 50, resizeMode: 'contain' }} source={require('./images/headparts2.png')}></Image>
+                            <Text style={styles.titolsHora}>PAIN ZONE</Text>
+                        </View>
+                        <View style={styles.vistaArray}>
+                            <Text style={styles.textArray}>{this.transformaArrays(this.state.zonaCap)}</Text>
+                        </View>
                     </View>
-                </View>
-                <Text> {this.state.zonaCap}</Text>
-                <Text> {this.state.simptomes}</Text>
-                <Text> {this.state.causes}</Text>
-                <Text> {this.state.impediments}</Text>
-                <Text> {this.state.exercicis}</Text>
-                <Text> {this.state.menstruacio}</Text>
-                <Text> {this.state.medicaments}</Text>
-            </View>
+                    <View style={styles.vistaGeneral}>
+                        <View style={styles.vistaColumna}>
+                            <Image style={{ width: 50, height: 50, resizeMode: 'contain' }} source={require('./images/symptomsImage.png')}></Image>
+                            <Text style={styles.titolsHora}>SYMPTOMS</Text>
+                        </View>
+                        <View style={styles.vistaArray}>
+                            <Text style={styles.textArray}>{this.transformaArrays(this.state.simptomes)}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.vistaGeneral}>
+                        <View style={styles.vistaColumna}>
+                            <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('./images/causes.png')} ></Image>
+                            <Text style={styles.titolsHora}>CAUSES</Text>
+                        </View>
+                        <View style={styles.vistaArray}>
+                            <Text style={styles.textArray}>{this.transformaArrays(this.state.causes)}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.vistaGeneral}>
+                        <View style={styles.vistaColumna}>
+                            <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('./images/run.png')}></Image>
+                            <Text style={styles.titolsHora}>AFECTED</Text>
+                            <Text style={styles.titolsHora}>ACTIVITIES</Text>
+                        </View>
+                        <View style={styles.vistaArray}>
+                            <Text style={styles.textArray}>{this.transformaArrays(this.state.impediments)}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.vistaGeneral}>
+                        <View style={styles.vistaColumna}>
+                            <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('./images/exercise.png')}></Image>
+                            <Text style={styles.titolsHora}>EXERCISE</Text>
+                        </View>
+                        <View style={styles.vistaArray}>
+                            <Text style={styles.textArray}>{this.state.exercicis}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.vistaGeneral}>
+                        <View style={styles.vistaColumna}>
+                            <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('./images/period.png')}></Image>
+                            <Text style={styles.titolsHora}>PERIOD</Text>
+                        </View>
+                        <View style={styles.vistaArray}>
+                            <Text style={styles.textArray}>{this.state.menstruacio}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.vistaGeneral}>
+                        <View style={styles.vistaColumna}>
+                            <Image style={{ width: 40, height: 40, resizeMode: 'contain' }} source={require('./images/pill.png')}></Image>
+                            <Text style={{ fontSize: 11, color: "#fff" }}>MEDICATION</Text>
+                        </View>
+                        <View style={styles.vistaArray}>
+                            <Text style={styles.textArray}>{this.transformaArrays(this.state.medicaments)}</Text>
+                        </View>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
@@ -173,6 +239,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+
+
     },
     titolsHora: {
         fontSize: 12,
@@ -185,5 +253,32 @@ const styles = StyleSheet.create({
     data: {
         fontSize: 15,
         color: '#fff'
+    },
+    textArray: {
+        fontSize: 18,
+        paddingHorizontal: 5
+    },
+    vistaGeneral: {
+        flexDirection: 'row',
+
+    },
+    vistaColumna: {
+        flex: 1,
+        backgroundColor: '#6483DE',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingRight: 5,
+        paddingVertical: 10,
+        borderBottomColor: '#fff',
+        borderBottomWidth: 1
+    },
+    vistaArray: {
+        flex: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#E9EFFF',
+        borderBottomWidth: 1,
+        borderBottomColor: '#6483DE'
+
     }
 });

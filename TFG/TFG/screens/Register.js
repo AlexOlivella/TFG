@@ -7,7 +7,6 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import { Dropdown } from 'react-native-material-dropdown';
 import PasswordInputText from 'react-native-hide-show-password-input';
 import Constants from 'expo-constants';
-import * as ImagePicker from 'expo-image-picker';
 
 export default class Register extends Component {
 

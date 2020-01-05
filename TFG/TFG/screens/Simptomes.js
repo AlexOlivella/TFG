@@ -44,7 +44,7 @@ export default class Simptomes extends Component {
         if (selected["No"] === true) selected = {}
         if (selected[element]!=selected["No"]) selected["No"] = false
         selected[element] = !selected[element];
-        console.log(selected);
+        //console.log(selected);
         this.setState({ selected: selected })
     }
 

@@ -22,7 +22,7 @@ export default class ZonaCap extends Component {
                 "Front right neck": false,
                 "Back left neck": false,
                 "Back right neck": false,
-
+                "None": false,
             }
         };
 
@@ -35,13 +35,10 @@ export default class ZonaCap extends Component {
     select(element) {
         let selected = this.state.selected;
 
-        if (element === "None of this")
-            selected = {}
-
+        if (element === "None") selected["None"] = true
+        if (selected["None"] === true) selected = {}
+        if (selected[element]!=selected["None"]) selected["None"] = false
         selected[element] = !selected[element];
-
-
-
         //console.log(selected);
         this.setState({ selected: selected })
 
@@ -139,7 +136,7 @@ export default class ZonaCap extends Component {
                             <Image source={require('./images/darrereCollDreta.png')}></Image>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ width: "100%", }} onPress={() => this.select("None of this")}>
+                    <TouchableOpacity style={{ width: "100%", }} onPress={() => this.select("None")}>
                         <Text>None of this</Text>
                     </TouchableOpacity>
                 </View>
