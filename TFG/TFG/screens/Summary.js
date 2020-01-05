@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import firebase from 'firebase'
 import { Header } from 'react-native-elements';
 
 
 export default class Summary extends Component {
+
+    constructor(props) {
+        super(props);
+        //console.log(this.props)
+        //console.log(user_email.email_user)
+        this.state = {
+            isLoaded: true,
+
+        }
+
+    };
     static navigationOptions = {
         header: null
     }
-    
+
     async next() {
+        this.setState({isLoaded:false})
         var { navigation } = this.props;
         var dataInici = navigation.getParam('dataInici');
-        var dataFinal= navigation.getParam('dataFinal');
+        var dataFinal = navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
@@ -38,6 +50,7 @@ export default class Summary extends Component {
             medicaments,
             tipus,
         )
+        this.setState({ isLoaded: true })
         this.props.navigation.navigate(
             "Home"
         )
@@ -57,10 +70,15 @@ export default class Summary extends Component {
         var exercicis = navigation.getParam('exercicis')
         var impediments = navigation.getParam('impediments')
         var medicaments = navigation.getParam('medicaments')
+
+        var loading
+        if (!this.state.isLoaded) loading = <View>
+            <ActivityIndicator size="large" color="black"></ActivityIndicator>
+        </View>
         return (
             <View style={styles.container}>
                 <Header
-                centerComponent={{text:'Summary', style: { color: '#fff' }}}>
+                    centerComponent={{ text: 'Summary', style: { color: '#fff' } }}>
 
                 </Header>
                 <View>
@@ -75,6 +93,7 @@ export default class Summary extends Component {
                     <Text> {menstruacio}</Text>
                     <Text> {medicaments}</Text>
                 </View>
+                {loading}
                 <View style={{ flex: 1 }}>
                     <Button
                         onPress={() => {

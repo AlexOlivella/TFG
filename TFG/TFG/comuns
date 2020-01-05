@@ -5,7 +5,11 @@ Color botons: '#2196F3'
 
 
 MIDES:
+title:"",
+headerStyle: {
+    backgroundColor: '#2089dc'
+},
 headerTintColor: '#fff',
 headerTitleStyle: {
-    fontSize:20,
+    fontSize: 20,
 },

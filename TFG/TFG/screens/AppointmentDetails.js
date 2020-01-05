@@ -24,11 +24,12 @@ export default class AppointmentDetails extends Component {
     static navigationOptions = {
         title: 'Appointment details',
         headerStyle: {
-            backgroundColor: '#2089dc',
+            backgroundColor: '#2089dc'
         },
+        headerTintColor: '#fff',
         headerTitleStyle: {
-            color: '#fff'
-        }
+            fontSize: 20,
+        },
     }
 
     componentDidMount() {

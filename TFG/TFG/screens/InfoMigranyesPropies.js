@@ -32,7 +32,11 @@ export default class InfoMigranyesPropies extends Component {
     static navigationOptions = {
         headerStyle: {
             backgroundColor: '#2089dc'
-        }
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontSize: 20,
+        },
     }
 
     componentDidMount() {

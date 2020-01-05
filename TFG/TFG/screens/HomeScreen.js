@@ -5,6 +5,7 @@ const { width, height } = Dimensions.get('screen');
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { Header, Icon } from 'react-native-elements'
+import ActionButton from 'react-native-circular-action-menu';
 
 
 export default class HomeScreen extends Component {
@@ -20,7 +21,7 @@ export default class HomeScreen extends Component {
 	obrirDrawer = () => {
 		this.props.navigation.openDrawer();
 	}
-
+	
 
 	createMigraine() {
 		var user = firebase.auth().currentUser;
@@ -44,14 +45,13 @@ export default class HomeScreen extends Component {
 					<Header
 						style={{ width: '100%' }}
 						placement="left"
-						leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
-						centerComponent={{ text: 'Home', style: { color: '#fff', fontSize:20 } }}
+						leftComponent={<Icon name='menu' color="#fff" onPress={() => this.obrirDrawer()} />}
+						centerComponent={{ text: 'Home', style: { color: '#fff', fontSize: 20 } }}
 					/>
 				</View>
 				<View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
 					<Text style={{ fontSize: 30 }}> Welcome to Mygraine </Text>
 				</View>
-
 				<View style={{ flex: 2, justifyContent: 'center', paddingHorizontal: 10 }}>
 					<Button onPress={() => { this.createMigraine() }} title="Register an attack"> </Button>
 				</View>
@@ -66,5 +66,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 
 		backgroundColor: '#fff',
+	},
+	actionButtonIcon: {
+		fontSize: 20,
+		height: 22,
+		color: 'white',
 	},
 });

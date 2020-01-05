@@ -163,12 +163,12 @@ export default class MigranyesPropies extends Component {
                     <Header
                         style={{ width: '100%' }}
                         placement="left"
-                        leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+                        leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
                         centerComponent={{ text: 'Migraines', style: { color: '#fff', fontSize:20 } }}
                         rightComponent={
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 {/*<Icon name="edit" onPress={() => alert("dit")} />*/}
-                                <Icon name='add' onPress={() => this.createMigraine()} />
+                                <Icon name='add' color="#fff"  onPress={() => this.createMigraine()} />
                             </View>}
                     />
                     <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: 10, }}>
@@ -187,11 +187,11 @@ export default class MigranyesPropies extends Component {
                 <Header
                     style={{ width: '100%' }}
                     placement="left"
-                    leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+                    leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
                     centerComponent={{ text: 'Migraines', style: { color: '#fff',fontSize:20  } }}
                     rightComponent={
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                            <Icon name='add' onPress={() => this.createMigraine()} />
+                            <Icon name='add' color="#fff"  onPress={() => this.createMigraine()} />
                         </View>}
                 />
                 <SafeAreaView style={{ flex: 1 }}>

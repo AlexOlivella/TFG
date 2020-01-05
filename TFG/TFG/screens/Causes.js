@@ -12,6 +12,7 @@ export default class Causes extends Component {
         super(props);
         this.state = {
             selected: {
+                "No":false,
                 "Stress": false,
                 "Anxiety": false,
                 "Depression": false,
@@ -31,7 +32,9 @@ export default class Causes extends Component {
     select(element) {
         let selected = this.state.selected;
 
-        if (element === "No") selected = {}
+        if (element === "No") selected["No"] = true
+        if (selected["No"] === true) selected = {}
+        if (selected[element]!=selected["No"]) selected["No"] = false
         selected[element] = !selected[element];
         //console.log(selected);
         this.setState({ selected: selected })

@@ -11,6 +11,7 @@ export default class Impediments extends Component {
         super(props);
         this.state = {
             selected: {
+                "No":false,
                 "Move": false,
                 "Breathe": false,
                 "Walk": false,
@@ -25,7 +26,9 @@ export default class Impediments extends Component {
     select(element) {
         let selected = this.state.selected;
 
-        if (element === "No") selected = {}
+        if (element === "No") selected["No"] = true
+        if (selected["No"] === true) selected = {}
+        if (selected[element]!=selected["No"]) selected["No"] = false
         selected[element] = !selected[element];
         //console.log(selected);
         this.setState({ selected: selected })

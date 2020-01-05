@@ -100,7 +100,7 @@ export default class VinclePacientMetge extends Component {
 					<Header
 						style={{ width: '100%' }}
 						placement="left"
-						leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+						leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
 						centerComponent={{ text: 'Comunication', style: { color: '#fff' } }}
 						rightComponent={{ icon: '' }}
 					/>

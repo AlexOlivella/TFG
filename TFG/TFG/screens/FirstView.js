@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, TextInput, ActivityIndicator } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TextInput, ActivityIndicator,Image } from 'react-native';
 import firebase from 'firebase'
 
 
@@ -56,6 +56,9 @@ export default class LoginScreen extends Component {
           <View style={styles.seccioTitol}>
             <Text style={{ fontSize: 30 }}> Mygraine </Text>
           </View>
+          <View style={{justifyContent:'center', alignItems:'center', }}>
+            <Image style={{width:400,height:400}} source={require('./images/LogoMygraine.png')}></Image>
+          </View>
           <View style={styles.seccioBoto}>
             <View style={{ width: "90%", paddingBottom: 10 }}>
               <Button onPress={() => { navigate("Login") }} title="Enter" > </Button>
@@ -74,14 +77,14 @@ const styles = StyleSheet.create({
 
   },
   seccioTitol: {
-    flex: 3,
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: '#fff',
   },
   seccioBoto: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
   },

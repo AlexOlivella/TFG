@@ -30,11 +30,12 @@ export default class LoginScreen extends Component {
     static navigationOptions = {
         title: 'Add pacient appointment',
         headerStyle: {
-            backgroundColor: '#2089dc',
+            backgroundColor: '#2089dc'
         },
+        headerTintColor: '#fff',
         headerTitleStyle: {
-            color: '#fff'
-        }
+            fontSize: 20,
+        },
     }
 
     componentDidMount() {

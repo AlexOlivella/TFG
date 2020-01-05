@@ -309,9 +309,9 @@ export default class prova extends Component {
         <Header
           style={{ width: '100%' }}
           placement="left"
-          leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+          leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
           centerComponent={{ text: 'Calendar', style: { color: '#fff', fontSize: 20 } }}
-          rightComponent={<Icon name='add' onPress={() => this.afegirCita()} />}
+          rightComponent={<Icon name='add' color="#fff"  onPress={() => this.afegirCita()} />}
         />
 
         <View>

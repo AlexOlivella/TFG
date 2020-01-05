@@ -16,6 +16,10 @@ export default class ForgotPasword extends Component {
         headerStyle: {
             backgroundColor: '#2089dc'
         },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontSize: 20,
+        },
     }
     checkInput() {
         if (this.state.email != '') {

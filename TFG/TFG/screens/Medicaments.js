@@ -12,6 +12,7 @@ export default class Medicaments extends Component {
         super(props);
         this.state = {
             selected: {
+                "No":false,
                 "Aspirin 1000mg": false,
                 "Paracetamol 1000mg": false,
                 "Metamizol 500mg": false,
@@ -36,7 +37,9 @@ export default class Medicaments extends Component {
     select(element) {
         let selected = this.state.selected;
 
-        if (element === "No") selected = {}
+        if (element === "No") selected["No"] = true
+        if (selected["No"] === true) selected = {}
+        if (selected[element]!=selected["No"]) selected["No"] = false
         selected[element] = !selected[element];
         //console.log(selected);
         this.setState({ selected: selected })

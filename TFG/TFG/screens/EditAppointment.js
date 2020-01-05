@@ -25,11 +25,12 @@ export default class EditAppointment extends Component {
     static navigationOptions = {
         title: 'Edit current appointment',
         headerStyle: {
-            backgroundColor: '#2089dc',
+            backgroundColor: '#2089dc'
         },
+        headerTintColor: '#fff',
         headerTitleStyle: {
-            color: '#fff'
-        }
+            fontSize: 20,
+        },
     }
 
     showDateTimePicker = () => {

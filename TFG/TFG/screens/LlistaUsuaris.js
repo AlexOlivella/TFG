@@ -204,11 +204,11 @@ export default class LlistaUsuaris extends Component {
 			header = <Header
 				style={{ width: '100%' }}
 				placement="left"
-				leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+				leftComponent={<Icon name='menu'  color="#fff" onPress={() => this.obrirDrawer()} />}
 				centerComponent={{ text: 'Pacient list', style: { color: '#fff', fontSize: 20 } }}
 				rightComponent={
 					<View>
-						<Icon name='people' onPress={() => this.openPendings()} />
+						<Icon name='people' color="#fff"  onPress={() => this.openPendings()} />
 						{badge}
 					</View>
 
@@ -219,9 +219,9 @@ export default class LlistaUsuaris extends Component {
 			header = <Header
 				style={{ width: '100%' }}
 				placement="left"
-				leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+				leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
 				centerComponent={{ text: 'Doctors list', style: { color: '#fff', fontSize: 20 } }}
-				rightComponent={<Icon name='add' onPress={() => this.openAllDoctors()} />}
+				rightComponent={<Icon name='add'  color="#fff" onPress={() => this.openAllDoctors()} />}
 			/>
 		}
 		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" color='black' /></View>)

@@ -14,6 +14,7 @@ export default class Simptomes extends Component {
         super(props);
         this.state = {
             selected: {
+                "No": false,
                 "Blind spots": false,
                 "Zig zag lanes": false,
                 "Shiny points": false,
@@ -39,9 +40,11 @@ export default class Simptomes extends Component {
     select(element) {
         let selected = this.state.selected;
 
-        if (element === "No") selected = {}
+        if (element === "No") selected["No"] = true
+        if (selected["No"] === true) selected = {}
+        if (selected[element]!=selected["No"]) selected["No"] = false
         selected[element] = !selected[element];
-        //console.log(selected);
+        console.log(selected);
         this.setState({ selected: selected })
     }
 
@@ -49,7 +52,7 @@ export default class Simptomes extends Component {
     next() {
         var { navigation } = this.props;
         var dataInici = navigation.getParam('dataInici');
-        var dataFinal= navigation.getParam('dataFinal');
+        var dataFinal = navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
 
@@ -301,9 +304,9 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 8,
     },
-    columnes:{
-        flexDirection:'row',
-        justifyContent:'space-between'
+    columnes: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     seleccionat: {
         borderWidth: 1,

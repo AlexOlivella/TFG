@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Alert, ToastAndroid, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, Alert, ToastAndroid, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI'
 import { TextField } from 'react-native-material-textfield';
@@ -8,6 +8,7 @@ import DatePicker from 'react-native-datepicker'
 import { tsThisType } from '@babel/types';
 import { Header, Icon } from 'react-native-elements'
 import DateTimePicker from "react-native-modal-datetime-picker";
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default class Register extends Component {
@@ -102,6 +103,7 @@ export default class Register extends Component {
                 this.state.birthday)
             //console.log("resposta: ", resposta)
         }
+        this.props.navigation.navigate("Home")
         ToastAndroid.show("Profile updated succesfully", ToastAndroid.SHORT)
     }
 
@@ -133,6 +135,21 @@ export default class Register extends Component {
         else return ""
     }
 
+
+    async handleChoosePhoto() {
+        const options = {
+            allowsEditing: true
+        }
+
+        let response = await ImagePicker.launchImageLibraryAsync(options)
+        console.log("response", response)
+        if (response.uri) {
+            this.setState({ photo: response })
+        }
+
+        console.log("photo", this.state.photo)
+    }
+
     render() {
         var { navigation } = this.props;
         var navigate = navigation.navigate;
@@ -141,10 +158,10 @@ export default class Register extends Component {
                 <Header
                     style={{ width: '100%' }}
                     placement="left"
-                    leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+                    leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
                     centerComponent={{ text: 'Change your profile', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                 />
-                <View style={{justifyContent:'center', alignItems:'center'}}>
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <ActivityIndicator size="large" color='black'></ActivityIndicator>
                 </View>
             </View>)
@@ -154,10 +171,19 @@ export default class Register extends Component {
                 <Header
                     style={{ width: '100%' }}
                     placement="left"
-                    leftComponent={<Icon name='menu' onPress={() => this.obrirDrawer()} />}
+                    leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
                     centerComponent={{ text: 'Change your profile', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                 />
-
+                <View style={styles.seccioTitol}>
+                    <TouchableOpacity onPress={() => this.handleChoosePhoto()}>
+                        <View>
+                            {this.state.photo ? this.state.photo && (<Image
+                                source={{ uri: this.state.photo.uri }}
+                                style={{ width: 100, height: 100, borderRadius: 100 / 2 }}
+                            />) : <Image style={{ width: 100, height: 100, borderRadius: 100 / 2 }} source={require('./images/no-profile-picture.jpg')}></Image>}
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.textView}>
 
                     <View style={styles.dades}>
@@ -182,7 +208,7 @@ export default class Register extends Component {
                     </View>
                     <View style={styles.dades}>
                         <View style={{ width: '50%', justifyContent: 'flex-end' }}>
-                            <Text style={{ fontSize: 20, fontWeight: 'bold', paddingBottom:10 }}>Gender</Text>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', paddingBottom: 10 }}>Gender</Text>
                         </View>
                         <View style={{ width: "50%", }}>
                             <Dropdown
@@ -287,7 +313,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
 
-
-    },
+    },  seccioTitol: {
+        flex: 1,
+        alignItems: 'center',
+        paddingTop:10
+      },
 
 });

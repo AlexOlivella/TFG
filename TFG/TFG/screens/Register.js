@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Picker, Platform, StyleSheet, Text, View, Button, TextInput, ScrollView, Alert, ToastAndroid, TouchableOpacity } from 'react-native';
+import { Picker, Platform, StyleSheet, Text, View, Button, TextInput, ScrollView, Alert, ToastAndroid, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import * as FirebaseAPI from '../modules/firebaseAPI';
 import { TextField } from 'react-native-material-textfield';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { Dropdown } from 'react-native-material-dropdown';
 import PasswordInputText from 'react-native-hide-show-password-input';
+import Constants from 'expo-constants';
+import * as ImagePicker from 'expo-image-picker';
 
 export default class Register extends Component {
 
@@ -20,11 +22,19 @@ export default class Register extends Component {
       type: "",
       email: "",
       isDateTimePickerVisible: false,
+      photo: "",
     }
 
   };
   static navigationOptions = {
-    header: null,
+    title: 'Sign up',
+    headerStyle: {
+      backgroundColor: '#2089dc'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontSize: 20,
+    },
   }
 
   showDateTimePicker = () => {
@@ -37,7 +47,7 @@ export default class Register extends Component {
 
   handleDatePicked = (date) => {
     //console.log("A date inicial has been picked: ", date);
-    this.setState({ birthday: date.getTime() })
+    this.setState({ birthday: date.getTime(), dateSelected: true })
     this.hideDateTimePicker();
 
   };
@@ -117,15 +127,17 @@ export default class Register extends Component {
     }
     else return ""
   }
+
+
+
   render() {
 
     //console.log(this.props)
 
     return (
       <View style={styles.container}>
-        <View style={styles.seccioTitol}>
-          <Text style={{ fontSize: 30 }}>Sign up</Text>
-        </View>
+
+
         <View style={styles.textinput}>
           <View style={{ width: "100%" }}>
             <TextField
@@ -143,7 +155,7 @@ export default class Register extends Component {
           </View>
 
           <View style={{ width: "100%" }}>
-          <PasswordInputText
+            <PasswordInputText
               getRef={input => this.input = input}
               value={this.state.password}
               onChangeText={(password) => this.setState({ password })}
@@ -185,7 +197,7 @@ export default class Register extends Component {
               onChangeText={(itemValue) => this.setState({ type: itemValue })}
             />
           </View>
-          <View style={{ width: "100%" }}>
+          <View style={{ width: "100%", paddingTop: 20 }}>
             <DateTimePicker
               isVisible={this.state.isDateTimePickerVisible}
               onConfirm={this.handleDatePicked}
@@ -194,48 +206,24 @@ export default class Register extends Component {
             />
 
             <TouchableOpacity onPress={this.showDateTimePicker} >
-              <Text >Select birthday {this.transformaData(this.state.birthday)}</Text>
+              {!this.state.dateSelected && <Text style={{ fontSize: 16, color: '#B9ACAC', borderBottomColor: '#D3D0D0', borderBottomWidth: 1 }}>Select date of birth</Text>}
+
+              {this.state.dateSelected && <View>
+                <Text style={{ fontSize: 12, color: '#0091EA' }}>Select date of birth</Text>
+                <Text style={{ fontSize: 16, borderBottomColor: '#D3D0D0', borderBottomWidth: 1, }}>{this.transformaData(this.state.birthday)}</Text>
+              </View>}
             </TouchableOpacity>
-            {/*<DatePicker
-              date={this.state.birthday}
-              mode="date"
-              placeholder="Select date of birth"
-              format="MM-DD-YYYY"
-              minDate="01-01-1919"
-              maxDate="12-31-2009"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              showIcon={false}
-              style={{ width: "100%" }}
-              customStyles={{
-                dateText: {
-                  color: "rgba(0, 0, 0, .87)",
-                  fontSize: 16,
-                  alignItems: 'flex-start',
-                  width: "100%"
-                },
-                dateInput: {
-                  marginTop: 20,
-                  borderWidth: 0,
-                  fontSize: 18,
-                  color: "rgba(0, 0, 0, .87)",
-                  borderBottomWidth: 0.5,
-                  alignItems: 'flex-start'
-                }
-              }}
-              onDateChange={date => { this.setState({ birthday: date }) }}
-            />*/}
           </View>
         </View>
         <View style={styles.seccioBotons}>
           <View style={{ width: "90%" }} >
             <Button onPress={() => {
-              //alert(/*this.state.username + " " + this.state.password + " " + this.state.email + " " + this.state.gender + " " + this.state.birthday*/)
               this.createUser();
 
             }} title="Sign up"> </Button>
           </View>
         </View>
+
       </View >
 
     );
@@ -246,28 +234,20 @@ export default class Register extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7BF0E6',
+    backgroundColor: '#fff',
   },
-  seccioTitol: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#7BF0E6',
-  },
+
   textinput: {
-    flex: 8,
-    justifyContent: 'flex-start',
+    flex: 4,
+    justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#7BF0E6',
     paddingHorizontal: 10,
   },
 
   seccioBotons: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#7BF0E6',
-    marginTop: 10,
 
   },
 

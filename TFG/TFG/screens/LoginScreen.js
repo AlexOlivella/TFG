@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, TextInput, TouchableHighlight } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TextInput, TouchableHighlight, Image } from 'react-native';
 import firebase from 'firebase'
 import * as FirebaseAPI from '../modules/firebaseAPI';
 import { TextField } from 'react-native-material-textfield';
@@ -78,7 +78,7 @@ export default class LoginScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.seccioTitol}>
-          <Text style={{ fontSize: 30 }}>Logo</Text>
+          <Image style={{ width: 200, height: 200 }} source={require('./images/LogoMygraine.png')}></Image>
         </View>
         <View style={styles.seccioEscriure}>
           <View style={{}}>
@@ -92,13 +92,6 @@ export default class LoginScreen extends Component {
             />
           </View>
           <View style={{}}>
-            {/*<Icon name='lock'></Icon>*/}
-            {/* <TextField
-              label="Password"
-              onChangeText={(v) => this.setState({ password: v })}
-              autoCapitalize="none"
-              value={this.state.password}
-              secureTextEntry={true} />*/}
             <PasswordInputText
               getRef={input => this.input = input}
               value={this.state.password}
@@ -106,7 +99,7 @@ export default class LoginScreen extends Component {
             />
           </View>
         </View>
-        <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 10 }}>
+        <View style={{ flex: 2, justifyContent: 'center', paddingHorizontal: 10 }}>
           <Button onPress={() => {
             this.signIn();
             //console.log(this.state.contador)
@@ -114,11 +107,11 @@ export default class LoginScreen extends Component {
 
           > </Button>
         </View>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around', }}>
           <Text style={{ fontSize: 16, color: 'orange' }} onPress={() => { navigate("Register") }}>No account yet? Create one</Text>
           <Text style={{ fontSize: 16, color: 'blue' }} onPress={() => { navigate("ForgotPassword") }}>Forgot Password?</Text>
         </View>
-        <View style={{ flex: 1 }}></View>
+        <View style={{flex:1}}></View>
       </View>
 
     );
@@ -132,25 +125,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   seccioTitol: {
-    flex: 1,
-    justifyContent: 'center',
+    flex: 3,
+    justifyContent: 'flex-end',
     alignItems: 'center',
+    
 
   },
   seccioEscriure: {
-    flex: 3,
-    paddingHorizontal:10,
-    justifyContent:'center',
-  },
-  seccioBotons: {
-    flex: 1,
+    flex: 2,
+    paddingHorizontal: 10,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red'
-
   },
-  boto: {
-    width: "100%",
-    marginBottom: 20,
-  }
+
 });
