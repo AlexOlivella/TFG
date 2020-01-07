@@ -72,33 +72,6 @@ export default class prova extends Component {
     this.setState({ llistaCites: result })
   }
 
-  renderFooter = () => {
-    if (!this.state.loading) return null;
-
-    return (
-      <View
-        style={{
-          paddingVertical: 20,
-          borderTopWidth: 1,
-          borderColor: "#7BF0E6"
-        }}
-      >
-        <ActivityIndicator animating size="large" />
-      </View>
-    );
-  };
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "86%",
-          backgroundColor: "#7BF0E6",
-          marginLeft: "14%"
-        }}
-      />
-    );
-  };
 
   transformaData(time) {
     if (time) {
@@ -269,8 +242,7 @@ export default class prova extends Component {
                     />
                   </TouchableOpacity>
                 }
-                ListFooterComponent={this.renderFooter}
-                ItemSeparatorComponent={this.renderSeparator}
+              
 
                 keyExtractor={item => item}
               />
@@ -295,8 +267,7 @@ export default class prova extends Component {
                   />
                 </TouchableOpacity>
               }
-              ListFooterComponent={this.renderFooter}
-              ItemSeparatorComponent={this.renderSeparator}
+              
 
               keyExtractor={item => item}
             />

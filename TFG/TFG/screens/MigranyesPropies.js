@@ -55,34 +55,6 @@ export default class MigranyesPropies extends Component {
         this.setState({ llistaMigranyes: result, isLoaded: true })
     }
 
-    renderFooter = () => {
-        if (!this.state.loading) return null;
-
-        return (
-            <View
-                style={{
-                    paddingVertical: 20,
-                    borderTopWidth: 1,
-                    borderColor: "#7BF0E6"
-                }}
-            >
-                <ActivityIndicator animating size="large" />
-            </View>
-        );
-    };
-    renderSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: "86%",
-                    backgroundColor: "#7BF0E6",
-                    marginLeft: "14%"
-                }}
-            />
-        );
-    };
-
     transformaData(time) {
         if (time) {
             time = parseInt(time)

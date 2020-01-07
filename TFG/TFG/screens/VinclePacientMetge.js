@@ -39,33 +39,7 @@ export default class VinclePacientMetge extends Component {
 		this.obteMetges();
 	}
 
-	renderFooter = () => {
-		if (!this.state.loading) return null;
-
-		return (
-			<View
-				style={{
-					paddingVertical: 20,
-					borderTopWidth: 1,
-					borderColor: "#7BF0E6"
-				}}
-			>
-				<ActivityIndicator animating size="large" />
-			</View>
-		);
-	};
-	renderSeparator = () => {
-		return (
-			<View
-				style={{
-					height: 1,
-					width: "86%",
-					backgroundColor: "#7BF0E6",
-					marginLeft: "14%"
-				}}
-			/>
-		);
-	};
+	
 	agregarDoctor(uid_metge) {
 		var user = firebase.auth().currentUser
 		Alert.alert("Add doctor", "Do you want to add this doctor?",
@@ -124,8 +98,7 @@ export default class VinclePacientMetge extends Component {
 								inputContainerStyle={{ backgroundColor: 'white' }}
 								onChangeText={(itemValue) => this.setState({ search: itemValue })}
 								value={this.state.search} />}
-							ListFooterComponent={this.renderFooter}
-							ItemSeparatorComponent={this.renderSeparator}
+							
 
 							keyExtractor={item => item}
 						/>

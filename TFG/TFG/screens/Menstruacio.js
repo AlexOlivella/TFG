@@ -41,43 +41,68 @@ export default class Menstruacio extends Component {
         return (
             <View style={styles.container}>
                 <Header
-                    centerComponent={{ text: 'Period type', style: { color: '#fff', fontSize:20 } }}
+                    centerComponent={{ text: 'Period type', style: { color: '#fff', fontSize: 20 } }}
                 >
                 </Header>
-                <View style={styles.seccioOpcions}>
-                    <View style={styles.lateral}>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => this.next("No")}>
-                            <Text>No</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => this.next("Low")}>
-                            <Text>Low</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => this.next("Moderate")}>
-                            <Text>Moderate</Text>
-                        </TouchableHighlight>
+                <View style={styles.safeArea}>
+                    <View style={styles.columnes}>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("No")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/No.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                No
+                            </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("Low")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/LowPeriod.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                Low
+                            </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("Moderate")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/ModeratePeriod.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                Moderate
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.lateral}>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => this.next("Hard")}>
-                            <Text>Hard</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => this.next("Soon")}>
-                            <Text>Soon</Text>
-                        </TouchableHighlight>
+                    <View style={styles.columnes}>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("Hard")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/HardPeriod.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                Hard
+                            </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("Soon")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/calendar-clock.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                Soon
+                            </Text>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.seccioBotons}>
@@ -117,23 +142,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    lateral: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    seccioOpcions: {
+    safeArea: {
         flex: 8,
-        //justifyContent: "center",
+        paddingHorizontal: 10,
     },
-    noSeleccionat: {
-        borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.2)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 100,
-        height: 100,
-        backgroundColor: '#3BD3EF',
-        borderRadius: 50,
+    columnes: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 10,
     },
     seccioBotons: {
         flex: 1,
@@ -141,4 +157,26 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
     },
+    rodonaIcon: {
+        flex: 1,
+        alignItems: 'center'
+    },
+    seleccionat: {
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 80,
+        height: 80,
+        backgroundColor: '#38B3EF',
+        borderRadius: 50,
+    },
+    noSeleccionat: {
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 80,
+        height: 80,
+        backgroundColor: '#3BD3EF',
+        borderRadius: 50,
+    }
 });
