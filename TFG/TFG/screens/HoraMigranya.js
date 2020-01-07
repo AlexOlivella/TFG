@@ -107,7 +107,7 @@ export default class HoraMigranya extends Component {
                     mode='datetime'
                 />
 
-                <View style={{ flex: 3, paddingHorizontal: 10, justifyContent: 'space-around', }}>
+                <View style={{ flex: 4, paddingHorizontal: 10, justifyContent: 'space-around', }}>
                     <View style={{ alignItems: 'center' }}>
                         <Text style={{ fontSize: 30 }}>Start time: </Text>
                         <Text style={{ fontSize: 25 }}>{this.transformaData(this.state.horaInici)}</Text>
@@ -116,7 +116,7 @@ export default class HoraMigranya extends Component {
 
                         <View style={styles.rodonaIcon}>
                             <TouchableOpacity style={[styles.icons, { backgroundColor: '#7584D8' }]} onPress={() => this.setState({ horaInici: new Date().getTime() - 60 * 60 * 1000 })}>
-                                <Image style={{ width: 75, height: 75 }} source={require('./images/timeblank2.png')}></Image>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/clock.png')}></Image>
                             </TouchableOpacity>
                             <Text style={styles.textBoto}>
                                 1 hour ago
@@ -124,7 +124,7 @@ export default class HoraMigranya extends Component {
                         </View>
                         <View style={styles.rodonaIcon}>
                             <TouchableOpacity style={styles.icons} onPress={() => this.setState({ horaInici: new Date().getTime() })}>
-                                <Image style={{ width: 75, height: 75 }} source={require('./images/timeblank2.png')}></Image>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/clock.png')}></Image>
                             </TouchableOpacity>
                             <Text style={styles.textBoto}>
                                 Now
@@ -150,7 +150,7 @@ export default class HoraMigranya extends Component {
                     onCancel={this.hideDateTimePicker2}
                     mode='datetime'
                 />
-                <View style={{ flex: 3, paddingHorizontal: 10, justifyContent: 'space-around', }}>
+                <View style={{ flex: 4, paddingHorizontal: 10, justifyContent: 'space-around', }}>
                     <View style={{ alignItems: 'center' }}>
                         <Text style={{ fontSize: 30 }}>End time: </Text>
                         <Text style={{ fontSize: 25 }}>{this.transformaData(this.state.horaFinal)}</Text>
@@ -167,7 +167,7 @@ export default class HoraMigranya extends Component {
                         </View>*/}
                         <View style={styles.rodonaIcon}>
                             <TouchableOpacity style={[styles.icons]} onPress={() => this.setState({ horaFinal: new Date().getTime() })}>
-                                <Image style={{ width: 75, height: 75 }} source={require('./images/timeblank2.png')}></Image>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/clock.png')}></Image>
                             </TouchableOpacity>
                             <Text style={styles.textBoto}>
                                 Now
@@ -237,29 +237,12 @@ export default class HoraMigranya extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        /*alignItems: 'center',*/
         backgroundColor: '#fff',
-    },
-    text: {
-        fontSize: 25
     },
     lateral: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         paddingHorizontal: 10
-    },
-    iconos: {
-        borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.2)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 105,
-        height: 105,
-        backgroundColor: '#38B3EF',
-        borderRadius: 50,
-    },
-    textSeccio: {
-        fontSize: 30
     },
     rodonaIcon: {
         flex: 1,
@@ -280,10 +263,7 @@ const styles = StyleSheet.create({
     seccioBotons: {
         flex: 1,
         flexDirection: 'row',
-
         justifyContent: 'space-around',
         alignItems: 'center',
-
-
     },
 });

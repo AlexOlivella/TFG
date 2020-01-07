@@ -11,7 +11,7 @@ export default class Impediments extends Component {
         super(props);
         this.state = {
             selected: {
-                "No":false,
+                "No": false,
                 "Move": false,
                 "Breathe": false,
                 "Walk": false,
@@ -28,7 +28,7 @@ export default class Impediments extends Component {
 
         if (element === "No") selected["No"] = true
         if (selected["No"] === true) selected = {}
-        if (selected[element]!=selected["No"]) selected["No"] = false
+        if (selected[element] != selected["No"]) selected["No"] = false
         selected[element] = !selected[element];
         //console.log(selected);
         this.setState({ selected: selected })
@@ -36,7 +36,7 @@ export default class Impediments extends Component {
     next() {
         var { navigation } = this.props;
         var dataInici = navigation.getParam('dataInici');
-        var dataFinal= navigation.getParam('dataFinal');
+        var dataFinal = navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
@@ -72,103 +72,141 @@ export default class Impediments extends Component {
         return (
             <View style={styles.container}>
                 <Header
-                    centerComponent={{ text: 'Impediments', style: { color: '#fff' } }}
+                    centerComponent={{ text: 'Select your impediments', style: { color: '#fff', fontSize: 15 } }}
                 >
                 </Header>
                 <SafeAreaView style={styles.safeArea}>
                     <ScrollView >
-                        <View style={styles.lateral}>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("No")}>
-                                <Text>No</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["Move"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("Move")}>
-                                <Text>Move</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["Walk"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("Walk")}>
-                                <Text>Walk</Text>
-                            </TouchableHighlight>
+                        <View style={styles.columnes}>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("No")}>
+                                    <Image style={{ width: 60, height: 60 }} source={require('./images/No.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    No
+                                </Text>
+                            </View>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Move"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("Move")}>
+                                    <Image style={{ width: 60, height: 60 }} source={require('./images/Move.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    Move
+                                </Text>
+                            </View>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Walk"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("Walk")}>
+                                    <Image style={{ width: 60, height: 60 }} source={require('./images/Walk.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    Walk
+                                </Text>
+                            </View>
                         </View>
-                        <View style={styles.lateral}>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["Make exercise"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("Make exercise")}>
-                                <Text>Make exercise</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["Go to school"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("Go to school")}>
-                                <Text>Go to school</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["Go to work"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("Go to work")}>
-                                <Text>Go to work</Text>
-                            </TouchableHighlight>
+                        <View style={styles.columnes}>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Make exercise"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("Make exercise")}>
+                                    <Image style={{ width: 60, height: 30 }} source={require('./images/exercise.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    Make exercise
+                                </Text>
+                            </View>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Go to school"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("Go to school")}>
+                                    <Image style={{ width: 60, height: 60 }} source={require('./images/GoToSchool.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    Go to school
+                                </Text>
+                            </View>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Go to work"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("Go to work")}>
+                                    <Image style={{ width: 60, height: 60 }} source={require('./images/GoToWork.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    Go to work
+                                </Text>
+                            </View>
                         </View>
-                        <View style={styles.lateral}>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["Forced to go home"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("Forced to go home")}>
-                                <Text>Forced to go home</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["Breathe"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("Breathe")}>
-                                <Text>Breathe</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight
-                                style={
-                                    this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
-                                }
-                                underlayColor='none'
-                                onPress={() => this.select("Others")}>
-                                <Text>Others</Text>
-                            </TouchableHighlight>
-                            
+                        <View style={styles.columnes}>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Forced to go home"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("Forced to go home")}>
+                                    <Image style={{ width: 60, height: 60 }} source={require('./images/ForcedToGoHome.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    Forced to
+                                </Text>
+                                <Text style={styles.textBoto}>
+                                    go home
+                                </Text>
+                            </View>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Breathe"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("Breathe")}>
+                                    <Image style={{ width: 60, height: 60 }} source={require('./images/Breathe.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    Breathe
+                                </Text>
+                            </View>
+                            <View style={styles.rodonaIcon}>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Others"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    underlayColor='none'
+                                    onPress={() => this.select("Others")}>
+                                    <Image style={{ width: 60, height: 60 }} source={require('./images/Others.png')}></Image>
+                                </TouchableHighlight>
+                                <Text style={styles.textBoto}>
+                                    Others
+                                </Text>
+                            </View>
                         </View>
                     </ScrollView>
                 </SafeAreaView>
-
-                <View style={{}}>
-                    <Button
-                        onPress={() => {
-                            this.next()
-                        }}
-                        title="Next"
-                    >
-
-                    </Button>
-                    <Button
+                <View style={styles.seccioBotons}>
+                    <TouchableOpacity
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
@@ -185,8 +223,22 @@ export default class Impediments extends Component {
                             )
                         }}
                         title="Cancel"
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
                     >
-                    </Button>
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>CANCEL</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        this.next()
+                    }}
+                        title="Next"
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>NEXT</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -196,32 +248,42 @@ export default class Impediments extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
     safeArea: {
         flex: 8,
+        paddingHorizontal: 10,
     },
-    lateral: {
+    columnes: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingVertical: 10,
+    },
+    seccioBotons: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    rodonaIcon: {
+        flex: 1,
+        alignItems: 'center'
     },
     seleccionat: {
         borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.2)',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 105,
-        height: 105,
+        width: 80,
+        height: 80,
         backgroundColor: '#38B3EF',
         borderRadius: 50,
     },
     noSeleccionat: {
         borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.2)',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         backgroundColor: '#3BD3EF',
         borderRadius: 50,
     }

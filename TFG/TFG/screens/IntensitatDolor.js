@@ -43,7 +43,7 @@ export default class IntensitatDolor extends Component {
                 centerComponent={{text:'Select your pain scale', style: { color: '#fff', fontSize: 20 }}}
                 ></Header>
                 
-                <View style={{ flex: 10 }}>
+                <View style={{ flex: 8}}>
                     <TouchableOpacity style={[{ backgroundColor: '#7cb1b9' }, styles.painRow]} onPress={() => this.next(0)}>
                         <Text style={styles.text}>No pain</Text>
                         <Text style={styles.text}> 0</Text>
@@ -89,7 +89,7 @@ export default class IntensitatDolor extends Component {
                         <Text style={styles.text}>10</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{flex:2, width: "100%", justifyContent:'center', alignItems:'stretch' }}>
+                <View style={styles.seccioBotons}>
                     { /*<Button
                         onPress={() => {
                             this.next()
@@ -98,7 +98,7 @@ export default class IntensitatDolor extends Component {
                     >
 
                     </Button>*/}
-                    <Button
+                    <TouchableOpacity
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
@@ -115,9 +115,13 @@ export default class IntensitatDolor extends Component {
                             )
                         }}
                         title="Cancel"
-                        
+                        style={{ width: '96%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
                     >
-                    </Button>
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>CANCEL</Text>
+
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View >
         );
@@ -143,6 +147,12 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 25
-    }
+    },
+    seccioBotons: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
 
 });

@@ -13,3 +13,8 @@ headerTintColor: '#fff',
 headerTitleStyle: {
     fontSize: 20,
 },
+
+Container per iconos:
+    flex:8
+botons: 
+    flex:1

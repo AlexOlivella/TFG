@@ -72,7 +72,7 @@ export async function comprovarTipusUsuari(uid) {
 export async function readUserData(uid, tipus) {
 	let docRef
 	if (tipus == "Doctor") docRef = db.collection("Metges").doc(uid);
-	else if(tipus == "Pacient") docRef = db.collection("Pacients").doc(uid)
+	else if (tipus == "Pacient") docRef = db.collection("Pacients").doc(uid)
 	//console.log(uid, docRef)
 	let response
 	await docRef.get().then(function (doc) {
@@ -218,14 +218,56 @@ export async function getAllMetges() {
 	return result
 }
 export async function getLlistaDoctorsFromPacient(uid_pacient) {
-	let result = []
-	var docRef = db.collection("Pacients").doc(uid_pacient).collection("llistaDoctors")
+	let doctors = []
+	var docRef = db.collection("Metges")
 	await docRef.get().then(function (querySnapshot) {
 		querySnapshot.forEach(function (doc) {
-			//console.log("doctors from pacient", doc.id, " => ", doc.data())
-			result.push({ uid: doc.id, nom: doc.data().firstName + " " + doc.data().lastName })
+			// doc.data() is never undefined for query doc snapshots
+			//console.log("all doctors", doc.id, " => ", doc.data());
+			/*doc.forEach(function (query2) {
+				if (docRef.doc(pacient_uid))*/
+			doctors.push({ uid: doc.id, nom: doc.data().firstName + " " + doc.data().lastName })
+			//});
 		});
 	});
+	console.log("doctors", doctors)
+	//let doctorsDinsUsuari = []
+	/*var docRef2 = db.collection("Pacients").doc(uid_pacient).collection("llistaDoctors")
+	await docRef2.get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			//console.log("doctors from pacient", doc.id, " => ", doc.data())
+			doctorsDinsUsuari.push({ uid: doc.id, nom: doc.data().firstName + " " + doc.data().lastName })
+		});
+	});*/
+	console.log("doctorsDinsUsuari", doctorsDinsUsuari)
+
+	//let doctors = await FirebaseAPI.getAllMetges();
+	//let doctorsDinsUsuari = await FirebaseAPI.getLlistaDoctorsFromPacient(user.uid)
+	//console.log("Tots els metges", doctors)
+	//console.log("Metges de l'usuari", doctorsDinsUsuari)
+	let result = doctors
+	//console.log("result Inicial: ", result)
+	if (doctorsDinsUsuari.length != 0) {
+		for (var i = 0; i < doctors.length; i++) {
+			for (var j = 0; j < doctorsDinsUsuari.length; j++) {
+				console.log("doctors[i].uid: ", doctors[i].uid, " doctorsDinsUsuari[j].uid: ", doctorsDinsUsuari[j].uid)
+				//if (doctors[i].uid != doctorsDinsUsuari[j].uid) {
+				console.log("result Bucle: ", result)
+				if (doctors[i].uid == doctorsDinsUsuari[j].uid) {
+					result.splice(i, 1)
+					//result.push({ uid: doctors[i].uid, nom: doctors[i].nom })
+					console.log("result Dins de if: ", result)
+				}
+			}
+
+		}
+	}
+	else if (doctorsDinsUsuari.length == 0) {
+		for (var i = 0; i < doctors.length; i++) {
+			result.push({ uid: doctors[i].uid, nom: doctors[i].nom })
+			console.log("result amb doctors dins usuari == 0: ", result)
+		}
+	}
 	return result
 }
 export async function getDadesPacient(pacient_uid) {
@@ -265,7 +307,7 @@ export async function getInfoMigranya(uid, data_migranya, tipus) {
 
 	let result
 	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid).collection("migranyes").doc(data_migranya)
-	else if (tipus == "Pacient")var docRef = db.collection("Pacients").doc(uid).collection("migranyes").doc(data_migranya)
+	else if (tipus == "Pacient") var docRef = db.collection("Pacients").doc(uid).collection("migranyes").doc(data_migranya)
 	await docRef.get().then(function (doc) {
 		if (doc.exists) {
 			//console.log("Document data:", doc.data());

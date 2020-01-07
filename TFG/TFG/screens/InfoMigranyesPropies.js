@@ -136,7 +136,7 @@ export default class InfoMigranyesPropies extends Component {
                 <ScrollView>
                     <View style={{ flexDirection: 'row', backgroundColor: '#6483DE', paddingVertical: 5, borderBottomColor: '#fff', borderBottomWidth: 1 }}>
                         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                            <Image source={require('./images/calendar-clock.png')}></Image>
+                            <Image style={{width:40, height:40}} source={require('./images/calendar-clock.png')}></Image>
                             <Text style={styles.titolsHora}>DURATION</Text>
                         </View>
                         <View style={{ flex: 4, flexDirection: 'row', justifyContent: 'space-around' }}>

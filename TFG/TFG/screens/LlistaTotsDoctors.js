@@ -12,7 +12,6 @@ export default class LlistaTotsDoctors extends Component {
 		super(props);
 		this.state = {
 			llistaDoctors: [],
-			refresh: this.props.navigation.state.params.refresh(),
 			firstName: "",
 			lastName: "",
 			isLoaded: false,
@@ -46,36 +45,10 @@ export default class LlistaTotsDoctors extends Component {
 	}
 
 	async getAllMetges() {
-		var user = firebase.auth().currentUser
-		let doctors = await FirebaseAPI.getAllMetges();
-		let doctorsDinsUsuari = await FirebaseAPI.getLlistaDoctorsFromPacient(user.uid)
-		//console.log("Tots els metges", doctors)
-		//console.log("Metges de l'usuari", doctorsDinsUsuari)
-		let result = doctors
-		console.log("result Inicial: ", result)
-		if (doctorsDinsUsuari.length != 0) {
-			for (var i = 0; i < doctors.length; i++) {
-				for (var j = 0; j < doctorsDinsUsuari.length; j++) {
-					//console.log("doctors[i].uid: ", doctors[i].uid, " doctorsDinsUsuari[j].uid: ", doctorsDinsUsuari[j].uid)
-					//if (doctors[i].uid != doctorsDinsUsuari[j].uid) {
-					console.log("result Bucle: ", result)
-					if (doctors[i].uid == doctorsDinsUsuari[j].uid) {
-						result.splice(i, 1)
-						//result.push({ uid: doctors[i].uid, nom: doctors[i].nom })
-						console.log("result Dins de if: ", result)
-					}
-				}
-
-			}
-		}
-		else if (doctorsDinsUsuari.length == 0) {
-			for (var i = 0; i < doctors.length; i++) {
-				result.push({ uid: doctors[i].uid, nom: doctors[i].nom })
-				console.log("result amb doctors dins usuari == 0: ", result)
-			}
-		}
+		
 		//console.log("Doctors finals: ", result)
-
+		var user = firebase.auth().currentUser
+		let result = await FirebaseAPI.getAllMetges()
 		this.setState({
 			llistaDoctors: result,
 			isLoaded: true,
@@ -84,8 +57,6 @@ export default class LlistaTotsDoctors extends Component {
 			this.arrayholder = result
 		})
 	}
-
-
 	search = text => {
 		console.log(text);
 	};
@@ -117,7 +88,7 @@ export default class LlistaTotsDoctors extends Component {
 				{
 					text: 'Confirm', onPress: () => {
 						FirebaseAPI.addDoctor(user.uid, uid_metge, this.state.firstName, this.state.lastName)
-						this.getAllMetges()
+						//this.getAllMetges()
 						alert("Doctor added successfully, wait until you get accepted!")
 					}
 				},
@@ -127,10 +98,7 @@ export default class LlistaTotsDoctors extends Component {
 
 	render() {
 		//console.log(this.props)
-		const { navigation } = this.props;
-		const uid_user = navigation.getParam('uid_user', 'NO-User');
-		var user = firebase.auth().currentUser;
-		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center', paddingHorizontal: 10 }]}><ActivityIndicator size="large" /></View>)
+		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center', paddingHorizontal: 10 }]}><ActivityIndicator size="large" color="black"/></View>)
 		if (this.state.llistaDoctorsAux.length == 0) return (
 			<View style={[styles.container, { justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10 }]}>
 				<Text style={{ fontSize: 30 }}>There are no doctors in our database or you have already added them all, wait until we have a new one!</Text>
@@ -138,8 +106,7 @@ export default class LlistaTotsDoctors extends Component {
 			</View>)
 		return (
 
-			<View style={styles.container}>
-				<SafeAreaView style={{ flex: 1 }}>
+				<SafeAreaView style={styles.container}>
 					<ScrollView style={{ flex: 1 }}>
 						<SearchBar
 							round
@@ -165,7 +132,6 @@ export default class LlistaTotsDoctors extends Component {
 						/>
 					</ScrollView>
 				</SafeAreaView>
-			</View>
 		);
 	}
 }
@@ -174,20 +140,6 @@ export default class LlistaTotsDoctors extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-
 		backgroundColor: '#fff',
 	},
-	flatview: {
-		justifyContent: 'center',
-
-	},
-	name: {
-		fontSize: 18,
-		paddingHorizontal: 10,
-		borderBottomWidth: 1,
-		borderBottomColor: "grey"
-	},
-	email: {
-		color: 'red'
-	}
 });

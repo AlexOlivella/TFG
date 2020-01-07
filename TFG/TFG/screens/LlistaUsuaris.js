@@ -204,11 +204,11 @@ export default class LlistaUsuaris extends Component {
 			header = <Header
 				style={{ width: '100%' }}
 				placement="left"
-				leftComponent={<Icon name='menu'  color="#fff" onPress={() => this.obrirDrawer()} />}
+				leftComponent={<Icon name='menu' color="#fff" onPress={() => this.obrirDrawer()} />}
 				centerComponent={{ text: 'Pacient list', style: { color: '#fff', fontSize: 20 } }}
 				rightComponent={
 					<View>
-						<Icon name='people' color="#fff"  onPress={() => this.openPendings()} />
+						<Icon name='people' color="#fff" onPress={() => this.openPendings()} />
 						{badge}
 					</View>
 
@@ -219,9 +219,9 @@ export default class LlistaUsuaris extends Component {
 			header = <Header
 				style={{ width: '100%' }}
 				placement="left"
-				leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
+				leftComponent={<Icon name='menu' color="#fff" onPress={() => this.obrirDrawer()} />}
 				centerComponent={{ text: 'Doctors list', style: { color: '#fff', fontSize: 20 } }}
-				rightComponent={<Icon name='add'  color="#fff" onPress={() => this.openAllDoctors()} />}
+				rightComponent={<Icon name='add' color="#fff" onPress={() => this.openAllDoctors()} />}
 			/>
 		}
 		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" color='black' /></View>)
@@ -237,11 +237,15 @@ export default class LlistaUsuaris extends Component {
 		if (this.state.llistaDataAux.length == 0 && this.state.tipus == "Pacient") return (
 			<View style={styles.container}>
 				{header}
-				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10 }}>
-					<Text style={{ fontSize: 30 }}>You don't have any doctor on your doctor list, try to add one</Text>
-					<Image source={require("./images/smile.jpeg")} style={{ width: 50, height: 50 }}></Image>
+				<View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 10 }}>
+					<Text style={{ fontSize: 30 }}>You don't have any doctor on your doctor list</Text>
+					<Text style={{ fontSize: 30 }}>Try to add one clicking</Text>
+					<View style={{ flexDirection: 'row', }}>
+						<Text style={{ fontSize: 30 }}>this icon--></Text>
+						<Icon name='add' size={50} onPress={() => this.openAllDoctors()}></Icon>
+					</View>
 				</View>
-			</View>
+			</View >
 		)
 		return (
 

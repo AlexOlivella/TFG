@@ -143,11 +143,11 @@ export default class Summary extends Component {
                 <Header
                  centerComponent={{ text: 'Summary', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                 ></Header>
-                <SafeAreaView style={[styles.container, {flex:10}]}>
+                <SafeAreaView style={[styles.container, {flex:8}]}>
                     <ScrollView>
                         <View style={{ flexDirection: 'row', backgroundColor: '#6483DE', paddingVertical: 5, borderBottomColor: '#fff', borderBottomWidth: 1 }}>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-                                <Image source={require('./images/calendar-clock.png')}></Image>
+                                <Image style={{width:40, height:40}} source={require('./images/calendar-clock.png')}></Image>
                                 <Text style={styles.titolsHora}>DURATION</Text>
                             </View>
                             <View style={{ flex: 4, flexDirection: 'row', justifyContent: 'space-around' }}>

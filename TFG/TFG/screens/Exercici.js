@@ -20,7 +20,7 @@ export default class Exercici extends Component {
     next(exercici) {
         var { navigation } = this.props;
         var dataInici = navigation.getParam('dataInici');
-        var dataFinal= navigation.getParam('dataFinal');
+        var dataFinal = navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
@@ -62,50 +62,72 @@ export default class Exercici extends Component {
             <View style={styles.container}>
 
                 <Header
-                    centerComponent={{ text: 'Exercise done', style: { color: '#fff' } }}
+                    centerComponent={{ text: 'Type of exercise you done', style: { color: '#fff', fontSize: 15 } }}
                 >
                 </Header>
-                <View style={styles.seccioOpcions}>
-                    <View style={styles.lateral}>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => { this.next("No exercise") }}>
-                            <Text>No</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => { this.next("Low") }}>
-                            <Text>Low</Text>
-                        </TouchableHighlight >
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => { this.next("Moderate") }}>
-                            <Text>Moderate</Text>
-                        </TouchableHighlight>
+                <View style={styles.safeArea}>
+                    <View style={styles.columnes}>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.select("No exercise")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/No.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                No exercise
+                                </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("Low")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/LowExercise.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                Low
+                            </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("Moderate")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/ModerateExercise.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                Moderate
+                            </Text>
+                        </View>
                     </View>
-                    <View style={styles.lateral}>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => { this.next("Intense") }}>
-                            <Text>Intense</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight
-                            style={styles.noSeleccionat}
-                            underlayColor='none'
-                            onPress={() => { this.next("Very intense") }}>
-                            <Text>Very intense</Text>
-                        </TouchableHighlight>
+                    <View style={styles.columnes}>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("Intense")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/IntenseExercise.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                Intense
+                            </Text>
+                        </View>
+                        <View style={styles.rodonaIcon}>
+                            <TouchableHighlight
+                                style={styles.noSeleccionat}
+                                underlayColor='none'
+                                onPress={() => this.next("Very intense")}>
+                                <Image style={{ width: 60, height: 60 }} source={require('./images/VeryIntenseExercise.png')}></Image>
+                            </TouchableHighlight>
+                            <Text style={styles.textBoto}>
+                                Very intense
+                            </Text>
+                        </View>
                     </View>
                 </View>
-                <View style={styles.seccioBuida}>
-
-                </View>
-                <View style={{ flex: 1 }}>
-                    <Button
+                <View style={styles.seccioBotons}>
+                    <TouchableOpacity
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
@@ -122,8 +144,13 @@ export default class Exercici extends Component {
                             )
                         }}
                         title="Cancel"
+                        style={{ width: '96%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
                     >
-                    </Button>
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>CANCEL</Text>
+
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -133,32 +160,42 @@ export default class Exercici extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        backgroundColor: '#fff',
+    },
+    safeArea: {
+        flex: 8,
+        paddingHorizontal: 10,
+    },
+    columnes: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingVertical: 10,
+    },
+    seccioBotons: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#7BF0E6',
     },
-    lateral: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    seccioOpcions: {
-        flex: 3,
-        //justifyContent: "center",
-    },
-    titol: {
+    rodonaIcon: {
         flex: 1,
-        alignItems: "flex-start"
+        alignItems: 'center'
     },
-    seccioBuida: {
-        flex: 1,
+    seleccionat: {
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 80,
+        height: 80,
+        backgroundColor: '#38B3EF',
+        borderRadius: 50,
     },
     noSeleccionat: {
         borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.2)',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         backgroundColor: '#3BD3EF',
         borderRadius: 50,
     }

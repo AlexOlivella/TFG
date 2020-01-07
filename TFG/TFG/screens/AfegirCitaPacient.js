@@ -92,7 +92,7 @@ export default class LoginScreen extends Component {
 
     creaDropdown(llista) {
         result = []
-        let dades = llista.map(pacient => { return { value: pacient.nom } })
+        let dades = llista.map(pacient => { return { uid: pacient.uid, value: pacient.nom } })
         result = [].concat(dades)
         return result
     }
@@ -100,10 +100,12 @@ export default class LoginScreen extends Component {
     async getPacients() {
         var user = firebase.auth().currentUser
         var pacients = await FirebaseAPI.getPacientsFromMetge(user.uid)
+        console.log("pacients", pacients)
         var result = this.creaDropdown(pacients)
         this.setState({
             llistaData: result
         })
+        console.log("result", result)
     }
     checkTextInput() {
         if (this.state.value == 0) {

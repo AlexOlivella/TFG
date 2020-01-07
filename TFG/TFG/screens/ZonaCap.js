@@ -90,7 +90,7 @@ export default class ZonaCap extends Component {
                 centerComponent={{text:'Select your pain zone', style: { color: '#fff', fontSize: 20 }}}>
 
                 </Header>
-                <View style={{ flex: 2 , justifyContent:'center'}}>
+                <View style={{ flex: 8 , justifyContent:'center'}}>
                     <View style={styles.lateral}>
                         <TouchableOpacity style={{}} onPress={() => this.select("Front left head")}>
                             <Image source={require('./images/davantDaltEsquerra.png')}></Image>
@@ -140,16 +140,8 @@ export default class ZonaCap extends Component {
                         <Text>None of this</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ flex: 1 }}>
-                    <Button
-                        onPress={() => {
-                            this.next()
-                        }}
-                        title="Next"
-                    >
-
-                    </Button>
-                    <Button
+                <View style={styles.seccioBotons}>
+                    <TouchableOpacity
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
@@ -166,8 +158,22 @@ export default class ZonaCap extends Component {
                             )
                         }}
                         title="Cancel"
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
                     >
-                    </Button>
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>CANCEL</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        this.next()
+                    }}
+                        title="Next"
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>NEXT</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
             </View>
@@ -178,8 +184,6 @@ export default class ZonaCap extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#fff',
     },
     lateral: {
@@ -188,5 +192,12 @@ const styles = StyleSheet.create({
 
     headPart: {
         opacity: 0.2
-    }
+    },
+    seccioBotons: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+
+    },
 });

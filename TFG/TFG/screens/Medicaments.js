@@ -12,7 +12,7 @@ export default class Medicaments extends Component {
         super(props);
         this.state = {
             selected: {
-                "No":false,
+                "No": false,
                 "Aspirin 1000mg": false,
                 "Paracetamol 1000mg": false,
                 "Metamizol 500mg": false,
@@ -39,7 +39,7 @@ export default class Medicaments extends Component {
 
         if (element === "No") selected["No"] = true
         if (selected["No"] === true) selected = {}
-        if (selected[element]!=selected["No"]) selected["No"] = false
+        if (selected[element] != selected["No"]) selected["No"] = false
         selected[element] = !selected[element];
         //console.log(selected);
         this.setState({ selected: selected })
@@ -47,7 +47,7 @@ export default class Medicaments extends Component {
     next() {
         var { navigation } = this.props;
         var dataInici = navigation.getParam('dataInici');
-        var dataFinal= navigation.getParam('dataFinal');
+        var dataFinal = navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
         var zonaCap = navigation.getParam('zonaCap')
         var simptomes = navigation.getParam('simptomes')
@@ -89,7 +89,7 @@ export default class Medicaments extends Component {
         return (
             <View style={styles.container}>
                 <Header
-                    centerComponent={{ text: 'Medication', style: { color: '#fff' } }}
+                    centerComponent={{ text: 'Select your medication', style: { color: '#fff', fontSize:20 } }}
                 >
                 </Header>
                 <SafeAreaView style={styles.safeArea}>
@@ -244,17 +244,8 @@ export default class Medicaments extends Component {
                         </View>
                     </ScrollView>
                 </SafeAreaView>
-
-                <View style={{}}>
-                    <Button
-                        onPress={() => {
-                            this.next()
-                        }}
-                        title="Next"
-                    >
-
-                    </Button>
-                    <Button
+                <View style={styles.seccioBotons}>
+                    <TouchableOpacity
                         onPress={() => {
                             Alert.alert(
                                 'Cancel',
@@ -271,8 +262,22 @@ export default class Medicaments extends Component {
                             )
                         }}
                         title="Cancel"
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
                     >
-                    </Button>
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>CANCEL</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        this.next()
+                    }}
+                        title="Next"
+                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                    >
+                        <View >
+                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>NEXT</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
             </View>
@@ -283,7 +288,7 @@ export default class Medicaments extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#7BF0E6',
+        backgroundColor: '#fff',
     },
     safeArea: {
         flex: 8,
@@ -311,5 +316,12 @@ const styles = StyleSheet.create({
         height: 100,
         backgroundColor: '#3BD3EF',
         borderRadius: 50,
-    }
+    },
+    seccioBotons: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+
+    },
 });
