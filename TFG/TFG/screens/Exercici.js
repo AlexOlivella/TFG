@@ -89,7 +89,7 @@ export default class Exercici extends Component {
                             <TouchableHighlight
                                 style={styles.noSeleccionat}
                                 underlayColor='none'
-                                onPress={() => this.select("No exercise")}>
+                                onPress={() => this.next("No exercise")}>
                                 <Image style={{ width: 60, height: 60 }} source={require('./images/No.png')}></Image>
                             </TouchableHighlight>
                             <Text style={styles.textBoto}>
