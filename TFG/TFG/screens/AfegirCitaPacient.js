@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, TextInput, ActivityIndicator, TouchableOpacity, ToastAndroid } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TextInput, ActivityIndicator, TouchableOpacity, ToastAndroid, Alert } from 'react-native';
 import firebase from 'firebase'
 import { TextField } from 'react-native-material-textfield';
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -20,7 +20,9 @@ export default class LoginScreen extends Component {
             name: "",
             dateSelected: false,
             llistaData: [],
-            pacient: ''
+            pacient: '',
+            refresh: this.props.navigation.state.params.refresh(),
+
         }
         this.daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         this.monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -64,10 +66,10 @@ export default class LoginScreen extends Component {
             const date = data.getDate(); //Current Date
             const month = (data.getMonth()); //Current Month
             const year = data.getFullYear(); //Current Year
-            const hour= data.getHours(); //Current Hours
-            const min = data.getMinutes(); //Current Minutes
-            const day = data.getDay();
-            
+            var hour = data.getHours(); //Current Hours
+            var min = data.getMinutes(); //Current Minutes
+            var day = data.getDay();
+
             console.log(month)
             if (min < 10) {
                 min = '0' + min;
@@ -77,15 +79,15 @@ export default class LoginScreen extends Component {
             }
 
             var terminologia
-            const dia =this.daysArray[day]
+            const dia = this.daysArray[day]
             const mes = this.monthsArray[month]
-        
+
             if (date == 1 || date == 21 || date == 31) terminologia = "st"
             else if (date == 2 || date == 22) terminologia = "nd"
             else if (date == 3 || date == 23) terminologia = "rd"
             else terminologia = "th"
 
-            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hour+ ':' + min
+            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hour + ':' + min
         }
         else return ""
     }
@@ -132,32 +134,43 @@ export default class LoginScreen extends Component {
         }
     }
     async addAppointment() {
-        var user = firebase.auth().currentUser
-        let error
-        if (this.checkTextInput()) {
-            if (this.state.day > new Date()) {
-                if (this.state.value == 0) {
-                    //console.log(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
-                    error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
-                }
-                else {
-                    //console.log(user.uid, this.state.pacient, this.state.day)
-                    error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.pacient, this.state.day)
-                }
-                //console.log(error)
+        Alert.alert("Add appointment", "Do you want to add this appointment?",
+            [
+                { text: 'Cancel', onPress: () => { return null } },
+                {
+                    text: 'Confirm', onPress: async()  => {
+                        var user = firebase.auth().currentUser
+                        let error
+                        if (this.checkTextInput()) {
+                            if (this.state.day > new Date()) {
+                                if (this.state.value == 0) {
+                                    //console.log(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
+                                    error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
+                                }
+                                else {
+                                    //console.log(user.uid, this.state.pacient, this.state.day)
+                                    error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.pacient, this.state.day)
+                                }
+                                //console.log(error)
 
-                if (error) alert(error)
-                else {
-                    ToastAndroid.show("Appointment succesfully added", ToastAndroid.SHORT)
-                    this.props.navigation.navigate("Calendar")
-                }
+                                if (error) alert(error)
+                                else {
+                                    ToastAndroid.show("Appointment succesfully added", ToastAndroid.SHORT)
+                                    this.props.navigation.state.params.refresh()
+                                    this.props.navigation.navigate("Calendar")
+                                }
 
-            }
-            else alert("Select a day after today")
-        }
-        else {
-            alert("Check your inputs")
-        }
+                            }
+                            else alert("Select a day after today")
+                        }
+                        else {
+                            alert("Check your inputs")
+                        }
+                    }
+                },
+            ],
+            { cancelable: false })
+
 
     }
     render() {

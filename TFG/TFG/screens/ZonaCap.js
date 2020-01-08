@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, TouchableHighlight } from 'react-native';
 import { Header, Icon } from 'react-native-elements'
 
 
@@ -22,7 +22,7 @@ export default class ZonaCap extends Component {
                 "Front right neck": false,
                 "Back left neck": false,
                 "Back right neck": false,
-                "None": false,
+                "None of this": false,
             }
         };
 
@@ -35,23 +35,19 @@ export default class ZonaCap extends Component {
     select(element) {
         let selected = this.state.selected;
 
-        if (element === "None") selected["None"] = true
-        if (selected["None"] === true) selected = {}
-        if (selected[element]!=selected["None"]) selected["None"] = false
+        if (element === "None of this") selected["None of this"] = true
+        if (selected["None of this"] === true) selected = {}
+        if (selected[element] != selected["None of this"]) selected["None of this"] = false
         selected[element] = !selected[element];
         //console.log(selected);
         this.setState({ selected: selected })
-
-
-
-
     }
 
     next() {
 
         var { navigation } = this.props;
         var dataInici = navigation.getParam('dataInici');
-        var dataFinal= navigation.getParam('dataFinal');
+        var dataFinal = navigation.getParam('dataFinal');
         var intensitatDolor = navigation.getParam('intensitatDolor')
 
         let zonesCap = [];
@@ -87,58 +83,183 @@ export default class ZonaCap extends Component {
         return (
             <View style={styles.container}>
                 <Header
-                centerComponent={{text:'Select your pain zone', style: { color: '#fff', fontSize: 20 }}}>
-
+                    centerComponent={{ text: 'Select your pain zone', style: { color: '#fff', fontSize: 20 } }}>
                 </Header>
-                <View style={{ flex: 8 , justifyContent:'center'}}>
-                    <View style={styles.lateral}>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Front left head")}>
-                            <Image source={require('./images/davantDaltEsquerra.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Front right head")}>
-                            <Image source={require('./images/davantDaltDreta.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Back left head")}>
-                            <Image source={require('./images/darrereCapEsquerra.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Back right head")}>
-                            <Image source={require('./images/darrereCapDreta.png')}></Image>
-                        </TouchableOpacity>
+                <View style={styles.safeArea}>
+                    {/*<View style={styles.rodonaIcon}>
+                        <TouchableHighlight
+                            style={
+                                this.state.selected["No"] ? styles.seleccionat : styles.noSeleccionat
+                            }
+                            underlayColor='none'
+                            onPress={() => this.select("No")}>
+                            <Image style={{ width: 60, height: 60 }} source={require('./images/No.png')}></Image>
+                        </TouchableHighlight>
+                        <Text style={styles.textBoto}>
+                            No
+                        </Text>
+                    </View>*/}
+                    <View style={styles.files}>
+                        <View style={styles.columnaDreta}>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Front left head"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Front left head")}>
+                                    <Image style={{ width: 80 * 0.70, height: 110 * 0.70, resizeMode: 'stretch' }} source={require('./images/FrontLeftHead.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Front left face"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Front left face")}>
+                                    <Image style={{ width: 95 * 0.70, height: 130 * 0.70, resizeMode: 'stretch' }} source={require('./images/FrontLeftFace.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Front left neck"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Front left neck")}>
+                                    <Image style={{ width: 71.5 * 0.70, height: 50 * 0.70, resizeMode: 'stretch' }} source={require('./images/FrontLeftNeck.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                        <View style={styles.columnaEsquerra}>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Front right head"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Front right head")}>
+                                    <Image style={{ width: 80 * 0.70, height: 110 * 0.70, resizeMode: 'stretch' }} source={require('./images/FrontRightHead.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Front right face"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Front right face")}>
+                                    <Image style={{ width: 89 * 0.70, height: 130 * 0.70, resizeMode: 'stretch' }} source={require('./images/FrontRightFace.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Front right neck"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Front right neck")}>
+                                    <Image style={{ width: 65 * 0.70, height: 50 * 0.70, resizeMode: 'stretch' }} source={require('./images/FrontRightNeck.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
                     </View>
-                    <View style={styles.lateral}>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Front left face")}>
-                            <Image source={require('./images/caraEsquerra.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Front right face")}>
-                            <Image source={require('./images/davantCaraDreta.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Back left face")}>
-                            <Image source={require('./images/darrereCaraEsquerra.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Back right face")}>
-                            <Image source={require('./images/darrereCaraDreta.png')}></Image>
-                        </TouchableOpacity>
+                    <View style={styles.files}>
+                        <View style={styles.columnaDreta}>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Back left head"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Back left head")}>
+                                    <Image style={{ width: 80 * 0.70, height: 105 * 0.70, resizeMode: 'stretch' }} source={require('./images/BackLeftHead.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Back left face"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Back left face")}>
+                                    <Image style={{ width: 93.5 * 0.70, height: 112 * 0.70, resizeMode: 'stretch' }} source={require('./images/BackLeftFace.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Back left neck"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Back left neck")}>
+                                    <Image style={{ width: 73.5 * 0.70, height: 80 * 0.70, resizeMode: 'stretch' }} source={require('./images/BackLeftNeck.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                        <View style={styles.columnaEsquerra}>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Back right head"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Back right head")}>
+                                    <Image style={{ width: 80 * 0.70, height: 105 * 0.70, resizeMode: 'stretch' }} source={require('./images/BackRightHead.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Back right face"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Back right face")}>
+                                    <Image style={{ width: 93 * 0.70, height: 112 * 0.70, resizeMode: 'stretch' }} source={require('./images/BackRightFace.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                            <View>
+                                <TouchableHighlight
+                                    style={
+                                        this.state.selected["Back right neck"] ? styles.seleccionat : styles.noSeleccionat
+                                    }
+                                    activeOpacity={1}
+                                    underlayColor='#3BD3EF'
+                                    onPress={() => this.select("Back right neck")}>
+                                    <Image style={{ width: 58 * 0.70, height: 80 * 0.70, resizeMode: 'stretch' }} source={require('./images/BackRightNeck.png')}></Image>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
                     </View>
-                    <View style={styles.lateral}>
-                        {this.state.selected["Front left neck"] &&
-                            <TouchableOpacity style={styles.headPart} onPress={() => this.select("Front left neck")}>
-                                <Image source={require('./images/collDavantEsquerra.png')}></Image>
-                            </TouchableOpacity> || <TouchableOpacity style={{}} onPress={() => this.select("Front left neck")}>
-                                <Image source={require('./images/collDavantEsquerra.png')}></Image>
-                            </TouchableOpacity>}
-                        <TouchableOpacity style={{}} onPress={() => this.select("Front right neck")}>
-                            <Image source={require('./images/davantCollDreta.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Back left neck")}>
-                            <Image source={require('./images/darrereCollEsquerra.png')}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{}} onPress={() => this.select("Back right neck")}>
-                            <Image source={require('./images/darrereCollDreta.png')}></Image>
-                        </TouchableOpacity>
+                    {/*<View>
+                        <Image style={{width:100, height:70}} source={require('./images/headparts2.png')}></Image>
+                    </View>*/}
+                    <View style={styles.rodonaIcon}>
+                        <TouchableHighlight
+                            style={
+                                this.state.selected["None of this"] ? styles.seleccionatBoto : styles.noSeleccionatBoto
+                            }
+                            activeOpacity={1}
+                            underlayColor='#3BD3EF'
+                            onPress={() => this.select("None of this")}>
+                            <Image style={{ width: 60, height: 60 }} source={require('./images/No.png')}></Image>
+                        </TouchableHighlight>
+                        <Text style={styles.textBoto}>
+                            None of this
+                        </Text>
                     </View>
-                    <TouchableOpacity style={{ width: "100%", }} onPress={() => this.select("None")}>
-                        <Text>None of this</Text>
-                    </TouchableOpacity>
                 </View>
                 <View style={styles.seccioBotons}>
                     <TouchableOpacity
@@ -186,18 +307,62 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    lateral: {
-        flexDirection: 'row',
+    safeArea: {
+        flex: 8,
+        paddingHorizontal: 10,
     },
-
-    headPart: {
-        opacity: 0.2
+    columnaDreta: {
+        //flexDirection: 'column',
+        width: "50%",
+        justifyContent: 'center',
+        alignItems: 'flex-end'
+    },
+    columnaEsquerra: {
+        //flexDirection: 'column',
+        width: "50%",
+        justifyContent: 'center',
+        alignItems: 'flex-start'
+    },
+    files: {
+        flexDirection: 'row',
+        paddingVertical: 10
     },
     seccioBotons: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
+    },
+    rodonaIcon: {
+        flex: 1,
+        alignItems: 'center'
+    },
+    seleccionat: {
+        backgroundColor: '#38B3EF',
 
     },
+    noSeleccionat: {
+        backgroundColor: '#3BD3EF',
+
+    },
+    seleccionatBoto: {
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 80,
+        height: 80,
+        backgroundColor: '#38B3EF',
+        borderRadius: 50,
+
+    },
+    noSeleccionatBoto: {
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 80,
+        height: 80,
+        borderRadius: 50,
+        backgroundColor: '#3BD3EF',
+
+    }
 });

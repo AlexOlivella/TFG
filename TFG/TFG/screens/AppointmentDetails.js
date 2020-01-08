@@ -15,7 +15,8 @@ export default class AppointmentDetails extends Component {
             isLoading: true,
             name: "",
             day: this.props.navigation.getParam("day"),
-
+            refresh: this.props.navigation.state.params.refresh(),
+            nameUpdate: "" || this.props.navigation.getParam("name")
         }
         this.daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         this.monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -37,7 +38,8 @@ export default class AppointmentDetails extends Component {
         console.log(this.transformaData(this.state.day))
     }
     refresh() {
-        this.getDades()
+        //this.getDades()
+        console.log("nameUpdated", this.state.nameUpdate)
     }
     async getDades() {
         var user = firebase.auth().currentUser
@@ -45,9 +47,8 @@ export default class AppointmentDetails extends Component {
         //console.log(result)
         this.setState({ name: result })
     }
-
     editAppointment() {
-        this.props.navigation.navigate("EditAppointment", { pacientName: this.state.name, day: this.state.day })
+        this.props.navigation.navigate("EditAppointment", { pacientName: this.state.name, day: this.state.day, refresh: () => this.refresh() })
     }
 
     deleteAppointment() {
@@ -58,6 +59,7 @@ export default class AppointmentDetails extends Component {
                     text: 'Confirm', onPress: () => {
                         var user = firebase.auth().currentUser
                         FirebaseAPI.deleteAppointment(user.uid, this.state.day)
+                        this.props.navigation.state.params.refresh()
                         this.props.navigation.navigate("Calendar")
 
 
@@ -75,9 +77,9 @@ export default class AppointmentDetails extends Component {
             const date = data.getDate(); //Current Date
             const month = (data.getMonth()); //Current Month
             const year = data.getFullYear(); //Current Year
-            const hour = data.getHours(); //Current Hours
-            const min = data.getMinutes(); //Current Minutes
-            const day = data.getDay();
+            var hour = data.getHours(); //Current Hours
+            var min = data.getMinutes(); //Current Minutes
+            var day = data.getDay();
 
             console.log(month)
             if (min < 10) {

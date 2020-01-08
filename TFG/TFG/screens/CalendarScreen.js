@@ -71,8 +71,6 @@ export default class prova extends Component {
     //console.log("Cites doctor: ", result)
     this.setState({ llistaCites: result })
   }
-
-
   transformaData(time) {
     if (time) {
       time = parseInt(time)
@@ -88,6 +86,12 @@ export default class prova extends Component {
       }
       if (hour < 10) {
         hour = '0' + hour;
+      }
+      if (date < 10) {
+        date = '0' + date;
+      }
+      if (month < 10) {
+        month = '0' + month;
       }
       return date + '-' + month + '-' + year + ' ' + hour + ':' + min
     }
@@ -111,7 +115,7 @@ export default class prova extends Component {
   }
 
   afegirCita() {
-    this.props.navigation.navigate("AfegirCitaPacient")
+    this.props.navigation.navigate("AfegirCitaPacient", { refresh: () => this.refresh() })
   }
 
   creaMarked(llista) {
@@ -202,12 +206,16 @@ export default class prova extends Component {
   }
 
   seeDetailsAppointment(data_appointment) {
-    this.props.navigation.navigate("AppointmentDetails", { day: data_appointment })
+    this.props.navigation.navigate("AppointmentDetails", { day: data_appointment, refresh: () => this.refresh() })
   }
 
   seeDetailsMigraine(migranya_id) {
     var user = firebase.auth().currentUser
     this.props.navigation.navigate("InfoMigranyesPropies", { pacient: user.uid, migranya: migranya_id })
+  }
+
+  refresh(){
+    this.markDays()
   }
   render() {
     var { navigation } = this.props;

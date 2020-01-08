@@ -1,60 +1,78 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, Alert, Image, TouchableOpacity, TouchableHighlight, ScrollView, SafeAreaView } from 'react-native';
 import { Header } from 'react-native-elements';
-
-
-
-
+import * as FirebaseAPI from '../modules/firebaseAPI'
+import firebase from 'firebase'
 
 export default class Exercici extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            gender: "",
         }
     }
     static navigationOptions = {
         header: null
     }
-
+    async componentDidMount() {
+        var user = firebase.auth().currentUser
+        let tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
+        let result = await FirebaseAPI.readUserData(user.uid, tipus)
+        console.log("result", result)
+        this.setState({ gender: result.gender })
+        console.log("gender", this.state.gender)
+    }
     next(exercici) {
-        var { navigation } = this.props;
-        var dataInici = navigation.getParam('dataInici');
-        var dataFinal = navigation.getParam('dataFinal');
-        var intensitatDolor = navigation.getParam('intensitatDolor')
-        var zonaCap = navigation.getParam('zonaCap')
-        var simptomes = navigation.getParam('simptomes')
-        var causes = navigation.getParam('causes')
-        var impediments = navigation.getParam('impediments')
-        this.props.navigation.navigate(
-            "Menstruacio",
-            {
-                dataInici,
-                dataFinal,
-                intensitatDolor,
-                zonaCap,
-                simptomes,
-                causes,
-                impediments,
-                exercicis: exercici
-            }
-        )
+        if (this.state.gender != "Male") {
+            var { navigation } = this.props;
+            var dataInici = navigation.getParam('dataInici');
+            var dataFinal = navigation.getParam('dataFinal');
+            var intensitatDolor = navigation.getParam('intensitatDolor')
+            var zonaCap = navigation.getParam('zonaCap')
+            var simptomes = navigation.getParam('simptomes')
+            var causes = navigation.getParam('causes')
+            var impediments = navigation.getParam('impediments')
+            this.props.navigation.navigate(
+                "Menstruacio",
+                {
+                    dataInici,
+                    dataFinal,
+                    intensitatDolor,
+                    zonaCap,
+                    simptomes,
+                    causes,
+                    impediments,
+                    exercicis: exercici
+                }
+            )
+        }
         //console.log("exercici")
 
         //}
-        /* else{
-                 var { navigation } = this.props;
-                 var dataInici = navigation.getParam('dataInici');
-                 this.props.navigation.navigate(
-                     "Medicaments",
-                     {
-                         dataInici,
-                         intensitatDolor: dolor,
-         
-                     }
-                 )
- 
-         }*/
+        else {
+            var { navigation } = this.props;
+            var dataInici = navigation.getParam('dataInici');
+            var dataFinal = navigation.getParam('dataFinal');
+            var intensitatDolor = navigation.getParam('intensitatDolor')
+            var zonaCap = navigation.getParam('zonaCap')
+            var simptomes = navigation.getParam('simptomes')
+            var causes = navigation.getParam('causes')
+            var impediments = navigation.getParam('impediments')
+            this.props.navigation.navigate(
+                "Medicaments",
+                {
+                    dataInici,
+                    dataFinal,
+                    intensitatDolor,
+                    zonaCap,
+                    simptomes,
+                    causes,
+                    impediments,
+                    exercicis: exercici
+
+                })
+        }
     }
     render() {
 

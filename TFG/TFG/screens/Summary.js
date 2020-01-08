@@ -19,7 +19,7 @@ export default class Summary extends Component {
             zonaCap: navigation.getParam('zonaCap'),
             simptomes: navigation.getParam('simptomes'),
             causes: navigation.getParam('causes'),
-            menstruacio: navigation.getParam('menstruacio'),
+            menstruacio: navigation.getParam('menstruacio') || "",
             exercicis: navigation.getParam('exercicis'),
             impediments: navigation.getParam('impediments'),
             medicaments: navigation.getParam('medicaments'),
@@ -65,7 +65,7 @@ export default class Summary extends Component {
             isLoaded: false,
 
         })
-        console.log("this.state", this.state)
+        //console.log("this.state", this.state)
         var user = firebase.auth().currentUser;
         var tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
         await FirebaseAPI.createMigranya(
