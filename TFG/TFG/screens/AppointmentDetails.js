@@ -12,11 +12,12 @@ export default class AppointmentDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true,
+            isLoading: false,
             name: "",
             day: this.props.navigation.getParam("day"),
             refresh: this.props.navigation.state.params.refresh(),
-            nameUpdate: "" || this.props.navigation.getParam("name")
+            tipus: "",
+            pacient_uid: "",
         }
         this.daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         this.monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -35,20 +36,21 @@ export default class AppointmentDetails extends Component {
 
     componentDidMount() {
         this.getDades()
-        console.log(this.transformaData(this.state.day))
+        //console.log(this.transformaData(this.state.day))
     }
     refresh() {
         //this.getDades()
-        console.log("nameUpdated", this.state.nameUpdate)
+        //console.log("nameUpdated", this.state.nameUpdate)
     }
     async getDades() {
         var user = firebase.auth().currentUser
-        let result = await FirebaseAPI.getDadesAppointment(user.uid, this.state.day)
-        //console.log(result)
-        this.setState({ name: result })
+        let tipus = await FirebaseAPI.comprovarTipusUsuari(user.uid)
+        let result = await FirebaseAPI.getDadesAppointment(user.uid, this.state.day, tipus)
+        console.log("result", result)
+        this.setState({ name: result.nom, tipus: tipus, isLoading: true, pacient_uid:result.pacient_uid })
     }
     editAppointment() {
-        this.props.navigation.navigate("EditAppointment", { pacientName: this.state.name, day: this.state.day, refresh: () => this.refresh() })
+        this.props.navigation.navigate("EditAppointment", { pacient_uid: this.state.pacient_uid, pacientName: this.state.name, day: this.state.day, refresh: () => this.refresh() })
     }
 
     deleteAppointment() {
@@ -58,7 +60,8 @@ export default class AppointmentDetails extends Component {
                 {
                     text: 'Confirm', onPress: () => {
                         var user = firebase.auth().currentUser
-                        FirebaseAPI.deleteAppointment(user.uid, this.state.day)
+                        //console.log("daades", user.uid, this.state.day, this.state.pacient_uid)
+                        FirebaseAPI.deleteAppointment(user.uid, this.state.day, this.state.pacient_uid)
                         this.props.navigation.state.params.refresh()
                         this.props.navigation.navigate("Calendar")
 
@@ -81,7 +84,7 @@ export default class AppointmentDetails extends Component {
             var min = data.getMinutes(); //Current Minutes
             var day = data.getDay();
 
-            console.log(month)
+            //console.log(month)
             if (min < 10) {
                 min = '0' + min;
             }
@@ -105,40 +108,61 @@ export default class AppointmentDetails extends Component {
 
     render() {
         //console.log(this.props)
-        return (
-            <View style={styles.container}>
-                <View style={{ flex: 4, justifyContent: 'space-around' }}>
-                    <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, color: 'gray' }}>Pacient name: </Text>
-                        <Text style={{ fontSize: 20 }}>{this.state.name}</Text>
+        if (!this.state.isLoading) return (<View style={{ justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator size="large" color="black"></ActivityIndicator></View>)
+        if (this.state.tipus == "Doctor") {
+            return (
+                <View style={styles.container}>
+                    <View style={{ flex: 4, justifyContent: 'space-around' }}>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 20, color: 'gray' }}>Pacient name: </Text>
+                            <Text style={{ fontSize: 20 }}>{this.state.name}</Text>
+                        </View>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 20, color: 'gray' }}>Appointment date: </Text>
+                            <Text style={{ fontSize: 20 }}>{this.transformaData(this.state.day)}</Text>
+                        </View>
                     </View>
-                    <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, color: 'gray' }}>Appointment date: </Text>
-                        <Text style={{ fontSize: 20 }}>{this.transformaData(this.state.day)}</Text>
-                    </View>
-                </View>
-                <View style={styles.seccioBotons}>
-                    <TouchableOpacity
-                        onPress={() => {this.editAppointment()}}
-                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
-                    >
-                        <View >
-                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>EDIT APPOINTMENT</Text>
+                    <View style={styles.seccioBotons}>
+                        <TouchableOpacity
+                            onPress={() => { this.editAppointment() }}
+                            style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                        >
+                            <View >
+                                <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>EDIT APPOINTMENT</Text>
 
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => {this.deleteAppointment()}}
-                        style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
-                    >
-                        <View >
-                            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>DELETE APPOINTMENT</Text>
-                        </View>
-                    </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => { this.deleteAppointment() }}
+                            style={{ width: '48%', alignItems: 'center', height: 52, justifyContent: 'center', backgroundColor: '#2196F3' }}
+                        >
+                            <View >
+                                <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>DELETE APPOINTMENT</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-        );
+            );
+        }
+        else if (this.state.tipus == "Pacient") {
+            return (
+                <View style={styles.container}>
+                    <View style={{ flex: 4, justifyContent: 'space-around' }}>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 20, color: 'gray' }}>Doctor name </Text>
+                            <Text style={{ fontSize: 20 }}>{this.state.name}</Text>
+                        </View>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 20, color: 'gray' }}>Appointment date: </Text>
+                            <Text style={{ fontSize: 20 }}>{this.transformaData(this.state.day)}</Text>
+                        </View>
+                    </View>
+                </View>
+            );
+        }
+
     }
+
 }
 
 const styles = StyleSheet.create({

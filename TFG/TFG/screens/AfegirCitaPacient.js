@@ -15,12 +15,15 @@ export default class LoginScreen extends Component {
             isLoading: true,
             value: "",
             day: "",
-            firstName: "",
-            lastName: "",
+            pacientFirstname: "",
+            pacientLastName: "",
             name: "",
             dateSelected: false,
             llistaData: [],
-            pacient: '',
+            pacientName: '',
+            pacient_uid: "",
+            doctorFirstName: "",
+            doctorLastName: "",
             refresh: this.props.navigation.state.params.refresh(),
 
         }
@@ -42,6 +45,16 @@ export default class LoginScreen extends Component {
 
     componentDidMount() {
         this.getPacients()
+        this.getUser()
+
+    }
+    async getUser() {
+        var user = firebase.auth().currentUser
+        let resultat = await FirebaseAPI.readUserData(user.uid, "Doctor")
+        this.setState({
+            doctorFirstName: resultat.firstName,
+            doctorLastName: resultat.lastName
+        })
 
     }
     showDateTimePicker = () => {
@@ -70,7 +83,7 @@ export default class LoginScreen extends Component {
             var min = data.getMinutes(); //Current Minutes
             var day = data.getDay();
 
-            console.log(month)
+            //console.log(month)
             if (min < 10) {
                 min = '0' + min;
             }
@@ -102,17 +115,17 @@ export default class LoginScreen extends Component {
     async getPacients() {
         var user = firebase.auth().currentUser
         var pacients = await FirebaseAPI.getPacientsFromMetge(user.uid)
-        console.log("pacients", pacients)
+        //console.log("pacients", pacients)
         var result = this.creaDropdown(pacients)
         this.setState({
             llistaData: result
         })
-        console.log("result", result)
+        //console.log("result", result)
     }
     checkTextInput() {
         if (this.state.value == 0) {
-            if (this.state.firstName != '') {
-                if (this.state.lastName != '') {
+            if (this.state.pacientFirstname != '') {
+                if (this.state.pacientLastName != '') {
                     if (this.state.day != '') {
                         return true
                     }
@@ -124,7 +137,7 @@ export default class LoginScreen extends Component {
 
         }
         else {
-            if (this.state.pacient != '') {
+            if (this.state.pacientName != '') {
                 if (this.state.day != '') {
                     return true
                 }
@@ -138,18 +151,20 @@ export default class LoginScreen extends Component {
             [
                 { text: 'Cancel', onPress: () => { return null } },
                 {
-                    text: 'Confirm', onPress: async()  => {
+                    text: 'Confirm', onPress: async () => {
                         var user = firebase.auth().currentUser
                         let error
                         if (this.checkTextInput()) {
                             if (this.state.day > new Date()) {
                                 if (this.state.value == 0) {
-                                    //console.log(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
-                                    error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.firstName + " " + this.state.lastName, this.state.day)
+                                    error = await FirebaseAPI.afegirCitaPacient(user.uid, "null", "null", this.state.pacientFirstname.trim() + " " + this.state.pacientLastName, this.state.day)
                                 }
                                 else {
-                                    //console.log(user.uid, this.state.pacient, this.state.day)
-                                    error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.pacient, this.state.day)
+                                    //console.log(user.uid, this.state.pacient, this.state.day)                                
+                                    /*console.log(user.uid, this.state.doctorFirstName +
+                                        " " + this.state.doctorLastName, this.state.pacient_uid, this.state.pacientName, this.state.day)*/
+                                    error = await FirebaseAPI.afegirCitaPacient(user.uid, this.state.doctorFirstName +
+                                        " " + this.state.doctorLastName, this.state.pacient_uid, this.state.pacientName, this.state.day)
                                 }
                                 //console.log(error)
 
@@ -159,7 +174,6 @@ export default class LoginScreen extends Component {
                                     this.props.navigation.state.params.refresh()
                                     this.props.navigation.navigate("Calendar")
                                 }
-
                             }
                             else alert("Select a day after today")
                         }
@@ -190,15 +204,15 @@ export default class LoginScreen extends Component {
                     <View style={styles.addName}>
                         <TextField
                             label="First name"
-                            onChangeText={firstName => this.setState({ firstName })}
-                            value={this.state.firstName}
+                            onChangeText={pacientFirstname => this.setState({ pacientFirstname })}
+                            value={this.state.pacientFirstname}
                         />
                     </View>
                     <View style={styles.addName}>
                         <TextField
                             label="Last name"
-                            onChangeText={lastName => this.setState({ lastName })}
-                            value={this.state.lastName}
+                            onChangeText={pacientLastName => this.setState({ pacientLastName })}
+                            value={this.state.pacientLastName}
                         />
                     </View>
                 </View>
@@ -210,8 +224,11 @@ export default class LoginScreen extends Component {
                     <Dropdown
                         label='Select pacient'
                         data={this.state.llistaData}
-                        value={this.state.pacient}
-                        onChangeText={(itemValue) => this.setState({ pacient: itemValue })}
+                        value={this.state.pacientName}
+                        onChangeText={(itemValue, itemIndex, itemData) => {
+                            this.setState({ pacientName: itemValue, pacient_uid: itemData[itemIndex].uid });
+                            //console.log("itemValue", itemValue,/* "itemIndex", itemIndex, "itemData", itemData,*/"itemData[itemIndex].uid", itemData[itemIndex].uid)
+                        }}
                     />
                 </View>
         }

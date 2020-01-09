@@ -13,9 +13,12 @@ export default class EditAppointment extends Component {
         super(props);
         this.state = {
             day: this.props.navigation.getParam("day"),
-            pacient: this.props.navigation.getParam("pacientName"),
+            pacientName: this.props.navigation.getParam("pacientName"),
             dateUpdate: "",
             refresh: this.props.navigation.state.params.refresh(),
+            pacient_uid: this.props.navigation.getParam("pacient_uid"),
+            doctorFirstName: "",
+            doctorLastName:"",
         }
         this.daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         this.monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -31,6 +34,16 @@ export default class EditAppointment extends Component {
         headerTitleStyle: {
             fontSize: 20,
         },
+    }
+    componentDidMount() {
+        this.getDades()
+        //console.log(this.transformaData(this.state.day))
+    }
+    async getDades() {
+        var user = firebase.auth().currentUser
+        let result = await FirebaseAPI.readUserData(user.uid, "Doctor")
+        console.log("result", result.firstName, result.lastName)
+        this.setState({isLoading: true, doctorFirstName: result.firstName, doctorLastName: result.lastName })
     }
 
     showDateTimePicker = () => {
@@ -55,11 +68,11 @@ export default class EditAppointment extends Component {
             var date = data.getDate(); //Current Date
             var month = (data.getMonth()); //Current Month
             const year = data.getFullYear(); //Current Year
-            var hour= data.getHours(); //Current Hours
+            var hour = data.getHours(); //Current Hours
             var min = data.getMinutes(); //Current Minutes
             var day = data.getDay();
-            
-            console.log(month)
+
+            //console.log(month)
             if (min < 10) {
                 min = '0' + min;
             }
@@ -68,15 +81,15 @@ export default class EditAppointment extends Component {
             }
 
             var terminologia
-            const dia =this.daysArray[day]
+            const dia = this.daysArray[day]
             const mes = this.monthsArray[month]
-        
+
             if (date == 1 || date == 21 || date == 31) terminologia = "st"
             else if (date == 2 || date == 22) terminologia = "nd"
             else if (date == 3 || date == 23) terminologia = "rd"
             else terminologia = "th"
 
-            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hour+ ':' + min
+            return dia + " " + date + terminologia + " of " + mes + ", " + year + " at " + hour + ':' + min
         }
         else return ""
     }
@@ -87,7 +100,9 @@ export default class EditAppointment extends Component {
         }
         else return false
     }
+
     async editAppointment() {
+        console.log("dades", this.state.doctorFirstName + " " + this.state.doctorLastName)
         if (this.checkTextInput()) {
             Alert.alert("Edit appointment", "Do you want to confirm this new date?",
                 [
@@ -98,12 +113,13 @@ export default class EditAppointment extends Component {
                             let error
 
                             if (this.state.dateUpdate > new Date()) {
-                                error = await FirebaseAPI.updateAppointment(user.uid, this.state.pacient, this.state.day, this.state.dateUpdate)
+                                
+                                error = await FirebaseAPI.updateAppointment(user.uid, this.state.doctorFirstName + " " + this.state.doctorLastName, this.state.pacient_uid, this.state.pacientName, this.state.day, this.state.dateUpdate)
                                 if (error) alert(error)
                                 else {
                                     ToastAndroid.show("Appointment succesfully updated", ToastAndroid.SHORT)
                                     this.props.navigation.state.params.refresh()
-                                    this.props.navigation.navigate("AppointmentDetails", { day: this.state.dateUpdate, })
+                                    this.props.navigation.navigate("AppointmentDetails")
                                 }
                             }
                             else Alert.alert("Error", "Select a date after now")
@@ -130,7 +146,7 @@ export default class EditAppointment extends Component {
 
                 <View style={{ justifyContent: 'space-around', alignItems: 'center' }}>
                     <Text style={{ fontSize: 20, color: 'gray' }}>Pacient name:</Text>
-                    <Text style={{ fontSize: 20 }}>{this.state.pacient}</Text>
+                    <Text style={{ fontSize: 20 }}>{this.state.pacientName}</Text>
                 </View>
                 <View style={{ justifyContent: 'space-around', alignItems: 'center' }}>
                     <Text style={{ fontSize: 20, color: 'gray' }}>Current date:</Text>

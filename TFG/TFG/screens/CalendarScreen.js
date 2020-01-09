@@ -62,7 +62,7 @@ export default class prova extends Component {
   async getMigraines(data) {
     var user = firebase.auth().currentUser
     let result = await FirebaseAPI.getMigrainesByDate(user.uid, this.state.tipus, data)
-    console.log("Migranyes calendari", result)
+    //console.log("Migranyes calendari", result)
     this.setState({ llistaMigranyes: result, isLoaded: true })
   }
   async getCites(data) {
@@ -313,17 +313,19 @@ export default class prova extends Component {
               //console.log('selected day', day);
               this.setState({ isLoaded: false })
               this.getDades(day.timestamp)
-              
+              /*if(this.state.llistaCites.length == 0) console.log("llistaCites buit")
+              if(this.state.llistaMigranyes.length == 0) console.log("llistaMigranyes buit")*/
+
               
             }}
             // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
             monthFormat={' MMMM yyyy'}
             // Handler which gets executed when visible month changes in calendar. Default = undefined
-            onMonthChange={month => {
+           /* onMonthChange={month => {
               //this.setState({month:month})
               //console.log('month changed', month);
               //this.markDays()
-            }}
+            }}*/
             // Hide month navigation arrows. Default = false
             //hideArrows={true}
             // Do not show days of other months in month page. Default = false
