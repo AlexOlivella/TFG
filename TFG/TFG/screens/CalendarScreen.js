@@ -67,7 +67,7 @@ export default class prova extends Component {
   }
   async getCites(data) {
     var user = firebase.auth().currentUser
-     let result = await FirebaseAPI.getAppointmentsByDate(user.uid, data, this.state.tipus)
+    let result = await FirebaseAPI.getAppointmentsByDate(user.uid, data, this.state.tipus)
     //console.log("Cites doctor: ", result)
     this.setState({ llistaCites: result })
   }
@@ -183,7 +183,7 @@ export default class prova extends Component {
     //this.setState({ markedDays: resultatFinal })
     //console.log("resuultatFinal", this.state.markedDays)
   }
-  getDades(day){
+  getDades(day) {
     this.getMigraines(day)
     this.getCites(day)
   }
@@ -214,7 +214,7 @@ export default class prova extends Component {
     this.props.navigation.navigate("InfoMigranyesPropies", { pacient: user.uid, migranya: migranya_id })
   }
 
-  refresh(){
+  refresh() {
     this.markDays()
   }
   render() {
@@ -230,7 +230,7 @@ export default class prova extends Component {
     if (!this.state.isLoaded) carregar = <View><ActivityIndicator size="large"></ActivityIndicator></View>
     var tipusView
     var titolView
-
+    var header
     if (this.state.value == 0) {
       titolView = <View style={{ justifyContent: 'center', alignItems: 'center' }}><Text style={{ fontSize: 20 }}>Migraines list</Text></View>
       tipusView =
@@ -250,7 +250,7 @@ export default class prova extends Component {
                     />
                   </TouchableOpacity>
                 }
-              
+
 
                 keyExtractor={item => item}
               />
@@ -275,23 +275,30 @@ export default class prova extends Component {
                   />
                 </TouchableOpacity>
               }
-              
+
 
               keyExtractor={item => item}
             />
           </ScrollView>
         </SafeAreaView >
     }
+    if (this.state.tipus == "Doctor") header =
+      <Header
+        style={{ width: '100%' }}
+        placement="left"
+        leftComponent={<Icon name='menu' color="#fff" onPress={() => this.obrirDrawer()} />}
+        centerComponent={{ text: 'Calendar', style: { color: '#fff', fontSize: 20 } }}
+        rightComponent={<Icon name='add' color="#fff" onPress={() => this.afegirCita()} />}
+      />
+    else header = <Header
+      style={{ width: '100%' }}
+      placement="left"
+      leftComponent={<Icon name='menu' color="#fff" onPress={() => this.obrirDrawer()} />}
+      centerComponent={{ text: 'Calendar', style: { color: '#fff', fontSize: 20 } }}
+    />
     return (
-
       <View style={styles.container}>
-        <Header
-          style={{ width: '100%' }}
-          placement="left"
-          leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
-          centerComponent={{ text: 'Calendar', style: { color: '#fff', fontSize: 20 } }}
-          rightComponent={<Icon name='add' color="#fff"  onPress={() => this.afegirCita()} />}
-        />
+        {header}
 
         <View>
 
@@ -316,16 +323,16 @@ export default class prova extends Component {
               /*if(this.state.llistaCites.length == 0) console.log("llistaCites buit")
               if(this.state.llistaMigranyes.length == 0) console.log("llistaMigranyes buit")*/
 
-              
+
             }}
             // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
             monthFormat={' MMMM yyyy'}
             // Handler which gets executed when visible month changes in calendar. Default = undefined
-           /* onMonthChange={month => {
-              //this.setState({month:month})
-              //console.log('month changed', month);
-              //this.markDays()
-            }}*/
+            /* onMonthChange={month => {
+               //this.setState({month:month})
+               //console.log('month changed', month);
+               //this.markDays()
+             }}*/
             // Hide month navigation arrows. Default = false
             //hideArrows={true}
             // Do not show days of other months in month page. Default = false
