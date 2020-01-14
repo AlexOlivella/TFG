@@ -33,7 +33,7 @@ export default class LoginScreen extends Component {
     }
 
     static navigationOptions = {
-        title: 'Add pacient appointment',
+        title: 'Add patient appointment',
         headerStyle: {
             backgroundColor: '#2089dc'
         },
@@ -222,7 +222,7 @@ export default class LoginScreen extends Component {
             inputType =
                 <View style={{ paddingHorizontal: 10 }} >
                     <Dropdown
-                        label='Select pacient'
+                        label='Select patient'
                         data={this.state.llistaData}
                         value={this.state.pacientName}
                         onChangeText={(itemValue, itemIndex, itemData) => {
@@ -236,7 +236,7 @@ export default class LoginScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20 }}>Is the pacient in your pacients list?</Text>
+                    <Text style={{ fontSize: 20 }}>Is the patient in your patients list?</Text>
                 </View>
                 <View style={{ flex: 3, justifyContent: 'space-around' }}>
                     <RadioForm

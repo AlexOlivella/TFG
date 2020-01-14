@@ -150,7 +150,7 @@ export default class EditAppointment extends Component {
                     />
 
                     <View style={{ alignItems: 'center',  }}>
-                        <Text style={{ fontSize: 20, color: 'gray' }}>Pacient name:</Text>
+                        <Text style={{ fontSize: 20, color: 'gray' }}>Patient name:</Text>
                         <Text style={{ fontSize: 20 }}>{this.state.pacientName}</Text>
                     </View>
                     <View style={{ alignItems: 'center', }}>

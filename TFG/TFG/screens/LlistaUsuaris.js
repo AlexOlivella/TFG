@@ -115,7 +115,7 @@ export default class LlistaUsuaris extends Component {
 		}
 	}
 	desagregarPacient(uid) {
-		Alert.alert("Delete pacient", "Do you want to delete this pacient?",
+		Alert.alert("Delete patient", "Do you want to delete this patient?",
 			[
 				{ text: 'Cancel', onPress: () => { return null } },
 				{
@@ -205,7 +205,7 @@ export default class LlistaUsuaris extends Component {
 				style={{ width: '100%' }}
 				placement="left"
 				leftComponent={<Icon name='menu' color="#fff" onPress={() => this.obrirDrawer()} />}
-				centerComponent={{ text: 'Pacient list', style: { color: '#fff', fontSize: 20 } }}
+				centerComponent={{ text: 'Patient list', style: { color: '#fff', fontSize: 20 } }}
 				rightComponent={
 					<View>
 						<Icon name='people' color="#fff" onPress={() => this.openPendings()} />
@@ -229,7 +229,7 @@ export default class LlistaUsuaris extends Component {
 			<View style={styles.container}>
 				{header}
 				<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10 }}>
-					<Text style={{ fontSize: 30 }}>You don't have any pacient in your pacient list, ask some pacients to add you as their doctor or check your pending requests</Text>
+					<Text style={{ fontSize: 30 }}>You don't have any patient in your patient list, ask some patients to add you as their doctor or check your pending requests</Text>
 					<Image source={require("./images/smile.jpeg")} style={{ width: 50, height: 50 }}></Image>
 				</View>
 			</View>

@@ -42,7 +42,7 @@ export default class LlistaMigranyes extends Component {
 
 
     static navigationOptions = {
-        title:"Pacient migraine list",
+        title:"Patient migraine list",
         headerStyle: {
             backgroundColor: '#2089dc'
         },
@@ -134,7 +134,7 @@ export default class LlistaMigranyes extends Component {
         if (!this.state.isLoaded) return (<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}><ActivityIndicator size="large" color="black" /></View>)
         if (this.state.llistaMigranyesAux.length == 0) return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10 }}>
-                <Text style={{ fontSize: 30 }}>This pacient didn't registered any migraine yet</Text>
+                <Text style={{ fontSize: 30 }}>This patient didn't registered any migraine yet</Text>
                 <Image source={require("./images/sadImage.png")} style={{ width: 50, height: 50 }}></Image>
             </View>)
         return (

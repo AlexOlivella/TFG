@@ -26,7 +26,7 @@ export default class Pendings extends Component {
 		headerStyle: {
 			backgroundColor: '#2089dc'
 		},
-		headerTitle: 'Pending pacients',
+		headerTitle: 'Pending patients',
 		headerTintColor: '#fff',
 		headerTitleStyle: {
 			fontSize: 20,
@@ -66,7 +66,7 @@ export default class Pendings extends Component {
 
 	agregaPacient(uid_pacient) {
 		var user = firebase.auth().currentUser
-		Alert.alert("Add pacient", "Do you want to add this pacient?",
+		Alert.alert("Add patient", "Do you want to add this patient?",
 			[
 				{ text: 'Cancel', onPress: () => { return null } },
 				{
@@ -109,7 +109,7 @@ export default class Pendings extends Component {
 		if (!this.state.isLoaded) return (<View style={[styles.container, { justifyContent: 'center' }]}><ActivityIndicator size="large" /></View>)
 		if (this.state.llistaPendingsAux.length == 0) return (
 			<View style={[styles.container, { justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10 }]}>
-				<Text style={{ fontSize: 30 }}>You don't have any pending pacient request, ask some pacients to add you as their doctor</Text>
+				<Text style={{ fontSize: 30 }}>You don't have any pending patient request, ask some patients to add you as their doctor</Text>
 
 				<Image source={require("./images/smile.jpeg")} style={{ width: 50, height: 50 }}></Image>
 			</View>

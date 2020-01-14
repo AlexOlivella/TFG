@@ -190,7 +190,7 @@ export default class Register extends Component {
               data={[{
                 value: "Doctor"
               }, {
-                value: "Pacient"
+                value: "Patient"
               }]}
               value={this.state.type}
               onChangeText={(itemValue) => this.setState({ type: itemValue })}

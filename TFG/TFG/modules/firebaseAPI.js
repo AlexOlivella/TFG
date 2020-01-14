@@ -287,6 +287,35 @@ export async function getDadesPacient(pacient_uid) {
 	});
 	return result
 }
+export async function addObservationsToPacient(metge_uid, pacient_uid, observations) {
+	var docRef = db.collection("Metges").doc(metge_uid).collection("llistaPacients").doc(pacient_uid)
+	let errorR
+		//console.log("doctor", doctorName)
+		await docRef.update({
+			observations: observations
+		}).then(function () {
+			//console.log("Document successfully updated!");
+		}).catch(function (error) {
+			// The document probably doesn't exist.
+			//console.error("Error updating document: ", error);
+		});
+}
+export async function getObservationsByPacient(metge_uid,pacient_uid){
+	var docRef = db.collection("Metges").doc(metge_uid).collection("llistaPacients").doc(pacient_uid)
+	let result 
+	await docRef.get().then(function (doc) {
+		if (doc.exists) {
+			//console.log("Document data:", doc.data());
+			result = doc.data().observations
+		} else {
+			// doc.data() will be undefined in this case
+			//console.log("No such document!");
+		}
+	}).catch(function (error) {
+		//console.log("Error getting document:", error);
+	});
+	return result
+}
 export async function getLlistaMigranyes(uid, tipus) {
 	let result = []
 	let result2 = []
@@ -493,7 +522,7 @@ export async function updateAppointment(metge_uid, pacient_uid, data, dataUpdate
 		console.error("Error writing document: ", error);
 	});
 }
-export async function addObservations(metge_uid, pacient_uid, data, observations) {
+export async function addObservationsToDate(metge_uid, pacient_uid, data, observations) {
 	var docRef = db.collection("Metges").doc(metge_uid).collection("cites").doc(data.toString())
 	let errorR
 	await docRef.update({
@@ -513,6 +542,7 @@ export async function addObservations(metge_uid, pacient_uid, data, observations
 		//console.error("Error writing document: ", error);
 	});
 }
+
 export async function deleteAppointment(metge_uid, data, pacient_uid) {
 	var docRef = db.collection("Metges").doc(metge_uid).collection("cites").doc(data.toString())
 	docRef.delete().then(function () {

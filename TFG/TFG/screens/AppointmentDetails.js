@@ -19,7 +19,6 @@ export default class AppointmentDetails extends Component {
             tipus: "",
             pacient_uid: "",
             observations: "",
-            observations: "",
             edited: false,
 
         }
@@ -63,7 +62,7 @@ export default class AppointmentDetails extends Component {
                 {
                     text: 'Confirm', onPress: async () => {
                         var user = firebase.auth().currentUser
-                        await FirebaseAPI.addObservations(user.uid, this.state.pacient_uid, this.state.day, this.state.observations)
+                        await FirebaseAPI.addObservationsToDate(user.uid, this.state.pacient_uid, this.state.day, this.state.observations)
                         alert("Observations added successfully")
                     }
                 },
@@ -134,7 +133,7 @@ export default class AppointmentDetails extends Component {
 
                         <View style={{ flex: 4, justifyContent: 'space-around', paddingTop: 40 }}>
                             <View style={{ alignItems: 'center' }}>
-                                <Text style={{ fontSize: 20, color: 'gray' }}>Pacient name: </Text>
+                                <Text style={{ fontSize: 20, color: 'gray' }}>Patient name: </Text>
                                 <Text style={{ fontSize: 20 }}>{this.state.name}</Text>
                             </View>
                             <View style={{ alignItems: 'center', paddingTop: 40 }}>
@@ -184,24 +183,21 @@ export default class AppointmentDetails extends Component {
         }
         else if (this.state.tipus == "Pacient") {
             return (
-                <SafeAreaView style={styles.container}>
-                    <ScrollView style={{ flex: 1 }}>
-                        <View style={{ flex: 4, justifyContent: 'space-around', paddingTop: 40 }}>
-                            <View style={{ alignItems: 'center' }}>
-                                <Text style={{ fontSize: 20, color: 'gray' }}>Doctor name </Text>
-                                <Text style={{ fontSize: 20 }}>{this.state.name}</Text>
-                            </View>
-                            <View style={{ alignItems: 'center', paddingTop: 40 }}>
-                                <Text style={{ fontSize: 20, color: 'gray' }}>Appointment date: </Text>
-                                <Text style={{ fontSize: 20 }}>{this.transformaData(this.state.day)}</Text>
-                            </View>
-                            <View style={{ alignItems: 'center', paddingTop: 40 }}>
-                                <Text style={{ fontSize: 20, color: 'gray' }}>Observations: </Text>
-                                <Text style={{ fontSize: 20 }}>{this.state.observations}</Text>
-                            </View>
+                <View style={{flex:1, }}>
+                    <View style={{ flex:1}}></View>
+                    <View style={{ flex: 2, justifyContent: 'space-between' }}>
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 20, color: 'gray' }}>Doctor name </Text>
+                            <Text style={{ fontSize: 20 }}>{this.state.name}</Text>
                         </View>
-                    </ScrollView>
-                </SafeAreaView>
+                        <View style={{ alignItems: 'center', paddingTop: 40 }}>
+                            <Text style={{ fontSize: 20, color: 'gray' }}>Appointment date: </Text>
+                            <Text style={{ fontSize: 20 }}>{this.transformaData(this.state.day)}</Text>
+                        </View>
+                    </View>
+                    <View style={{flex:1}}></View>
+
+                </View>
             );
         }
 
@@ -215,7 +211,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingHorizontal: 10,
         paddingVertical: 10,
-        alignContent: 'center'
+        alignItems: 'center'
     },
     addName: {
         width: "100%",
