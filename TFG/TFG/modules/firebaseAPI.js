@@ -424,7 +424,7 @@ export async function getDadesAppointment(uid, data, tipus) {
 		await docRef.get().then(function (doc) {
 			if (doc.exists) {
 				console.log("Document data:", doc.data().pacientName);
-				result = { uid: doc.id, nom: doc.data().pacientName, pacient_uid: doc.data().pacient_uid }
+				result = { uid: doc.id, nom: doc.data().pacientName, pacient_uid: doc.data().pacient_uid, observations: doc.data().observations }
 			} else {
 				// doc.data() will be undefined in this case
 				//console.log("No such document!");
@@ -437,8 +437,8 @@ export async function getDadesAppointment(uid, data, tipus) {
 		var docRef2 = db.collection("Pacients").doc(uid).collection("cites").doc(data.toString())
 		await docRef2.get().then(function (doc) {
 			if (doc.exists) {
-				console.log("Document data:", doc.data().doctor);
-				result = { uid: doc.id, nom: doc.data().doctor }
+				//console.log("Document data:", doc.data().doctor);
+				result = { uid: doc.id, nom: doc.data().doctor, observations: doc.data().observations }
 			} else {
 				// doc.data() will be undefined in this case
 				//console.log("No such document!");
@@ -449,7 +449,7 @@ export async function getDadesAppointment(uid, data, tipus) {
 	}
 	return result
 }
-export async function updateAppointment(metge_uid, doctorName, pacient_uid, pacientName, data, dataUpdate) {
+export async function updateAppointment(metge_uid, pacient_uid, data, dataUpdate) {
 	var docRef = db.collection("Metges").doc(metge_uid).collection("cites").doc(data.toString())
 	let errorR
 	var docUpdate = db.collection("Metges").doc(metge_uid).collection("cites").doc(dataUpdate.toString())
@@ -463,7 +463,7 @@ export async function updateAppointment(metge_uid, doctorName, pacient_uid, paci
 				docUpdate.set({
 					pacientName: pacientName,
 					diaHora: dataUpdate,
-					pacient_uid: pacient_uid
+					pacient_uid: pacient_uid,
 				}).then(async function (docRef) {
 					var docRef2 = db.collection("Pacients").doc(pacient_uid).collection("cites").doc(data.toString())
 					var docUpdate2 = db.collection("Pacients").doc(pacient_uid).collection("cites").doc(dataUpdate.toString())
@@ -471,7 +471,7 @@ export async function updateAppointment(metge_uid, doctorName, pacient_uid, paci
 					await docRef2.delete().then(async function () {
 						docUpdate2.set({
 							doctor: doctorName,
-							diaHora: dataUpdate
+							diaHora: dataUpdate,
 						}).then(function () {
 							console.log("Document successfully updated!");
 						}).catch(function (error) {
@@ -491,6 +491,26 @@ export async function updateAppointment(metge_uid, doctorName, pacient_uid, paci
 		}
 	}).catch(function (error) {
 		console.error("Error writing document: ", error);
+	});
+}
+export async function addObservations(metge_uid, pacient_uid, data, observations) {
+	var docRef = db.collection("Metges").doc(metge_uid).collection("cites").doc(data.toString())
+	let errorR
+	await docRef.update({
+		observations: observations
+	}).then(async function (docRef) {
+		var docRef2 = db.collection("Pacients").doc(pacient_uid).collection("cites").doc(data.toString())
+		//console.log("doctor", doctorName)
+		await docRef2.update({
+			observations: observations
+		}).then(function () {
+			//console.log("Document successfully updated!");
+		}).catch(function (error) {
+			// The document probably doesn't exist.
+			//console.error("Error updating document: ", error);
+		});
+	}).catch(function (error) {
+		//console.error("Error writing document: ", error);
 	});
 }
 export async function deleteAppointment(metge_uid, data, pacient_uid) {

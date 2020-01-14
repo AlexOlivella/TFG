@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Button, TextInput, ActivityIndicator, TouchableOpacity, ToastAndroid, Alert, TouchableHighlightBase } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button, TextInput, ActivityIndicator, TouchableOpacity, ToastAndroid, Alert, TouchableHighlightBase, SafeAreaView, ScrollView } from 'react-native';
 import firebase from 'firebase'
 import { TextField } from 'react-native-material-textfield';
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -18,7 +18,9 @@ export default class EditAppointment extends Component {
             refresh: this.props.navigation.state.params.refresh(),
             pacient_uid: this.props.navigation.getParam("pacient_uid"),
             doctorFirstName: "",
-            doctorLastName:"",
+            doctorLastName: "",
+
+
         }
         this.daysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
         this.monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -43,7 +45,7 @@ export default class EditAppointment extends Component {
         var user = firebase.auth().currentUser
         let result = await FirebaseAPI.readUserData(user.uid, "Doctor")
         console.log("result", result.firstName, result.lastName)
-        this.setState({isLoading: true, doctorFirstName: result.firstName, doctorLastName: result.lastName })
+        this.setState({ isLoading: true, doctorFirstName: result.firstName, doctorLastName: result.lastName })
     }
 
     showDateTimePicker = () => {
@@ -113,8 +115,9 @@ export default class EditAppointment extends Component {
                             let error
 
                             if (this.state.dateUpdate > new Date()) {
-                                
-                                error = await FirebaseAPI.updateAppointment(user.uid, this.state.doctorFirstName + " " + this.state.doctorLastName, this.state.pacient_uid, this.state.pacientName, this.state.day, this.state.dateUpdate)
+
+                                error = await FirebaseAPI.updateAppointment(user.uid, this.state.doctorFirstName + " " + this.state.doctorLastName,
+                                    this.state.pacient_uid, this.state.pacientName, this.state.day, this.state.dateUpdate)
                                 if (error) alert(error)
                                 else {
                                     ToastAndroid.show("Appointment succesfully updated", ToastAndroid.SHORT)
@@ -131,46 +134,47 @@ export default class EditAppointment extends Component {
         }
         else Alert.alert("Error", "Check your inputs")
     }
-    render() {
 
+
+    render() {
+        
         //console.log(this.props)
         return (
             <View style={styles.container}>
-                <DateTimePicker
-                    isVisible={this.state.isDateTimePickerVisible}
-                    onConfirm={this.handleDatePicked}
-                    onCancel={this.hideDateTimePicker}
-                    minimumDate={new Date()}
-                    mode='datetime'
-                />
+                    <DateTimePicker
+                        isVisible={this.state.isDateTimePickerVisible}
+                        onConfirm={this.handleDatePicked}
+                        onCancel={this.hideDateTimePicker}
+                        minimumDate={new Date()}
+                        mode='datetime'
+                    />
 
-                <View style={{ justifyContent: 'space-around', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, color: 'gray' }}>Pacient name:</Text>
-                    <Text style={{ fontSize: 20 }}>{this.state.pacientName}</Text>
-                </View>
-                <View style={{ justifyContent: 'space-around', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 20, color: 'gray' }}>Current date:</Text>
-                    <Text style={{ fontSize: 20 }}>{this.transformaData(this.state.day)}</Text>
-                </View>
-                <View >
-                    <View style={{ justifyContent: 'space-around', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 20, color: 'gray' }}>New date:</Text>
+                    <View style={{ alignItems: 'center',  }}>
+                        <Text style={{ fontSize: 20, color: 'gray' }}>Pacient name:</Text>
+                        <Text style={{ fontSize: 20 }}>{this.state.pacientName}</Text>
                     </View>
+                    <View style={{ alignItems: 'center', }}>
+                        <Text style={{ fontSize: 20, color: 'gray' }}>Current date:</Text>
+                        <Text style={{ fontSize: 20 }}>{this.transformaData(this.state.day)}</Text>
+                    </View>
+                    <View >
+                        <View style={{ alignItems: 'center', paddingHorizontal:10 }}>
+                            <Text style={{ fontSize: 20, color: 'gray' }}>New date:</Text>
+                        </View>
 
-                    <TouchableOpacity onPress={this.showDateTimePicker} >
-                        {!this.state.dateSelected && <Text style={{ fontSize: 20, color: '#808080', borderBottomColor: '#808080', borderBottomWidth: 1 }}>Select day and time</Text>}
+                        <TouchableOpacity onPress={this.showDateTimePicker} >
+                            {!this.state.dateSelected && <Text style={{ fontSize: 20, color: '#808080', borderBottomColor: '#808080', borderBottomWidth: 1 }}>Select day and time</Text>}
 
-                        {this.state.dateSelected && <View>
-                            <Text style={{ fontSize: 14, color: '#0091EA' }}>Select day and time</Text>
-                            <Text style={{ fontSize: 20, borderBottomColor: '#B4A9A9', borderBottomWidth: 1 }}>{this.transformaData(this.state.dateUpdate)}</Text>
-                        </View>}
-                    </TouchableOpacity>
-                </View>
-                <View style={{ paddingHorizontal: 10, }}>
-                    <Button title="Confirm changes" style={{ width: '100%' }} onPress={() => this.editAppointment()}></Button>
-                </View>
-            </View >
-
+                            {this.state.dateSelected && <View>
+                                <Text style={{ fontSize: 14, color: '#0091EA' }}>Select day and time</Text>
+                                <Text style={{ fontSize: 20, borderBottomColor: '#B4A9A9', borderBottomWidth: 1 }}>{this.transformaData(this.state.dateUpdate)}</Text>
+                            </View>}
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ paddingHorizontal: 10, paddingTop: 40 }}>
+                        <Button title="Confirm changes" style={{ width: '100%' }} onPress={() => this.editAppointment()}></Button>
+                    </View>
+            </View>
         );
     }
 }
@@ -181,5 +185,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'space-around',
         paddingHorizontal: 10,
+        paddingVertical: 10,
     },
 });
