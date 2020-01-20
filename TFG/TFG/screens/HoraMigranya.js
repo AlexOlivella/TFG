@@ -64,10 +64,10 @@ export default class HoraMigranya extends Component {
             if (hour < 10) {
                 hour = '0' + hour;
             }
-            if(date < 10){
+            if (date < 10) {
                 date = '0' + date;
             }
-            if(month < 10){
+            if (month < 10) {
                 month = '0' + month;
             }
             return date + '-' + month + '-' + year + ' ' + hour + ':' + min
@@ -135,7 +135,7 @@ export default class HoraMigranya extends Component {
                                 <Image style={{ width: 60, height: 60 }} source={require('./images/calendar-clock.png')}></Image>
                             </TouchableOpacity>
                             <Text style={styles.textBoto}>
-                                Other
+                                Another
                             </Text>
                             <Text style={styles.textBoto}>
                                 moment
@@ -178,7 +178,7 @@ export default class HoraMigranya extends Component {
                                 <Image style={{ width: 60, height: 60 }} source={require('./images/calendar-clock.png')}></Image>
                             </TouchableOpacity>
                             <Text style={styles.textBoto}>
-                                Other
+                                Another
                             </Text>
                             <Text style={styles.textBoto}>
                                 moment

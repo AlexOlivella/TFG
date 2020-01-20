@@ -38,6 +38,9 @@ import EditAppointment from './screens/EditAppointment'
 import ForgotPassword from './screens/ForgotPassword'
 import Prescriptions from './screens/Prescriptions'
 import CreatePrescription from './screens/CreatePrescription'
+import PrescriptionDetails from './screens/PrescriptionDetails'
+import EditPrescription from './screens/EditPrescription'
+
 const AuthStack = createStackNavigator(
   {
     FirstView: {screen: FirstView},
@@ -77,6 +80,8 @@ const Calendari = createStackNavigator({
 const Prescription = createStackNavigator({
   Prescriptions:{screen:Prescriptions},
   CreatePrescription:{screen:CreatePrescription},
+  PrescriptionDetails:{screen:PrescriptionDetails},
+  EditPrescription:{screen:EditPrescription}
   
 })
 const MainDrawer = createDrawerNavigator({

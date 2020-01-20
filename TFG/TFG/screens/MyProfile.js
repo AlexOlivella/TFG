@@ -8,7 +8,6 @@ import DatePicker from 'react-native-datepicker'
 import { tsThisType } from '@babel/types';
 import { Header, Icon } from 'react-native-elements'
 import DateTimePicker from "react-native-modal-datetime-picker";
-import * as ImagePicker from 'expo-image-picker';
 
 
 export default class Register extends Component {
@@ -137,21 +136,6 @@ export default class Register extends Component {
         else return ""
     }
 
-
-    async handleChoosePhoto() {
-        const options = {
-            allowsEditing: true
-        }
-
-        let response = await ImagePicker.launchImageLibraryAsync(options)
-        console.log("response", response)
-        if (response.uri) {
-            this.setState({ photo: response })
-        }
-
-        console.log("photo", this.state.photo)
-    }
-
     render() {
         var { navigation } = this.props;
         var navigate = navigation.navigate;
@@ -176,16 +160,7 @@ export default class Register extends Component {
                     leftComponent={<Icon name='menu' color="#fff"  onPress={() => this.obrirDrawer()} />}
                     centerComponent={{ text: 'Change your profile', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
                 />
-                <View style={styles.seccioTitol}>
-                    <TouchableOpacity onPress={() => this.handleChoosePhoto()}>
-                        <View>
-                            {this.state.photo ? this.state.photo && (<Image
-                                source={{ uri: this.state.photo.uri }}
-                                style={{ width: 100, height: 100, borderRadius: 100 / 2 }}
-                            />) : <Image style={{ width: 100, height: 100, borderRadius: 100 / 2 }} source={require('./images/no-profile-picture.jpg')}></Image>}
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                
                 <View style={styles.textView}>
 
                     <View style={styles.dades}>
@@ -256,7 +231,7 @@ export default class Register extends Component {
                         onPress={() => {
                             Alert.alert(
                                 'Update profile',
-                                'Do you want to confirm this changes?',
+                                'do you want to confirm these changes?',
                                 [
                                     { text: 'Cancel', onPress: () => { return null } },
                                     {

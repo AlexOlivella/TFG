@@ -290,19 +290,19 @@ export async function getDadesPacient(pacient_uid) {
 export async function addObservationsToPacient(metge_uid, pacient_uid, observations) {
 	var docRef = db.collection("Metges").doc(metge_uid).collection("llistaPacients").doc(pacient_uid)
 	let errorR
-		//console.log("doctor", doctorName)
-		await docRef.update({
-			observations: observations
-		}).then(function () {
-			//console.log("Document successfully updated!");
-		}).catch(function (error) {
-			// The document probably doesn't exist.
-			//console.error("Error updating document: ", error);
-		});
+	//console.log("doctor", doctorName)
+	await docRef.update({
+		observations: observations
+	}).then(function () {
+		//console.log("Document successfully updated!");
+	}).catch(function (error) {
+		// The document probably doesn't exist.
+		//console.error("Error updating document: ", error);
+	});
 }
-export async function getObservationsByPacient(metge_uid,pacient_uid){
+export async function getObservationsByPacient(metge_uid, pacient_uid) {
 	var docRef = db.collection("Metges").doc(metge_uid).collection("llistaPacients").doc(pacient_uid)
-	let result 
+	let result
 	await docRef.get().then(function (doc) {
 		if (doc.exists) {
 			//console.log("Document data:", doc.data());
@@ -542,7 +542,6 @@ export async function addObservationsToDate(metge_uid, pacient_uid, data, observ
 		//console.error("Error writing document: ", error);
 	});
 }
-
 export async function deleteAppointment(metge_uid, data, pacient_uid) {
 	var docRef = db.collection("Metges").doc(metge_uid).collection("cites").doc(data.toString())
 	docRef.delete().then(function () {
@@ -608,4 +607,134 @@ export async function desagregaDoctor(uid, user_uid) {
 	}).catch(function (error) {
 		//console.error("Error removing document: ", error);
 	});
+}
+export async function addPrescription(metge_uid, metge_name, pacient_uid, pacient_name, dIni, dFi, timesPerDay, interval, numDoses, medicine, quantitatDoses, unity, observations) {
+	var docRef = db.collection("Metges").doc(metge_uid).collection("receptes")
+	await docRef.add({
+		pacient_uid,
+		pacient_name,
+		dIni,
+		dFi,
+		timesPerDay,
+		interval,
+		numDoses,
+		medicine,
+		quantitatDoses,
+		unity,
+		observations,
+	})
+		.then(async function (docRef) {
+			//console.log("Document written with ID: ", docRef.id);
+			var docRef2 = db.collection("Pacients").doc(pacient_uid).collection("receptes").doc(docRef.id)
+			await docRef2.set({
+				metge_uid,
+				metge_name,
+				dIni,
+				dFi,
+				timesPerDay,
+				interval,
+				numDoses,
+				medicine,
+				quantitatDoses,
+				unity,
+				observations,
+			})
+				.then(function (docRef) {
+					//console.log("Document written with ID: ", docRef.id);
+				})
+				.catch(function (error) {
+					//console.error("Error adding document: ", error);
+				});
+		})
+		.catch(function (error) {
+			//console.error("Error adding document: ", error);
+		});
+}
+export async function getLlistaPrescriptions(uid, tipus) {
+	let result = []
+	let result2 = []
+	if (tipus == "Doctor") var docRef = db.collection("Metges")
+	else if (tipus == "Pacient") var docRef = db.collection("Pacients")
+
+	await docRef.doc(uid).collection("receptes").get().then(function (querySnapshot) {
+		querySnapshot.forEach(function (doc) {
+			// doc.data() is never undefined for query doc snapshots
+			//console.log(doc.id, " => ", doc.data());
+			result.push({ uid: doc.id, dIni: doc.data().dIni, medicine: doc.data().medicine })
+
+		});
+		result2 = result.reverse()
+	});
+	return result2
+}
+export async function getDadesPrescription(uid, tipus, recepta_uid) {
+	let result
+	if (tipus == "Doctor") var docRef = db.collection("Metges").doc(uid).collection("receptes").doc(recepta_uid)
+	else if (tipus == "Pacient") var docRef = db.collection("Pacients").doc(uid).collection("receptes").doc(recepta_uid)
+	await docRef.get().then(function (doc) {
+		if (doc.exists) {
+			//console.log("Document data:", doc.data());
+			result = ({ id: doc.id, data: doc.data() })
+		} else {
+			// doc.data() will be undefined in this case
+			console.log("No such document!");
+		}
+	}).catch(function (error) {
+		console.log("Error getting document:", error);
+	});
+	return result
+}
+export async function deletePrescription(metge_uid, pacient_uid, recepta_uid) {
+	var docRef = db.collection("Metges").doc(metge_uid).collection("receptes").doc(recepta_uid)
+	docRef.delete().then(function () {
+		//console.log("Document successfully deleted!");
+		//if(pacient_uid!="null"){
+		var docRef2 = db.collection("Pacients").doc(pacient_uid).collection("receptes").doc(recepta_uid)
+		docRef2.delete().then(function () {
+			//console.log("Document successfully deleted!");
+		}).catch(function (error) {
+			console.error("Error removing document: ", error);
+		});
+		//}
+	}).catch(function (error) {
+		console.error("Error removing document: ", error);
+	});
+}
+export async function updatePrescription(metge_uid, pacient_uid, recepta_uid, dIni, dFi, timesPerDay, interval, numDoses, medicine, quantitatDoses, unity, observations) {
+	var docRef = db.collection("Metges").doc(metge_uid).collection("receptes").doc(recepta_uid)
+	await docRef.update({
+		dIni,
+		dFi,
+		timesPerDay,
+		interval,
+		numDoses,
+		medicine,
+		quantitatDoses,
+		unity,
+		observations,
+	})
+		.then(async function (docRef) {
+			//console.log("Document written with ID: ", docRef.id);
+			var docRef2 = db.collection("Pacients").doc(pacient_uid).collection("receptes").doc(recepta_uid)
+			await docRef2.update({
+				dIni,
+				dFi,
+				timesPerDay,
+				interval,
+				numDoses,
+				medicine,
+				quantitatDoses,
+				unity,
+				observations,
+			})
+				.then(function (docRef) {
+					//console.log("Document written with ID: ", docRef.id);
+				})
+				.catch(function (error) {
+					//console.error("Error adding document: ", error);
+				});
+		})
+		.catch(function (error) {
+			//console.error("Error adding document: ", error);
+		});
 }

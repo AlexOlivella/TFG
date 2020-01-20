@@ -22,7 +22,7 @@ export default class ZonaCap extends Component {
                 "Front right neck": false,
                 "Back left neck": false,
                 "Back right neck": false,
-                "None of this": false,
+                "None of these": false,
             }
         };
 
@@ -35,9 +35,9 @@ export default class ZonaCap extends Component {
     select(element) {
         let selected = this.state.selected;
 
-        if (element === "None of this") selected["None of this"] = true
-        if (selected["None of this"] === true) selected = {}
-        if (selected[element] != selected["None of this"]) selected["None of this"] = false
+        if (element === "None of these") selected["None of these"] = true
+        if (selected["None of these"] === true) selected = {}
+        if (selected[element] != selected["None of this"]) selected["None of these"] = false
         selected[element] = !selected[element];
         //console.log(selected);
         this.setState({ selected: selected })
@@ -249,15 +249,15 @@ export default class ZonaCap extends Component {
                     <View style={styles.rodonaIcon}>
                         <TouchableHighlight
                             style={
-                                this.state.selected["None of this"] ? styles.seleccionatBoto : styles.noSeleccionatBoto
+                                this.state.selected["None of these"] ? styles.seleccionatBoto : styles.noSeleccionatBoto
                             }
                             activeOpacity={1}
                             underlayColor='#3BD3EF'
-                            onPress={() => this.select("None of this")}>
+                            onPress={() => this.select("None of these")}>
                             <Image style={{ width: 60, height: 60 }} source={require('./images/No.png')}></Image>
                         </TouchableHighlight>
                         <Text style={styles.textBoto}>
-                            None of this
+                            None of these
                         </Text>
                     </View>
                 </View>

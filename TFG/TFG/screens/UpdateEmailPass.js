@@ -128,7 +128,7 @@ export default class Register extends Component {
                     {/*<TouchableOpacity onPress={() =>
                         Alert.alert(
                             'Update email',
-                            'Do you want to confirm this changes?',
+                            'do you want to confirm these changes?',
                             [
                                 { text: 'Cancel', onPress: () => { return null } },
                                 {
@@ -150,7 +150,7 @@ export default class Register extends Component {
                     <TouchableOpacity onPress={() =>
                         Alert.alert(
                             'Update password',
-                            'Do you want to confirm this changes?',
+                            'do you want to confirm these changes?',
                             [
                                 { text: 'Cancel', onPress: () => { return null } },
                                 {

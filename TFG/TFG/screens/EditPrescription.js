@@ -6,17 +6,16 @@ import { Dropdown } from 'react-native-material-dropdown';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { TextField } from 'react-native-material-textfield';
 
-export default class CreatePrescription extends Component {
+export default class EditPrescription extends Component {
     constructor(props) {
         super(props);
         this.state = {
             llistaData: [],
+            recepta_uid: this.props.navigation.getParam("recepta_uid"),
             pacientName: '',
             pacient_uid: "",
-            metge_firstName: "",
-            metge_lastName: "",
-            dateSelected: false,
-            dateSelected2: false,
+            dateSelected: true,
+            dateSelected2: true,
             isDateTimePickerVisible: false,
             isDateTimePickerVisible2: false,
             dataIni: "",
@@ -43,7 +42,7 @@ export default class CreatePrescription extends Component {
     }
 
     static navigationOptions = {
-        title: "Create prescription",
+        title: "Update prescription",
         headerStyle: {
             backgroundColor: '#2089dc'
         },
@@ -53,16 +52,25 @@ export default class CreatePrescription extends Component {
         },
     }
     componentDidMount() {
-        this.getPacients()
-        this.getDadesUsuari()
+        this.getPacientPrescription()
     }
-    async getDadesUsuari() {
+    async getPacientPrescription() {
         var user = firebase.auth().currentUser
-        let result = await FirebaseAPI.readUserData(user.uid, "Doctor")
-        //console.log(result)
+        let result = await FirebaseAPI.getDadesPrescription(user.uid, "Doctor", this.state.recepta_uid)
+        //console.log("result", result)
         this.setState({
-            metge_firstName: result.firstName,
-            metge_lastName: result.lastName
+            pacientName: result.data.pacient_name,
+            pacient_uid: result.data.pacient_uid,
+            dataIni: result.data.dIni,
+            dataFi: result.data.dFi,
+            timesPerDay: result.data.timesPerDay,
+            interval: result.data.interval,
+            numberDoses: result.data.numDoses,
+            medicine: result.data.medicine,
+            dose: result.data.quantitatDoses,
+            unity: result.data.unity,
+            observations: result.data.observations,
+            isLoading: false,
         })
     }
     showDateTimePicker = () => {
@@ -94,24 +102,6 @@ export default class CreatePrescription extends Component {
         this.hideDateTimePicker2();
 
     };
-
-    creaDropdown(llista) {
-        result = []
-        let dades = llista.map(pacient => { return { uid: pacient.uid, value: pacient.nom } })
-        result = [].concat(dades)
-        return result
-    }
-
-    async getPacients() {
-        var user = firebase.auth().currentUser
-        var pacients = await FirebaseAPI.getPacientsFromMetge(user.uid)
-        //console.log("pacients", pacients)
-        var result = this.creaDropdown(pacients)
-        this.setState({
-            llistaData: result
-        })
-        //console.log("result", result)
-    }
 
     transformaData(time) {
         if (time) {
@@ -161,75 +151,28 @@ export default class CreatePrescription extends Component {
         if (this.state.dataIni <= this.state.dataFi) return true
         return false
     }
-    checkTextInputs() {
-        if (this.state.pacientName != '') {
-            if (this.state.dataIni != '') {
-                if (this.state.dataFi != '') {
-                    if (this.comprovaIntervalDates()) {
-                        if (this.state.timesPerDay != '') {
-                            if (this.state.interval != '') {
-                                if (this.state.numberDoses != '') {
-                                    if (this.state.medicine != '') {
-                                        if (this.state.dose != '') {
-                                            if (this.state.unity != '') {
-                                                return true;
-                                            } else {
-                                                alert('Please select an unity');
-                                            }
-                                        } else {
-                                            alert('Please enter a valid dose');
-                                        }
-                                    } else {
-                                        alert('Please select a medicine');
-                                    }
-                                } else {
-                                    alert('Please select the number of doses');
-                                }
-                            }
-                            else {
-                                alert("Please select an interval between doses")
-                            }
-                        } else {
-                            alert('Please select the times to take the medication daily');
-                        }
-                    } else {
-                        alert('The final date must be after initial date');
-                    }
-                } else {
-                    alert('Please select a final date');
-                }
-            } else {
-                alert('Please select an initial date');
-            }
-        } else {
-            alert('Please select a patient');
-        }
-        return false;
 
-    }
-    addPrescription() {
-        Alert.alert("Add prescription", "Do you want to add this prescription?",
+    updatePrescription() {
+        Alert.alert("Update prescription", "Do you want to confirm these changes?",
             [
                 { text: 'Cancel', onPress: () => { return null } },
                 {
                     text: 'Confirm', onPress: async () => {
-                        if (this.checkTextInputs()) {
-                            this.setState({ isLoading: true })
-                            var user = firebase.auth().currentUser
-                            let error = await FirebaseAPI.addPrescription(user.uid, this.state.metge_firstName + " " + this.state.metge_lastName, this.state.pacient_uid,
-                                this.state.pacientName, this.state.dataIni, this.state.dataFi, this.state.timesPerDay2 ? this.state.timesPerDay2 : this.state.timesPerDay,
-                                this.state.interval2 ? this.state.interval2 : this.state.interval, this.state.numberDoses2 ? this.state.numberDoses2 : this.state.numberDoses,
-                                this.state.medicine2 ? this.state.medicine2 : this.state.medicine, this.state.dose, this.state.unity, this.state.observations)
-                            this.setState({ isLoading: false })
+                        this.setState({ isLoading: true })
+                        var user = firebase.auth().currentUser
+                        let error = await FirebaseAPI.updatePrescription(user.uid, this.state.pacient_uid, this.state.recepta_uid, this.state.dataIni, this.state.dataFi, this.state.timesPerDay2 ? this.state.timesPerDay2 : this.state.timesPerDay,
+                            this.state.interval2 ? this.state.interval2 : this.state.interval, this.state.numberDoses2 ? this.state.numberDoses2 : this.state.numberDoses,
+                            this.state.medicine2 ? this.state.medicine2 : this.state.medicine, this.state.dose, this.state.unity, this.state.observations)
+                        this.setState({ isLoading: false })
 
-                            if (error) alert(error)
-                            else {
-                                ToastAndroid.show("Appointment succesfully added", ToastAndroid.SHORT)
-                                this.props.navigation.state.params.refresh()
-                                this.props.navigation.navigate("Prescriptions")
-                            }
+                        if (error) alert(error)
+                        else {
+                            ToastAndroid.show("Appointment succesfully updated", ToastAndroid.SHORT)
+                            this.props.navigation.state.params.refresh()
+                            this.props.navigation.navigate("Prescriptions")
                         }
                     }
+
                 },
             ],
             { cancelable: false })
@@ -242,16 +185,13 @@ export default class CreatePrescription extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
-                    <View style={{}}>
-                        <Dropdown
-                            label='Select patient'
-                            data={this.state.llistaData}
-                            value={this.state.pacientName}
-                            onChangeText={(itemValue, itemIndex, itemData) => {
-                                this.setState({ pacientName: itemValue, pacient_uid: itemData[itemIndex].uid });
-                                //console.log("itemValue", itemValue,/* "itemIndex", itemIndex, "itemData", itemData,*/"itemData[itemIndex].uid", itemData[itemIndex].uid)
-                            }}
-                        />
+                    <View style={styles.lateral}>
+                        <View style={{ width: "50%", paddingTop: 10 }}>
+                            <Text style={styles.textTitol}>Patient name</Text>
+                        </View>
+                        <View style={{ width: "50%", paddingTop: 10 }}>
+                            <Text style={styles.textParam}>{this.state.pacientName}</Text>
+                        </View>
                     </View>
                     <DateTimePicker
                         isVisible={this.state.isDateTimePickerVisible}
@@ -376,6 +316,7 @@ export default class CreatePrescription extends Component {
                             <TextField
                                 label="Specify the dose"
                                 keyboardType="numeric"
+                                value={this.state.dose}
                                 onChangeText={(text) => this.setState({ dose: text })}
                             >
                             </TextField>
@@ -398,13 +339,14 @@ export default class CreatePrescription extends Component {
                         <TextField
                             label="Observations"
                             multiline={true}
+                            value={this.state.observations}
                             onChangeText={(text) => this.setState({ observations: text })}
                         >
                         </TextField>
                     </View>
                     {loading}
                     <View style={[styles.apartat, { paddingBottom: 10 }]}>
-                        <Button title="Add prescription" onPress={() => this.addPrescription()}></Button>
+                        <Button title="Udate prescription" onPress={() => this.updatePrescription()}></Button>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -421,5 +363,22 @@ const styles = StyleSheet.create({
     },
     apartat: {
         paddingTop: 40
-    }
+    },
+    lateral: {
+        flex: 1,
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: '#2089dc',
+    },
+    viewText: {
+        width: "50%",
+        paddingTop: 40,
+    },
+    textTitol: {
+        fontSize: 17,
+        fontWeight: 'bold'
+    },
+    textParam: {
+        fontSize: 15,
+    },
 });
