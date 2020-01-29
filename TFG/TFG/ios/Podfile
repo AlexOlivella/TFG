@@ -32,10 +32,7 @@ target 'Prova2' do
 
   use_unimodules!
 
-  pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
-
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
 end

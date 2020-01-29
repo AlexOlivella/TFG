@@ -2,16 +2,23 @@
   "name": "TFG",
   "displayName": "TFG",
   "expo": {
-    "name": "TFG",
-    "slug": "expo-template-bare",
+    "name": "Mygraine",
+    "slug": "Mygraine",
     "privacy": "unlisted",
     "sdkVersion": "34.0.0",
     "version": "1.0.0",
+    "icon": "C:\\Users\\alexo\\AndroidStudioProjects\\Github\\TFG\\TFG\\TFG\\screens\\images\\LogoMygraine.png",
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "android": {
+      "package": "com.yourcompany.yourappname"
+    },
+    "ios": {
+      "bundleIdentifier": "com.yourcompany.yourappname"
+    },
   }
 }

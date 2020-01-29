@@ -2906,11 +2906,6 @@ expo-font@~6.0.1:
   dependencies:
     fontfaceobserver "^2.1.0"
 
-expo-image-picker@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-8.0.1.tgz#bae9e0d89722de9a6e60e55f0e4291fc099abb14"
-  integrity sha512-f4KVQFZSgNiYlt8smZ9kc/gaHkJeFLhRYiSgQdOlmLOkCuX4jxtg++PjCZLSSVwMVv/DUHT0EvUzOZqJokZfdg==
-
 expo-keep-awake@~6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-6.0.0.tgz#e0d6d1263c6a73488272a62aef98312ab25cab1f"
@@ -6128,19 +6123,6 @@ react-native-circular-action-menu@^0.5.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-date-picker@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-2.7.0.tgz#91c6cd85c45309763e58982c46fcf3dba2d1da55"
-  integrity sha512-pevfIzZ2jnYZe3jrDsUN2EM0fGcal3lL2aqExDux7d01C4QWOJJdHbut2URjL/EzS1v2ByLQJNT0ErjniheRiw==
-  dependencies:
-    moment "^2.22.1"
-
-react-native-datepicker@^1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
-  integrity sha1-WNCCJZGgrJsyq6CCZQIioO4pZp0=
-  dependencies:
-    moment "^2.22.0"
 
 react-native-dynamic-search-bar@^0.2.1:
   version "0.2.1"
@@ -6196,11 +6178,6 @@ react-native-hide-show-password-input@^1.1.0:
     prop-types "^15.7.2"
     react-native-material-textfield "^0.12.0"
     react-native-vector-icons "^6.4.2"
-
-react-native-image-picker@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-1.1.0.tgz#c2a0523886edb4cf2cdc008ad0a71433142a4d53"
-  integrity sha512-/KjHf4NNAjl6XM7FQuqvGDz1wB9sRdLf86+2yksLW/QTRR7CitX4TLCM8ZF9CX6Y0MsCTndkZia3zWE+nt/GiA==
 
 react-native-material-buttons@^0.5.0:
   version "0.5.0"

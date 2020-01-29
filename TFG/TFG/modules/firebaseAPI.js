@@ -5,6 +5,7 @@ const db = firebase.firestore();
 
 export async function createUser(firstName, lastName, password, email, gender, type, birthday) {
 	let docRef
+	if(type == "Patient") type = "Pacient"
 	return await firebase.auth().createUserWithEmailAndPassword(email, password).then((res) => {
 		//console.log("res: ", res)
 		if (type == "Doctor") {
